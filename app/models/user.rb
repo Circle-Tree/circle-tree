@@ -32,6 +32,7 @@ class User < ApplicationRecord
                                  message: 'は全角カタカナのみで入力して下さい'
                                }
   end
+  validates_acceptance_of :agreement, allow_nil: false, message: "への同意が必要です。", on: :create
 
   def admin?
     admin

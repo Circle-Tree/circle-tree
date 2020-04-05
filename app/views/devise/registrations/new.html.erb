@@ -47,8 +47,7 @@
 
               <div class="form-check">
                 <label class="form-check-label">
-                  <div class="form-check-input"></div>利用規約に同意
-                </label>
+                  <%= f.check_box :agreement, :as => :boolean, checked: false, class: "form-check-input" %> 利用規約に同意</label>
               </div>
 
               </div>
@@ -56,7 +55,7 @@
                 <%= f.submit "登録", class: "btn btn-primary btn-block enter-btn", style: "margin-bottom: 20px;" %>
               </div>
 
-              <p class="sign-up text-center">既に登録済み?<%= link_to "ログイン", new_session_path(resource_name), class: "text9" %></p>
+              <p class="sign-up text-center">既に登録済み？ <%= link_to "ログイン", new_session_path(resource_name) %></p>
               <p class="terms">By creating an account you are accepting our<a href="#"> Terms & Conditions</a></p>
             <% end %>
           </div>
