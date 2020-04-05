@@ -1,0 +1,106 @@
+<% provide(:title, "My収支情報ページ") %>
+
+
+<%= render 'shared/topbar' %>
+
+<div class="box-graph"　
+     date-step="1"
+     data-intro='このページではあなたがサークルに支払わなければならない金額、および支払い済みのイベントの領収書を発行することができます。'>
+  <div style="position:absolute;
+              top: 50%;                    /* 親要素の半分下にずらす */
+              left: 50%;                   /* 親要素の半分右にずらす */
+              width: 120%;
+              transform: translateY(-50%) translateX(-50%);    /* 要素自体の半分、上と左にずらす */
+                padding: 20px;               /* 余白指定 */">
+    <canvas id="balance"></canvas>
+  </div>
+</div>
+
+<div class="box-balance">
+  <p class="text1">収支情報</p>
+  <div class="box4"></div>
+  <div class="box-border">
+    <p class="text2">イベント名</p>
+    <p class="text3">開催日</p>
+    <p class="text4">出金額</p>
+  </div>
+
+  <div class="name1" date-step="2" data-intro='どのイベントでいくら払ったかが確認できます。支払い済みであればイベント名を押すことで領収書が発行されます。'></div>
+  <div class="name2"></div>
+  <div class="name3"></div>
+  <div class="name4"></div>
+  <div class="name5"></div>
+
+  <button class="button-left">
+    <%# <%= image_pack_tag("chevron-left.svg", class: "img-ball") %>
+  </button>
+  <button class="button-1"></button>
+  <button class="button-2"></button>
+  <button class="button-3"></button>
+  <button class="button-4"></button>
+  <button class="button-right">
+    <%# <%= image_pack_tag("chevron-right.svg", class: "img-ball") %>
+  </button>
+</div>
+
+
+
+<div class="box-shadow">
+  <% @transactions.each do |t| %>
+  <% event = Event.find(t.event_id) %>
+  <% group = Group.find(t.group_id) %>
+    <div class="namebox"><%= link_to event.name, group_event_path(group_id: group.id, id: event.id) %></div>
+    <div class="datebox"><%= l event.start_date %> ~ <%= l event.end_date %></div>
+    <% if t.completed? %>
+      <div class="balancebox">￥<%= t.payment.to_s(:delimited) %>(<%= link_to "領収書発行", receipt_event_transaction_path(event_id: event.id, url_token: t.url_token, format: "pdf") %>)</div>
+    <% else %>
+      <div class="balancebox">￥<%= t.payment.to_s(:delimited) %>/￥<%= t.debt.to_s(:delimited) %></div>
+    <% end %>
+    <div class="change"></div>
+    <div class="checkbox"></div>
+  <% end %>
+  <%= paginate @transactions %>
+</div>
+
+<!--
+<p>支払い<%= @paid_total_amount %>円 | 未払い<%= @unpaid_total_amount %>円</p>
+-->
+
+<%= render 'shared/sidebar' %>
+<%= render 'shared/menu' %>
+
+<script>
+  new Chart(document.getElementById("balance"), {
+    type: "doughnut",
+    data: {
+      labels: ["支払い済み", "未納"],
+      datasets: [
+        {
+          data: [30, 50],
+          backgroundColor: [
+            "rgb(255, 99, 132)",
+            "rgb(54, 162, 235)",
+
+          ]
+        }
+      ]
+    }
+  });
+
+  new Chart(document.getElementById("deposit2"), {
+    type: "doughnut",
+    data: {
+      labels: ["男", "女"],
+      datasets: [
+        {
+          data: [30, 50],
+          backgroundColor: [
+            "rgb(255, 99, 132)",
+            "rgb(54, 162, 235)",
+
+          ]
+        }
+      ]
+    }
+  });
+</script>

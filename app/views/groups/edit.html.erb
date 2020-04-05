@@ -1,0 +1,72 @@
+<% provide(:title, "サークル情報") %>
+
+<div class="sidebar-fixed container-scroller" style="background-color: rgb(44, 44, 44);">
+  <%= render 'shared/sidebar' %>
+  <!-- partial -->
+  <div class="container-fluid page-body-wrapper">
+    <!-- partial:partials/_navbar.html -->
+    <%= render 'shared/topbar' %>
+    <!-- partial -->
+    <div class="main-panel">
+      <div class="content-wrapper" style="height: 100%;">
+        <div class="page-header">
+          <h3 class="page-title"> サークル情報 </h3>
+          <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+              <li class="breadcrumb-item"><a href="#">サークルページ</a></li>
+              <li class="breadcrumb-item active" aria-current="page">サークル情報</li>
+            </ol>
+          </nav>
+        </div>
+        <div class="row">
+          <div class="col-md-12 grid-margin stretch-card">
+            <div class="card">
+              <div class="card-body" style="background-color: rgb(255, 255, 255); color: #000;">
+                <h4 class="card-title">サークル設定</h4>
+                <p class="card-description">サークルの設定ができます。</p>
+                <%= form_with model: @group, class: "forms-sample", local: true do |f| %>
+                  <div class="form-group row">
+                    <%= f.label :name, "サークル名", for: "exampleInputUsername2", class: 'col-sm-3 col-form-label' %>
+                    <div class="col-sm-9">
+                      <%= f.text_field :name, class: "form-control", id: "exampleInputUsername2", placeholder: "登録名", style: "color: white;" %>
+                    </div>
+                  </div>
+                  <%# <div class="form-group row">
+                    <label for="exampleInputEmail2" class="col-sm-3 col-form-label">代表者名</label>
+                    <div class="col-sm-9">
+                      <input type="email" class="form-control" id="exampleInputEmail2" placeholder="Email" style="color: white;">
+                    </div>
+                  </div> %>
+                  <div class="form-group row">
+                    <%= f.label :email, "代表者メールアドレス", for: "exampleInputMobile", class: "col-sm-3 col-form-label" %>
+                    <div class="col-sm-9">
+                      <%= f.email_field :email, autofocus: true, autocomplete: "email", id: "exampleInputMobile", class: 'form-control', placeholder: "代表者メールアドレス", style: "color: white;" %>
+                    </div>
+                  </div>
+                  <%# <div class="form-group row">
+                    <label for="exampleInputPassword2" class="col-sm-3 col-form-label">支払いPayPalアカウント</label>
+                    <div class="col-sm-9">
+                      <input type="password" class="form-control" id="exampleInputPassword2" placeholder="現在のPaypal" style="color: white;">
+                    </div>
+                  </div> %>
+                  <div class="form-group row">
+                    <%= f.label :group_number, "グループID(6~25文字)", for: "exampleInputConfirmPassword2", class: "col-sm-3 col-form-label" %>
+                    <div class="col-sm-9">
+                      <%= f.text_field :group_number, id: "exampleInputConfirmPassword2", class: 'form-control', placeholder: "現在のサークルID", style: "color: white;" %>
+                    </div>
+                  </div>
+                  <%= button_tag '変更', type: 'submit', class: "btn btn-primary mr-2" %>
+                  <%# <button class="btn btn-dark">リセット</button> %>
+                <% end %>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- content-wrapper ends -->
+      <%= render 'shared/footer' %>
+    </div>
+    <!-- main-panel ends -->
+  </div>
+  <!-- page-body-wrapper ends -->
+</div>

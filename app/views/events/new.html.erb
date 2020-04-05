@@ -1,0 +1,142 @@
+<div class="sidebar-fixed container-scroller" style="background-color: rgb(44, 44, 44);">
+  <%= render 'shared/sidebar' %>
+  <div class="container-fluid page-body-wrapper">
+    <!-- partial:partials/_navbar.html -->
+    <%= render 'shared/topbar' %>
+    <!-- partial -->
+    <div class="main-panel">
+      <div class="content-wrapper">
+        <div class="page-header">
+          <h3 class="page-title"> イベント作成 </h3>
+          <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+              <li class="breadcrumb-item"><a href="#">サークルページ</a></li>
+              <li class="breadcrumb-item active" aria-current="page">イベント作成</li>
+            </ol>
+          </nav>
+        </div>
+        <div class="row">
+          <div class="col-12 grid-margin">
+            <div class="card">
+              <div class="card-body" style="color: black;">
+                <h4 class="card-title">イベント作成</h4>
+                <%= form_with model: @event, url: group_events_path(group_id: current_user_group.id), local: true, id: :exampleform do |f| %>
+                  <!-- エラーメッセージ -->
+                  <%= f.hidden_field :user_id, value: current_user.id %>
+                  <%= f.hidden_field :group_id, value: @group.id %>
+                  <div>
+                    <h3>イベント概要</h3>
+                    <section>
+                      <div class="form-group">
+                        <%= f.label :name, 'イベント名' %>
+                        <%= f.text_field :name, class: "form-control", placeholder: 'イベント名を入力してください', style: "color: white;" %>
+                      </div>
+                      <div class="form-group">
+                        <%= f.label :start_date, '開始日' %>
+                        <%= f.date_field :start_date, class: "form-control" %>
+                      </div>
+                      <div class="form-group">
+                        <%= f.label :end_date, '終了日' %>
+                        <%= f.date_field :end_date, class: "form-control" %>
+                      </div>
+                    </section>
+
+                    <h3>集金設定</h3>
+                    <section>
+                      <h3>集金設定</h3>
+                      <div class="form-group">
+                        <%= f.label :amount, '集金額' %>
+                        <%= f.number_field :amount, class: "form-control", placeholder: '集金額を設定してください', style: "color:white;" %>
+                      </div>
+                      <div class="form-group">
+                        <%= f.label :answer_deadline, '出欠締め切り日' %>
+                        <%= f.date_field :answer_deadline, class: "form-control" %>
+                      </div>
+                      <div class="form-group">
+                        <%= f.label :pay_deadline, '集金締め切り日' %>
+                        <%= f.date_field :pay_deadline, class: "form-control" %>
+                      </div>
+                    </section>
+
+                    <h3>イベント内容</h3>
+                    <section>
+                      <h3>イベント内容</h3>
+                      <div class="form-group">
+                        <%= f.label :comment, 'みんなへ一言' %>
+                        <%= f.text_field :comment, class: "form-control", style: "color: white;" %>
+                        <small id="emailHelp" class="form-text text-muted">サムネイルに使用される一言(任意)</small>
+                      </div>
+                      <div class="form-group">
+                        <%= f.label :description, 'イベントの説明' %>
+                        <%= f.text_area :description, class: "form-control", rows: "8", style: "color: white;" %>
+                        <small id="emailHelp" class="form-text text-muted">イベントの詳しい説明(任意)</small>
+                      </div>
+                    </section>
+                  </div>
+                <% end %>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- content-wrapper ends -->
+      <!-- content-wrapper ends -->
+      <!-- partial:partials/_footer.html -->
+      <%= render 'shared/footer' %>
+      <!-- partial -->
+    </div>
+    <!-- main-panel ends -->
+  </div>
+  <!-- page-body-wrapper ends -->
+</div>
+<script>
+(function($) {
+  'use strict';
+  var form = $("#exampleform");
+  // var userId = $('#event_user_id').val();
+  // var groupId = $('#event_group_id').val();
+  // var name = $('#event_name').val();
+  // var startDate = $('#event_start_date').val();
+  // var endDate = $('#event_end_date').val();
+  // var amount = $('#event_amount').val();
+  // var answerDeadline = $('#event_answer_deadline').val();
+  // var payDeadline = $('#event_pay_deadline').val();
+  // var comment = $('#event_comment').val();
+  // var description = $('#event_description').val();
+  // var url = `/groups/${groupId}/events`
+  form.children("div").steps({
+    headerTag: "h3",
+    bodyTag: "section",
+    transitionEffect: "slideLeft",
+    onFinished: function(event, currentIndex) {
+      $('form').submit();
+      // $.ajax({
+      //   url: url,
+      //   type: "POST",
+      //   dataType: 'html',
+      //   async: false,
+      //   data: {
+      //     event: {
+      //       user_id: userId,
+      //       group_id: groupId,
+      //       name: name,
+      //       start_date: startDate,
+      //       end_date: endDate,
+      //       amount: amount,
+      //       answer_deadline: answerDeadline,
+      //       pay_deadline: payDeadline,
+      //       comment: comment,
+      //       description: description
+      //     }
+      //   },
+      //   success: function(data) {
+      //       alert("success");
+      //   },
+      //   error: function(data) {
+      //       alert("errror");
+      //   }
+      // });
+    }
+  });
+})(jQuery);
+</script>

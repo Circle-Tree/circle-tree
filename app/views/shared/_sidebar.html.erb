@@ -1,0 +1,15 @@
+<nav class="sidebar sidebar-offcanvas" id="sidebar" >
+  <%= render 'shared/logo'%>
+  <ul class="nav">
+    <%= render 'shared/sidebar/profile' %>
+    <%= render 'shared/sidebar/home' %>
+    <%= render 'shared/sidebar/my_page' %>
+    <% unless current_user_group.blank? %>
+      <%= render 'shared/sidebar/circle_page' %>
+      <%= render 'shared/sidebar/event' %>
+      <%= render 'shared/sidebar/circle_setting' %>
+    <% end %>
+    <%= render 'shared/sidebar/faq' %>
+    <%= render 'shared/sidebar/customize' %>
+  </ul>
+</nav>

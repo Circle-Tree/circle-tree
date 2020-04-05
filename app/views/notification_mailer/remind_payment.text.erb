@@ -1,0 +1,6 @@
+<%= @debtor.name %> さん
+
+<%= @event.name %>(<%= @group.name %>)の支払い期限が近づいています。
+期限は<%= @transaction.deadline.strftime("%Y/%m/%d") %>
+以下から確認できます。
+<%= group_event_url(group_id: @group.id, id: @event.id) %>

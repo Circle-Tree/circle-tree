@@ -1,0 +1,6 @@
+<%= @user.name %> さん
+
+<%= @current_user.name %>さんが<%= @group.name %>の新規イベントを作成しました。
+
+確認はこちらから
+<%= group_event_url(group_id: @group.id, id: @event.id) %>

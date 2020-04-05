@@ -1,0 +1,42 @@
+<div class="row">
+  <% if @new_events.present? %>
+    <% @new_events.each do |event| %>
+      <div class="col-xl-3 col-sm-6 grid-margin stretch-card">
+        <div class="card">
+          <div class="card-body" style="color: black;">
+            <div class="row">
+              <div class="col-9">
+                <div class="d-flex align-items-center align-self-start">
+                  <h3 class="mb-0">更新情報</h3>
+                  <p class="text-success ml-2 mb-0 font-weight-medium">
+                    <% start_date, end_date = event.start_date, event.end_date %>
+                    <% if start_date == end_date %>
+                      <%= l start_date, format: :short %>
+                    <% else %>
+                      <%= l start_date, format: :short %> ~ <%= l end_date, format: :short %>
+                    <% end %>
+                  </p>
+                </div>
+              </div>
+            </div>
+            <h6 class="text-muted font-weight-normal"><%= link_to event.name, group_event_path(group_id: event.group_id, id: event.id) %></h6>
+          </div>
+        </div>
+      </div>
+    <% end %>
+  <% else %>
+    <div class="col-xl-3 col-sm-6 grid-margin stretch-card">
+        <div class="card">
+          <div class="card-body" style="color: black;">
+            <div class="row">
+              <div class="col-9">
+                <div class="d-flex align-items-center align-self-start">
+                  <h5 class="mb-0">更新情報はありません</h5>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+  <% end %>
+</div>

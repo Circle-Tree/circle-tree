@@ -1,0 +1,10 @@
+:pidfile: ./tmp/pids/sidekiq.pid
+:logfile: ./log/sidekiq.log
+:queues:
+  - default
+  - mailers
+:schedule:
+  RemindAnswerJob:
+    cron: '0 8 * * *'
+  RemindPaymentJob:
+    cron: '0 9 * * *'

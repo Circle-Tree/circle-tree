@@ -1,0 +1,16 @@
+<td>￥<%= transaction.debt %></td>
+<td id="payment">￥<%= transaction.payment %></td>
+<td>?</td>
+<td>
+  <% if transaction.completed? %>
+    <%= link_to '完了', receipt_transaction_path(url_token: transaction.url_token, format: 'pdf'), class: 'btn btn-success' %>
+  <% else %>
+    <%= form_with model: transaction, url: transaction_path(url_token: transaction.url_token) do |f| %>
+      <%= f.select :completed, [['完了', true], ['未完了', false]], {}, { id: "transaction-select", class: "btn btn-secondary", style: "background-color:rgb(236, 236, 236)",
+                                                                          data: { url_token: transaction.url_token, payment: transaction.debt } } %>
+    <% end %>
+  <% end %>
+</td>
+<td>
+  <%= link_to '変更', edit_transaction_path(url_token: transaction.url_token), class: "btn btn-outline-primary" %>
+</td>

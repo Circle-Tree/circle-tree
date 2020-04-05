@@ -1,0 +1,42 @@
+<% provide(:title, "ログイン") %>
+<% content_for :pack_tag do %>
+  <%#= javascript_pack_tag 'users/sessions/new' %>
+  <%#= stylesheet_pack_tag 'users/sessions/new' %>
+<% end %>
+    <div class="parent"></div>
+      <div class="test2"></div>
+      <div class="test3"></div>
+      <div class="test4"></div>
+      <p class="test5">ログイン</p>
+      <p class="test6">サービスの利用にはログインが必要です。</p>
+      <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
+        <%= render "devise/shared/error_messages", resource: resource %>
+        <div class="field">
+          <div class="test8"><%= f.label :email, 'メールアドレス' %></div>
+          <%= f.email_field :email, autofocus: true, autocomplete: "email", class: "test7" %>
+        </div>
+
+        <div class="field">
+          <div class="test10"><%= f.label :password, 'パスワード' %></div>
+          <%= f.password_field :password, autocomplete: "current-password", class: "test9" %>
+        </div>
+
+        <%- if devise_mapping.recoverable? && controller_name != 'passwords' && controller_name != 'registrations' %>
+          <%= link_to "パスワードがわからない？", new_password_path(resource_name), class: "test13" %>
+        <% end %>
+
+        <% if devise_mapping.rememberable? %>
+          <div class="field">
+            <%= f.check_box :remember_me, class: "test14" %>
+            <%= f.label :remember_mem, "記憶する", class: "test15" %>
+          </div>
+        <% end %>
+
+        <%= f.submit "ログイン", class: "test11" %>
+
+        <%- if devise_mapping.registerable? && controller_name != 'registrations' %>
+          <%= link_to "新規登録", new_registration_path(resource_name), class: "test16" %><br />
+        <% end %>
+      <% end %>
+    </div>
+

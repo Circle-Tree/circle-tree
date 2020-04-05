@@ -1,0 +1,72 @@
+<% provide(:title, "デポジット") %>
+<% content_for :pack_tag do %>
+  <%= javascript_pack_tag 'groups/deposit' %>
+  <%= stylesheet_pack_tag 'groups/deposit' %>
+  <!--
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.1/Chart.min.js"></script>
+  -->
+<% end %>
+<div class="back"></div>
+<div class="topbar1" >
+  <input type="search" class="search">
+  <%= image_pack_tag("help.png", class: "img-ball") %>
+</div>
+<!--
+<div style="position:absolute;
+  top: 17.68%;
+  left: 0%;
+  width: 70.66%;
+  height: 70.13%;">
+  <canvas id="deposit1"></canvas>
+</div>
+-->
+
+    <div class="box2"></div>
+    <div class="box3"></div>
+    <div class="box4"></div>
+    <div class="box5"></div>
+    <div class="box6"></div>
+    <div class="box7"></div>
+    <div class="box8"></div>
+
+    <p class="text1">デポジット</p>
+    <p class="text2">履歴</p>
+
+<%= render 'shared/sidebar' %>
+<%= render 'shared/menu' %>
+
+<!--
+<script>
+  new Chart(document.getElementById("deposit1"), {
+  type: "doughnut",
+  data: {
+    labels: ["準備金", "剰余デポジット"],
+    datasets: [
+      {
+        data: [30, 50],
+        backgroundColor: [
+          "rgb(255, 99, 132)",
+          "rgb(54, 162, 235)",
+        ]
+      }
+    ]
+  }
+});
+
+new Chart(document.getElementById("deposit2"), {
+  type: "doughnut",
+  data: {
+    labels: ["男", "女"],
+    datasets: [
+      {
+        data: [30, 50],
+        backgroundColor: [
+          "rgb(255, 99, 132)",
+          "rgb(54, 162, 235)",
+        ]
+      }
+    ]
+  }
+});
+</script>
+-->

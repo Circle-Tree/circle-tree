@@ -1,0 +1,32 @@
+<div class="tab-pane fade" id="profile-1" role="tabpanel" aria-labelledby="profile-tab">
+  <h3>引継ぎ</h3>
+  <section>
+    <%= form_with url: inherit_group_path(id: group.id), local: true do |f| %>
+      <div class="form-group">
+        <input type="form" id='inheritable-search' class="form-control col-md-8" aria-describedby="emailHelp" placeholder="引継ぎたい人の名前を入力してください"
+                style="display: inline-block; color: white;" data-group-id="<%= group.id %>">
+        <%# <button type="button" class="btn btn-success btn-icon-text" style="display: inline-block;">
+          <i class="mdi mdi-email"></i> 検索
+        </button> %>
+        <%= button_tag type: 'submit', class: "btn btn-danger btn-icon-text", style: "display: inline-block;" do %>
+          <i class="mdi mdi-email"></i> 引継ぐ
+        <% end %>
+        <small id="emailHelp" class="form-text text-muted">引き継ぎたいメンバーを選択します。</small>
+      </div>
+
+      <div class="card">
+        <div class="card-body">
+          <div class="row">
+            <div class="col-12">
+              <form action="#">
+                <div class="form-group d-flex">
+                  <%= render 'groups/inheritable_members', f: f %>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    <% end %>
+  </section>
+</div>

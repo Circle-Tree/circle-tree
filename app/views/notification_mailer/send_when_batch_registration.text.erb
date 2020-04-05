@@ -1,0 +1,6 @@
+<%= @user.name %> さん
+
+<%= @current_user.name %>さんによって Circle Management への会員登録が行われました。
+現在仮登録状態ですので、こちらからログインを行って本登録をしてください。
+<%= new_user_session_url %>
+パスワードは<%= @current_user.name %> さんから共有してもらい、ログイン後すぐに変更するようにしてください。

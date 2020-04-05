@@ -1,0 +1,122 @@
+<% provide(:title, "イベント編集") %>
+<div class="sidebar-fixed container-scroller" style="background-color: rgb(44, 44, 44);">
+  <%= render 'shared/sidebar' %>
+  <!-- partial -->
+  <div class="container-fluid page-body-wrapper">
+    <!-- partial:partials/_navbar.html -->
+    <%= render 'shared/topbar' %>
+    <!-- partial -->
+    <div class="main-panel">
+      <div class="content-wrapper">
+        <div class="page-header">
+          <h3 class="page-title"> イベント名:詳細変更 </h3>
+          <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+              <li class="breadcrumb-item"><a href="#">イベントページ</a></li>
+              <li class="breadcrumb-item active" aria-current="page">イベント名</li>
+              <li class="breadcrumb-item active" aria-current="page">イベント名:詳細変更</li>
+            </ol>
+          </nav>
+        </div>
+
+        <div class="card" style="margin-bottom: 20px;">
+          <div class="card-body" style="color: black;">
+            <h4 class="card-title">詳細変更</h4>
+            <%= form_with model: @event, url: group_event_path(event_id: @event.id), local: true, class: "form-sample" do |f| %>
+              <p class="card-description"> イベント情報 </p>
+              <%= render 'shared/error_messages', object: f.object %>
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="form-group row">
+                    <%= f.label :name, "イベント名", class: "col-sm-3 col-form-label" %>
+                    <div class="col-sm-9">
+                      <%= f.text_field :name, style: "color: white;", class: "form-control", placeholder: "現在のイベント名" %>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group row">
+                    <%= f.label :amount, "集金額", class: "col-sm-3 col-form-label" %>
+                    <div class="col-sm-9">
+                      <%= f.number_field :amount, style: "color: white;", class: "form-control", placeholder: "現在の集金額" %>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="form-group row">
+                    <%= f.label :start_date, "開始日", class: "col-sm-3 col-form-label" %>
+                    <div class="col-sm-9">
+                      <%= f.date_field :start_date, class: "form-control", placeholder: "dd/mm/yyyy" %>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group row">
+                    <%= f.label :end_date, "終了日", class: "col-sm-3 col-form-label" %>
+                    <div class="col-sm-9">
+                      <%= f.date_field :end_date, class: "form-control", placeholder: "dd/mm/yyyy" %>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="form-group row">
+                    <%= f.label :answer_deadline, "回答締め切り", class: "col-sm-3 col-form-label" %>
+                    <div class="col-sm-9">
+                      <%= f.date_field :answer_deadline, class: "form-control", placeholder: "dd/mm/yyyy" %>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group row">
+                    <%= f.label :pay_deadline, "支払い締め切り", class: "col-sm-3 col-form-label" %>
+                    <div class="col-sm-9">
+                      <%= f.date_field :pay_deadline, class: "form-control", placeholder: "dd/mm/yyyy" %>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="row" >
+                <div class="col-md-9">
+                  <div class="form-group row">
+                    <%= f.label :comment, "みんなへ一言", class: "col-sm-3 col-form-label" %>
+                    <div class="col-sm-9">
+                      <%= f.text_field :comment, style: "color: white;", class: "form-control", placeholder: "みんなが参加したくなるような一言を考えよう！" %>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="row" >
+                <div class="col-md-12">
+                  <div class="form-group row">
+                    <label class="col-sm-3  col-form-label">イベント詳細</label>
+                    <div class="col-sm-12">
+                      <%= f.text_area :description, class: "form-control", style: "height: 120px; color: white;" %>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="row">
+                <%= button_tag type: 'submit', class: "btn btn-primary btn-icon-text col-md-3", style: "margin-right: 30px;margin-left: 30px;" do %>
+                  <i class="mdi mdi-file-check btn-icon-prepend"></i> 保存
+                <% end %>
+              </div>
+            <% end %>
+          </div>
+        </div>
+      </div>
+      <!-- content-wrapper ends -->
+
+      <%= render 'shared/footer' %>
+    </div>
+    <!-- main-panel ends -->
+  </div>
+  <!-- page-body-wrapper ends -->
+</div>

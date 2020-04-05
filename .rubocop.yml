@@ -1,0 +1,70 @@
+inherit_from: .rubocop_todo.yml
+AllCops:
+  Exclude:
+    - 'db/schema.rb'
+
+###################### Layout #########################
+
+# 改行文字は保留
+Layout/EndOfLine:
+  Enabled: false
+
+# メソッド内はインデントする(privateメソッドなど)
+Layout/IndentationConsistency:
+  EnforcedStyle: indented_internal_methods
+
+Layout/LineLength:
+  Enabled: false
+
+###################### Metrics #########################
+
+Metrics/AbcSize:
+  Max: 42
+
+Metrics/BlockLength:
+  Exclude:
+    - 'config/environments/*'
+    - 'config/routes.rb'
+    - 'db/seeds.rb'
+
+Metrics/MethodLength:
+  Max: 26
+
+###################### Style #########################
+
+Style/AsciiComments:
+  Enabled: false
+
+Style/ClassAndModuleChildren:
+  Enabled: false
+
+Style/Documentation:
+  Enabled: false
+
+Style/GuardClause:
+  Exclude:
+    - 'app/models/event.rb'
+    - 'app/models/transaction.rb'
+
+Style/IfUnlessModifier:
+  Exclude:
+    - 'app/controllers/application_controller.rb'
+    - 'app/controllers/events/transactions_controller.rb'
+
+Style/MixinUsage:
+  Exclude:
+    - 'bin/setup'
+    - 'bin/update'
+
+Style/RedundantBegin:
+  Exclude:
+    - 'bin/yarn'
+
+Style/StderrPuts:
+  Exclude:
+    - 'bin/yarn'
+
+Style/SymbolProc:
+  Exclude:
+    - 'app/mailers/notification_mailer.rb'
+

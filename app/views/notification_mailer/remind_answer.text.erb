@@ -1,0 +1,6 @@
+<%= @user.name %> さん
+
+<%= @group.name %>の<%= @event.name %>の回答がまだです。
+期限は<%= @event.answer_deadline.strftime("%Y/%m/%d") %>
+以下のリンクから回答してください。
+<%= user_transactions_url(user_id: @user.id) %>

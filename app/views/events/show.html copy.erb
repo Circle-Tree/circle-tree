@@ -1,0 +1,189 @@
+<% provide(:title, "#{@event.name}ページ") %>
+<% content_for :pack_tag do %>
+  <%= javascript_pack_tag 'events/show' %>
+  <%= stylesheet_pack_tag 'events/show' %>
+<% end %>
+
+<%= render 'shared/topbar' %>
+
+<div class="box-attend" date-step="1" data-intro='このページでは出欠、出金状況が確認できます。'>
+  <a href="../attend/attend.html" class="text1">出席</a>
+  <div class="box-border">
+    <p class="text6">名前</p>
+    <p class="text7">回答日</p>
+    <p class="text8">出金額</p>
+    <p class="text9">出金</p>
+    <p class="text10">徴収額</p>
+    <p class="text11">変更</p>
+  </div>
+  <div class="total-number"><%= @attending_count %>人</div>
+  <div class="amount-total">￥<%= @total_payment %></div>
+  <div class="amount-all">| ￥<%= @expected_total_payment %></div>
+
+  <div class="name1-1" date-step="2" data-intro='名前　日付　出金額　出金状況を管理できます。'></div>
+  <div class="name1-2"></div>
+  <div class="name1-3"></div>
+  <div class="name1-4"></div>
+  <button class="button1-1">
+    <%#= image_pack_tag("chevron-left.svg", class: "img-ball") %>
+  </button>
+  <button class="button1-2">
+    <%#= image_pack_tag("chevron-right.svg", class: "img-ball") %>
+  </button>
+</div>
+
+<div class="attend-shadow">
+  <% @attending_answers.each do |a| %>
+    <% user = User.find(a.user_id) %>
+    <% transaction = Event::Transaction.find_by(event_id: @event.id, debtor_id: user.id) %>
+    <div class="namebox"><%= user.name %></div>
+    <div class="datebox"><%= l a.updated_at %></div>
+    <% if transaction.completed? %>
+      <div class="balancebox"><%= transaction.payment %></div>
+    <% else %>
+      <div class="balancebox"><%= transaction.payment %></div>
+    <% end %>
+    <div class="collectedbox"><%= transaction.debt %></div>
+    <% unless transaction.completed %>
+      <button class="change"><%= link_to '変更', edit_event_transaction_path(event_id: transaction.event_id, url_token: transaction.url_token) %></button>
+      <%= form_with model: transaction, url: event_transaction_path(event_id: @event.id, url_token: transaction.url_token), class: "checkbox" do |f| %>
+        <%= f.select :completed, [['出金済み', true], ['未納', false]] %>
+        <%= f.submit "変更" %>
+      <% end %>
+    <% else %>
+      <%= link_to '出金済み', receipt_event_transaction_path(event_id: transaction.event_id, url_token: transaction.url_token, format: 'pdf') %>
+    <% end %>
+  <% end %>
+</div>
+
+<div class="box-absence">
+  <a href="" class="text2">欠席</a>
+  <div class="box-border">
+    <p class="text6">名前</p>
+    <p class="text7">回答日</p>
+  </div>
+  <div class="total-number"><%= @absent_count %>人</div>
+  <div class="name2-1"></div>
+  <div class="name2-2"></div>
+  <div class="name2-3"></div>
+  <div class="name2-4"></div>
+  <button class="button1-1">
+    <%#= image_pack_tag("chevron-left.svg", class: "img-ball") %>
+  </button>
+  <button class="button1-2">
+    <%#= image_pack_tag("chevron-right.svg", class: "img-ball") %>
+  </button>
+</div>
+
+<div class="absence-shadow">
+  <% @absent_answers.each do |a| %>
+    <% user = User.find(a.user_id) %>
+    <div class="namebox"><%= user.name %></div>
+    <div class="datebox"><%= l a.updated_at %></div>
+  <% end %>
+</div>
+
+<div class="box-unanswered">
+  <a href="" class="text3">未回答</a>
+  <div class="box-border">
+    <p class="text6">名前</p>
+  </div>
+  <div class="total-number"><%= @unanswered_count %>人</div>
+  <div class="name3-1"></div>
+  <div class="name3-2"></div>
+  <div class="name3-3"></div>
+  <div class="name3-4"></div>
+  <button class="button1-1">
+    <%#= image_pack_tag("chevron-left.svg", class: "img-ball") %>
+  </button>
+  <button class="button1-2">
+    <%#= image_pack_tag("chevron-right.svg", class: "img-ball") %>
+  </button>
+</div>
+
+<div class="unanswered-shadow">
+  <% @absent_answers.each do |a| %>
+    <% user = User.find(a.user_id) %>
+    <div class="namebox"><%= user.name %></div>
+  <% end %>
+</div>
+
+<div class="box-unpaid">
+  <a href="" class="text4">未納</a>
+  <div class="box-border">
+    <p class="text6">名前</p>
+    <p class="text8">出金額</p>
+    <p class="text9">出金</p>
+    <p class="text10">徴収額</p>
+    <p class="text11">変更</p>
+  </div>
+  <div class="total-number"><%= @unpaid_members_count %>人</div>
+  <div class="name4-1"></div>
+  <div class="name4-2"></div>
+  <div class="name4-3"></div>
+  <div class="name4-4"></div>
+  <button class="button1-1">
+    <%#= image_pack_tag("chevron-left.svg", class: "img-ball") %>
+  </button>
+  <button class="button1-2">
+    <%#= image_pack_tag("chevron-right.svg", class: "img-ball") %>
+  </button>
+</div>
+
+<div class="unpaid-shadow">
+  <% if @uncompleted_transactions.present? %>
+    <% @uncompleted_transactions.each do |transaction| %>
+      <% user = User.find(transaction.debtor_id) %>
+      <div class="namebox"><%= user.name %></div>
+      <div class="balancebox"><%= transaction.payment %></div>
+      <div class="collectedbox"><%= transaction.debt %></div>
+      <button class="change"><%= %></button>
+      <select class="checkbox">
+        <option>出金済み</option>
+        <option>未納</option>
+      </select>
+    <% end %>
+  <% end %>
+</div>
+
+<div class="box1-b" date-step="4" data-intro='イベント詳細を押せば詳細を変更できます。'>
+  <a href="" class="text1b">イベント詳細</a>
+
+  <div class="box2-b">
+    <p class="text2b">イベント名</p>
+  </div>
+  <div class="box3-b">
+    <p class="text2b">集金額</p>
+  </div>
+  <div class="box4-b">
+    <p class="text2b">所属サークル</p>
+  </div>
+  <div class="box5-b">
+    <p class="text2b">集金締め切り</p>
+  </div>
+  <div class="box6-b">
+    <p class="text2b">開始日</p>
+  </div>
+  <div class="box7-b">
+    <p class="text2b">終了日</p>
+  </div>
+  <div class="box8-b">
+    <p class="text2b">解答締め切り</p>
+  </div>
+  <div class="box9-b">
+    <p class="text9b">イベント説明</p>
+  </div>
+  <select class="box10-b"　
+  date-step="5"
+  data-intro='イベントへの出欠を選びましょう。'>
+    <option value="">未回答</option>
+    <option value="">出席</option>
+    <option value="">欠席</option>
+  </select>
+  <div class="boader1-b"></div>
+
+  <button class="button1b"></button>
+</div>
+
+<%= render 'shared/sidebar' %>
+<%= render 'shared/menu' %>

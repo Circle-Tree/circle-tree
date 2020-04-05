@@ -1,0 +1,42 @@
+<% provide(:title, "プロフィール") %>
+<% content_for :pack_tag do %>
+  <%= javascript_pack_tag 'users/registrations/edit' %>
+  <%= stylesheet_pack_tag 'users/registrations/edit' %>
+<% end %>
+
+<%= render 'shared/topbar' %>
+
+<div class="box-profile"
+     date-step="1"
+     data-intro='このページではあなたのプロフィールが変更できます。'>
+  <p class="text1">プロフィール</p>
+  <div class="box-border"></div>
+  <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put }) do |f| %>
+    <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
+      <div>現在<<%= resource.unconfirmed_email %>>の確認待ちです。</div>
+    <% end %>
+
+    <%= render "devise/shared/error_messages", resource: resource %>
+
+    <%= f.text_field :name, class: "box-text", placeholder: '名前' %>
+
+    <%= f.text_field :furigana, class: "box-text", placeholder: "フリガナ" %>
+
+    <%= f.email_field :email, autofocus: true, autocomplete: "email",
+                              class:"box-text", placeholder: "e-mail" %>
+
+    <%= f.password_field :password, autocomplete: "new-password", class: "box-text", placeholder: "新しいパスワード" %>
+
+    <%= f.password_field :password_confirmation, autocomplete: "new-password", class: "box-text", placeholder: "確認用パスワード" %>
+
+    <%= f.password_field :current_password, autocomplete: "current-password", class: "box-text", placeholder: "現在のパスワード" %>
+
+    <%= f.submit "保存", class: "button1" %>
+<% end %>
+
+<%= render 'shared/sidebar' %>
+<%= render 'shared/menu' %>
+
+
+
+<%#= button_to "退会する", registration_path(resource_name), data: { confirm: "本当によろしいですか？?" }, method: :delete %>

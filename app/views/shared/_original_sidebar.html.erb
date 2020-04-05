@@ -1,0 +1,59 @@
+<aside id="sidebar">
+  <h1 id="brand-logo"><%= image_pack_tag("Nazi.png", class: "img-n") %></h1>
+  <nav id="global-nav">
+    <div class="iconbox1"></div>
+    <%= link_to root_path do %>
+      <%= image_pack_tag("home.png", class: "img1") %>
+    <% end %>
+    <br><br>
+    <% unless current_user_group.blank? %>
+      <div class="iconbox2"></div>
+      <div class="sub-menu">
+      <%= link_to group_path(id: current_user_group.id) do %>
+        <%= image_pack_tag("circle_page.png", class: "img2") %>
+      <% end %>
+      </div>
+      <br>
+      <div class="iconbox3"></div>
+      <div class="sub-menu">
+        <%= link_to group_path(id: current_user_group.id) do %>
+          <%= image_pack_tag("event_page.png", class: "img3") %>
+        <% end %>
+        <div class="sub-menu-nav">
+          <ul class="ul3">
+            <li class="li3">Event 1</a></li>
+            <li class="li3">Event 2</a></li>
+            <li class="li3">Event 3</a></li>
+            <li class="li3">Event 4</a></li>
+            <li class="li3">Event 5</a></li>
+          </ul>
+          <br>
+        </div>
+      </div>
+      <div class="iconbox4"></div>
+      <%= link_to new_group_event_path(group_id: current_user_group.id) do %>
+        <%= image_pack_tag("new_event.png", class: "img4") %>
+      <% end %>
+      <br> <br>
+      <div class="iconbox5"></div>
+      <%= link_to deposit_group_path(id: current_user_group.id) do %>
+        <%= image_pack_tag("deposit.png", class: "img5") %>
+      <% end %>
+      <br><br>
+      <div class="iconbox6"></div>
+      <%= link_to statistics_group_path(id: current_user_group.id) do %>
+        <%= image_pack_tag("static.png", class: "img6") %>
+      <% end %>
+      <ul class="sub-menu-nav">
+        <li><a href="#">Link 1</a></li>
+        <li><a href="#">Link 2</a></li>
+        <li><a href="#">Link 3</a></li>
+      </ul>
+      <br><br>
+      <div class="iconbox7"></div>
+      <%= link_to edit_group_path(id: current_user_group.id) do %>
+        <%= image_pack_tag("circle_option.png", class: "img7") %>
+      <% end %>
+    <% end %>
+  </nav>
+</aside>

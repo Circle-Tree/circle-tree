@@ -1,0 +1,150 @@
+<% provide(:title, "Myイベント一覧") %>
+<div class="sidebar-fixed container-scroller" style="background-color: rgb(44, 44, 44);">
+  <%= render 'shared/sidebar' %>
+  <div class="container-fluid page-body-wrapper">
+    <!-- partial:partials/_navbar.html -->
+    <%= render 'shared/topbar' %>
+    <!-- partial -->
+    <div class="main-panel">
+      <div class="content-wrapper" style="color: black;">
+        <%= render 'shared/flash' %>
+        <div class="page-header">
+          <h3 class="page-title"> Myイベント一覧 </h3>
+          <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+              <li class="breadcrumb-item"><a href="#">マイページ</a></li>
+              <li class="breadcrumb-item active" aria-current="page">Myイベント一覧</li>
+            </ol>
+          </nav>
+        </div>
+        <div class="card">
+          <div class="card-body">
+            <h4 class="card-title">Myイベント一覧</h4>
+            <button type="button" class="btn btn-danger btn-icon-text" style="margin-bottom: 30px;">
+              <i class="mdi mdi-check"></i> 保存
+            </button>
+            <div class="row">
+              <div class="col-12">
+                <div class="table-responsive">
+                  <table id="order-listing" class="table">
+                    <thead>
+                      <tr>
+                        <th>イベント名</th>
+                        <th>日時</th>
+                        <th>人数</th>
+                        <th>出席率</th>
+                        <th>出金額</th>
+                        <th>総提出額</th>
+                        <th>出欠状況</th>
+                        <th>支払い状況</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <% @events.each do |event| %>
+                        <% transaction = Event::Transaction.find_by(event_id: event.id, debtor_id: current_user.id) %>
+                        <% answer = Answer.find_by(event_id: event.id, user_id: current_user.id) %>
+                        <tr>
+                          <td><%= event.name %></td>
+                          <td>
+                            <% start_date, end_date = event.start_date, event.end_date %>
+                            <% if start_date == end_date %>
+                              <%= l start_date, format: :short %>
+                            <% else %>
+                              <%= l start_date, format: :short %> ~ <%= l end_date, format: :short %>
+                            <% end %>
+                          </td>
+                          <td>?</td>
+                          <td>?</td>
+                          <td>￥<%= transaction.debt %></td>
+                          <td>￥<%= transaction.payment %></td>
+                          <td>
+                            <%= render 'answer_select', answer: answer %>
+                          </td>
+                          <td>
+                            <% if transaction.completed? %>
+                              <%= link_to '完了', receipt_transaction_path(url_token: transaction.url_token, format: 'pdf'), class: 'btn btn-success' %>
+                            <% else %>
+                              <%= form_with model: transaction, url: transaction_path(url_token: transaction.url_token) do |f| %>
+                                <%= f.select :completed, [['完了', true], ['未完了', false]], {}, { class: "btn btn-secondary", style: "background-color:rgb(236, 236, 236)" } %>
+                              <% end %>
+                            <% end %>
+                          </td>
+                        <% end %>
+                        </tr>
+                    </tbody>
+                  </table>
+                  <%= paginate @events %>
+                  <button type="button" class="btn btn-danger btn-icon-text" style="margin-top: 30px;">
+                    <i class="mdi mdi-check"></i> 保存
+                  </button>
+
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- content-wrapper ends -->
+
+      <%= render 'shared/footer' %>
+    </div>
+    <!-- main-panel ends -->
+  </div>
+  <!-- page-body-wrapper ends -->
+</div>
+<script>
+  (function($) {
+    'use strict';
+    $(function() {
+      $('#order-listing').DataTable({
+        "aLengthMenu": [
+          [5, 10, 15, -1],
+          [5, 10, 15, "All"]
+        ],
+        "iDisplayLength": 10,
+        "language": {
+          search: ""
+        }
+      });
+      $('#order-listing').each(function() {
+        var datatable = $(this);
+        // SEARCH - Add the placeholder for Search and Turn this into in-line form control
+        var search_input = datatable.closest('.dataTables_wrapper').find('div[id$=_filter] input');
+        search_input.attr('placeholder', 'Search');
+        search_input.removeClass('form-control-sm');
+        // LENGTH - Inline-Form control
+        var length_sel = datatable.closest('.dataTables_wrapper').find('div[id$=_length] select');
+        length_sel.removeClass('form-control-sm');
+      });
+    });
+  })(jQuery);
+</script>
+<script>
+  let answerSelect = $('select[id=answer-select]');
+  answerSelect.change(function(e) {
+    e.preventDefault(); // キャンセル可能なイベントをキャンセル
+    let select = $(this)
+    let answerId = select.data('answer-id');
+    let status = select.val();
+    let answerUrl = `/answers/${answerId}/change`;
+    $.ajax({
+      url: answerUrl,
+      type: 'PATCH',
+      data: { answer_id: answerId, status: status },
+      // dataType: 'json',
+      // processData: false,
+      // contentType: false
+    })
+    .done(function() {
+      select.removeAttr('class')
+      if (status === 'attending') {
+        select.addClass('btn btn-success')
+      } else if (status === 'absent') {
+        select.addClass('btn btn-danger')
+      }
+    })
+    .fail(function() {
+      alert('失敗しました');
+    });
+  });
+</script>

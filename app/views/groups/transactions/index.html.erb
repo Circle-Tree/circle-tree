@@ -1,0 +1,18 @@
+<!-- 今後実装予定
+<h1><%= @group.name %>の収支情報ページ</h1>
+<%= link_to "貸した", new_group_transaction_path(group_id: @group.id, creditor_id: current_user.id) %>
+<% if @transactions.any? %>
+  <% @transactions.each do |transaction| %>
+    <p>貸した人： <%= User.find(transaction.creditor_id).name %></p>
+    <p>借りた人： <%= User.find(transaction.debtor_id).name %></p>
+    <p>金額： <%= transaction.debt %>円</p>
+    <p>返済期限： <%= transaction.deadline.strftime("%Y年%m月%d日") %></p>
+    <% if transaction.debt == transaction.payment %>
+      <p>支払い済み(<%= link_to "領収書発行", receipt_group_event_transaction_path(group_id: @group.id, event_id: @event.id, id: transaction.id, format: "pdf") %>)</p>
+    <% else %>
+      <p><%= transaction.payment %>円支払い済み</p>
+    <% end %>
+    <hr>
+  <% end %>
+<% end %>
+-->

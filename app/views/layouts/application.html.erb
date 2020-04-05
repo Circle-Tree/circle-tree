@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html class="body-full-height">
+  <head>
+    <title><%= full_title(yield(:title)) %></title>
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+    <%#= stylesheet_pack_tag 'application', media: 'all' %>
+    <%= yield(:pack_tag) %>
+    <!--[if lt IE 9]>
+      <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/r29/html5.min.js">
+      </script>
+    <![endif]-->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!--<meta http-equiv="X-UA-Compatible" content="IE=edge" /> Optimal Internet Explorer compatibility -->
+    <!-- <link rel="shortcut icon" href="../assets/images/favicon.png" /> -->
+    <%= stylesheet_pack_tag 'application', media: 'all' %>
+    <%= javascript_pack_tag 'application2' %>
+  </head>
+
+  <body>
+    <!--
+    <div style='z-index: 1;'><%= flash[:notice] %></div>
+    <div>
+      <% flash.each do |message_type, message| %>
+    　   <div class="alert alert-<%= message_type %>"><%= message %></div>
+      <% end %>
+    -->
+    <%= yield %>
+  </body>

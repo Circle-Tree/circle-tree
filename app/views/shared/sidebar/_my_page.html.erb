@@ -1,0 +1,20 @@
+<li class="nav-item menu-items">
+  <a class="nav-link" data-toggle="collapse" href="#ui-basic" aria-expanded="false" aria-controls="ui-basic">
+    <span class="menu-icon">
+      <i class="mdi mdi-account"></i>
+    </span>
+    <span class="menu-title">マイページ</span>
+    <i class="menu-arrow"></i>
+  </a>
+  <div class="collapse" id="ui-basic">
+    <ul class="nav flex-column sub-menu">
+      <% if current_user.definitive_registration %>
+        <li class="nav-item"> <a class="nav-link" href="#">お知らせ</a></li>
+        <li class="nav-item"> <a class="nav-link" href="#">Myカレンダー</a></li>
+        <li class="nav-item"> <%= link_to 'My収支情報', user_transactions_path(user_id: current_user.id), class: "nav-link" %></li>
+        <li class="nav-item"> <%= link_to 'Myイベント一覧', list_user_events_path(user_id: current_user.id), class: "nav-link" %></li>
+      <% end %>
+      <li class="nav-item"> <%= link_to 'プロフィール変更', edit_user_registration_path, class: "nav-link" %></li>
+    </ul>
+  </div>
+</li>

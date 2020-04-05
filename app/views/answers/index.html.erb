@@ -1,0 +1,224 @@
+<% provide(:title, "出席") %>
+<% content_for :pack_tag do %>
+  <%= javascript_pack_tag 'answers/index' %>
+  <%= stylesheet_pack_tag 'answers/index' %>
+<% end %>
+
+<body>
+  <div class="topbar1">
+    <input type="search" class="search">
+    <button  onclick="introJs().start()" class="help">
+      <img src="../img/help.png" class="img-ball">
+    </button>
+  </div>
+  <div class="back"></div>
+
+  <div class="box-allevent"　date-step="1"
+  data-intro='サークル内の全イベントが表示されています。任意のイベントを選択することで個別の詳細情報が表示されます。'>
+
+    <div class="box-border">
+      <p class="text1">イベント一覧</p>
+      <p class="text2">イベント名</p>
+      <p class="text3">集金締め切り</p>
+      <p class="text4">集金額</p>
+      <p class="text5">出金額</p>
+      <p class="text6">変更</p>
+      <p class="text7">出金状況</p>
+    </div>
+
+    <button class="button-left-upper">
+      <img src="img/chevron-left.svg" class="img-ball">
+    </button>
+
+    <button class="button-1-upper"></button>
+    <button class="button-2-upper"></button>
+    <button class="button-3-upper"></button>
+    <button class="button-4-upper"></button>
+
+    <button class="button-right-upper">
+      <img src="img/chevron-right.svg" class="img-ball">
+    </button>
+
+    <button class="button-left-bottum">
+      <img src="img/chevron-left.svg" class="img-ball">
+    </button>
+
+    <button class="button-1-bottum"></button>
+    <button class="button-2-bottum"></button>
+    <button class="button-3-bottum"></button>
+    <button class="button-4-bottum"></button>
+    <button class="button-right-bottum">
+      <img src="img/chevron-right.svg" class="img-ball">
+    </button>
+
+
+    <div class="name1"></div>
+    <div class="name2"></div>
+    <div class="name3"></div>
+    <div class="name4"></div>
+    <div class="name5"></div>
+    <div class="name6"></div>
+    <div class="name7"></div>
+    <div class="name8"></div>
+    <div class="name9"></div>
+    <div class="name10"></div>
+    <div class="name11"></div>
+    <div class="name12"></div>
+    <div class="name13"></div>
+    <div class="name14"></div>
+    <div class="name15"></div>
+    <div class="name16"></div>
+    <div class="name17"></div>
+    <div class="name18"></div>
+    <div class="name19"></div>
+    <div class="name20"></div>
+  </div>
+
+
+  <div class="box-shadow">
+    <% @transactions.each do |t| %>
+      <% event = Event.find(t.event_id) %>
+      <div class="namebox"><%= event.name %></div>
+      <div class="datebox"><%= event.pay_deadline %></div>
+      <div class="balancebox"><%=  %></div>
+      <div class="collectedbox"><%=  %></div>
+      <div class="change"><<%=  %>/div>
+      <div class="checkbox"><%=  %></div> <!--1-->
+    <% end %>
+
+    <div class="namebox"></div>
+    <div class="datebox"></div>
+    <div class="balancebox"></div>
+    <div class="collectedbox">aaa</div>
+    <div class="change"></div>
+    <div class="checkbox"></div> <!--2-->
+
+    <div class="namebox"></div>
+    <div class="datebox"></div>
+    <div class="balancebox"></div>
+    <div class="collectedbox">aaa</div>
+    <div class="change"></div>
+    <div class="checkbox"></div> <!--3-->
+
+    <div class="namebox"></div>
+    <div class="datebox"></div>
+    <div class="balancebox"></div>
+    <div class="collectedbox">aaa</div>
+    <div class="change"></div>
+    <div class="checkbox"></div> <!--4-->
+
+    <div class="namebox"></div>
+    <div class="datebox"></div>
+    <div class="balancebox"></div>
+    <div class="collectedbox">aaa</div>
+    <div class="change"></div>
+    <div class="checkbox"></div> <!--5-->
+
+    <div class="namebox"></div>
+    <div class="datebox"></div>
+    <div class="balancebox"></div>
+    <div class="collectedbox">aaa</div>
+    <div class="change"></div>
+    <div class="checkbox"></div> <!--6-->
+
+    <div class="namebox"></div>
+    <div class="datebox"></div>
+    <div class="balancebox"></div>
+    <div class="collectedbox">aaa</div>
+    <div class="change"></div>
+    <div class="checkbox"></div> <!--7-->
+
+    <div class="namebox"></div>
+    <div class="datebox"></div>
+    <div class="balancebox"></div>
+    <div class="collectedbox">aaa</div>
+    <div class="change"></div>
+    <div class="checkbox"></div> <!--8-->
+
+    <div class="namebox"></div>
+    <div class="datebox"></div>
+    <div class="balancebox"></div>
+    <div class="collectedbox">aaa</div>
+    <div class="change"></div>
+    <div class="checkbox"></div> <!--9-->
+
+    <div class="namebox"></div>
+    <div class="datebox"></div>
+    <div class="balancebox"></div>
+    <div class="collectedbox">aaa</div>
+    <div class="change"></div>
+    <div class="checkbox"></div> <!--10-->
+
+    <div class="namebox"></div>
+    <div class="datebox"></div>
+    <div class="balancebox"></div>
+    <div class="collectedbox">aaa</div>
+    <div class="change"></div>
+    <div class="checkbox"></div> <!--11-->
+
+    <div class="namebox"></div>
+    <div class="datebox"></div>
+    <div class="balancebox"></div>
+    <div class="collectedbox">aaa</div>
+    <div class="change"></div>
+    <div class="checkbox"></div> <!--12-->
+
+    <div class="namebox"></div>
+    <div class="datebox"></div>
+    <div class="balancebox"></div>
+    <div class="collectedbox">aaa</div>
+    <div class="change"></div>
+    <div class="checkbox"></div> <!--13-->
+
+    <div class="namebox"></div>
+    <div class="datebox"></div>
+    <div class="balancebox"></div>
+    <div class="collectedbox">aaa</div>
+    <div class="change"></div>
+    <div class="checkbox"></div> <!--14-->
+
+    <div class="namebox"></div>
+    <div class="datebox"></div>
+    <div class="balancebox"></div>
+    <div class="collectedbox">aaa</div>
+    <div class="change"></div>
+    <div class="checkbox"></div> <!--15-->
+
+    <div class="namebox"></div>
+    <div class="datebox"></div>
+    <div class="balancebox"></div>
+    <div class="collectedbox">aaa</div>
+    <div class="change"></div>
+    <div class="checkbox"></div> <!--16-->
+
+    <div class="namebox"></div>
+    <div class="datebox"></div>
+    <div class="balancebox"></div>
+    <div class="collectedbox">aaa</div>
+    <div class="change"></div>
+    <div class="checkbox"></div> <!--17-->
+
+    <div class="namebox"></div>
+    <div class="datebox"></div>
+    <div class="balancebox"></div>
+    <div class="collectedbox">aaa</div>
+    <div class="change"></div>
+    <div class="checkbox"></div> <!--18-->
+
+    <div class="namebox"></div>
+    <div class="datebox"></div>
+    <div class="balancebox"></div>
+    <div class="collectedbox">aaa</div>
+    <div class="change"></div>
+    <div class="checkbox"></div> <!--19-->
+
+    <div class="namebox"></div>
+    <div class="datebox"></div>
+    <div class="balancebox"></div>
+    <div class="collectedbox">aaa</div>
+    <div class="change"></div>
+    <div class="checkbox"></div> <!--20-->
+  </div>
+
+<%= render 'shared/sidebar' %>
+<%= render 'shared/menu' %>

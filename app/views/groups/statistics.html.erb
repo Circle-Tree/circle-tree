@@ -1,0 +1,327 @@
+<% provide(:title, "統計") %>
+<% content_for :pack_tag do %>
+  <%= javascript_pack_tag 'groups/statistics' %>
+  <%= stylesheet_pack_tag 'groups/statistics' %>
+  <!--
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.1/Chart.min.js"></script>
+    <script type="text/javascript" src="js/menu.js"></script>
+  -->
+<% end %>
+<div class="back"></div>
+<div class="topbar1" >
+  <input type="search" class="search">
+  <%= image_pack_tag("help.png", class: "img-ball") %>
+</div>
+
+
+<!--
+<div style="position: absolute;
+  top: 12.86%;
+  left: 0%;
+  width: 60.73%;
+  height: 55.97%;">
+  <canvas id="attend-all"></canvas>
+</div>
+
+    <div class="box2"></div>
+    <div style="position: absolute;
+        top: 12.86%;
+        left: 45.49%;
+        width: 60.73%;
+        height: 55.97%;">
+        <canvas id="sex-all"></canvas>
+    </div>
+
+    <div class="box3"></div>
+    <div style="position: absolute;
+        top: 72.6%;
+        left: 0%;
+        width: 60.73%;
+        height: 55.97%;">
+        <canvas id="grade-all"></canvas>
+    </div>
+
+    <div class="box4"></div>
+    <div style="position: absolute;
+        top: 80.6%;
+        left: 53.29%;
+        width: 43.73%;
+        height: 55.97%;">
+        <canvas id="attend-all1"></canvas>
+    </div>
+
+    <div class="box5"></div>
+    <div style="position: absolute;
+        top: 137.3%;
+        left: 0.5%;
+        width: 38.03%;
+        height: 20.9%;">
+        <canvas id="sex-1"></canvas>
+    </div>
+
+    <div class="box6"></div>
+    <div style="position: absolute;
+        top: 137.3%;
+        left: 22.27%;
+        width: 38.03%;
+        height: 33.9%;">
+        <canvas id="sex-2"></canvas>
+    </div>
+
+    <div class="box7"></div>
+    <div style="position: absolute;
+        top: 137.3%;
+        left: 44%;
+        width: 38.03%;
+        height: 33.9%;">
+        <canvas id="sex-3"></canvas>
+    </div>
+
+    <div class="box8"></div>
+    <div style="position: absolute;
+        top: 137.3%;
+        left: 66%;
+        width: 38.03%;
+        height: 33.9%;">
+        <canvas id="sex-4"></canvas>
+    </div>
+
+    <div class="box9"></div>
+    <div style="position: absolute;
+        top: 176%;
+        left: 0.5%;
+        width: 38.03%;
+        height: 67.4%;">
+        <canvas id="attend-1"></canvas>
+    </div>
+
+    <div class="box10"></div>
+    <div style=" position: absolute;
+        top: 176%;
+        left: 22.27%;
+        width: 38.03%;
+        height: 33.9%;">
+        <canvas id="attend-2"></canvas>
+    </div>
+
+    <div class="box11"></div>
+    <div style="position: absolute;
+        top: 176%;
+        left: 44%;
+        width: 38.03%;
+        height: 33.9%;">
+        <canvas id="attend-3"></canvas>
+    </div>
+
+    <div class="box12"></div>
+    <div style="position: absolute;
+        top: 176%;
+        left: 66%;
+        width: 38.03%;
+        height: 33.9%;">
+        <canvas id="attend-4"></canvas>
+    </div>
+-->
+
+<%= render 'shared/sidebar' %>
+<%= render 'shared/menu' %>
+
+<!--
+  <script>
+    new Chart(document.getElementById("attend-all"), {
+    type: "doughnut",
+    data: {
+      labels: ["出席", "欠席", "未回答"],
+      datasets: [
+        {
+          data: [300, 50, 100],
+          backgroundColor: [
+            "rgb(255, 99, 132)",
+            "rgb(54, 162, 235)",
+            "rgb(255, 205, 86)"
+          ]
+        }
+      ]
+    }
+  });
+  new Chart(document.getElementById("sex-all"), {
+    type: "doughnut",
+    data: {
+      labels: ["男", "女"],
+      datasets: [
+        {
+          data: [300, 50],
+          backgroundColor: [
+            "rgb(255, 99, 132)",
+            "rgb(54, 162, 235)",
+
+          ]
+        }
+      ]
+    }
+  });
+  new Chart(document.getElementById("grade-all"), {
+    type: "doughnut",
+    data: {
+      labels: ["1年生", "2年生", "3年生","4年生"],
+      datasets: [
+        {
+          data: [300, 500, 100,80],
+          backgroundColor: [
+            "rgb(255, 99, 132)",
+            "rgb(54, 162, 235)",
+            "rgb(255, 205, 86)",
+            "rgb(125, 125, 86)"
+          ]
+        }
+      ]
+    }
+  });
+
+  new Chart(document.getElementById("attend-all1"), {
+    type: "line",
+    data: {
+      labels: ["8/12", "8/22", "9/13", "10/23", "11/9","12/31"],
+      datasets: [
+        {
+          data: [300, 50, 100,622,22,123],
+          backgroundColor: [
+            "rgb(255, 99, 132)",
+            "rgb(54, 162, 235)",
+            "rgb(255, 205, 86)"
+          ]
+        }
+      ]
+    }
+  });
+
+  new Chart(document.getElementById("sex-1"), {
+    type: "doughnut",
+    data: {
+      labels: ["男", "女"],
+      datasets: [
+        {
+          data: [300, 50],
+          backgroundColor: [
+            "rgb(255, 99, 132)",
+            "rgb(54, 162, 235)",
+
+          ]
+        }
+      ]
+    }
+  });
+  new Chart(document.getElementById("sex-2"), {
+    type: "doughnut",
+    data: {
+      labels: ["男", "女"],
+      datasets: [
+        {
+          data: [30, 50],
+          backgroundColor: [
+            "rgb(255, 99, 132)",
+            "rgb(54, 162, 235)",
+
+          ]
+        }
+      ]
+    }
+  });
+  new Chart(document.getElementById("sex-3"), {
+    type: "doughnut",
+    data: {
+      labels: ["男", "女"],
+      datasets: [
+        {
+          data: [20, 50],
+          backgroundColor: [
+            "rgb(255, 99, 132)",
+            "rgb(54, 162, 235)",
+
+          ]
+        }
+      ]
+    }
+  });
+  new Chart(document.getElementById("sex-4"), {
+    type: "doughnut",
+    data: {
+      labels: ["男", "女"],
+      datasets: [
+        {
+          data: [100, 50],
+          backgroundColor: [
+            "rgb(255, 99, 132)",
+            "rgb(54, 162, 235)",
+
+          ]
+        }
+      ]
+    }
+  });
+  new Chart(document.getElementById("attend-1"), {
+    type: "doughnut",
+    data: {
+      labels: ["出席", "欠席", "未回答"],
+      datasets: [
+        {
+          data: [300, 450, 100],
+          backgroundColor: [
+            "rgb(255, 99, 132)",
+            "rgb(54, 162, 235)",
+            "rgb(255, 205, 86)"
+          ]
+        }
+      ]
+    }
+  });
+  new Chart(document.getElementById("attend-2"), {
+    type: "doughnut",
+    data: {
+      labels: ["出席", "欠席", "未回答"],
+      datasets: [
+        {
+          data: [300, 50, 100],
+          backgroundColor: [
+            "rgb(255, 99, 132)",
+            "rgb(54, 162, 235)",
+            "rgb(255, 205, 86)"
+          ]
+        }
+      ]
+    }
+  });
+  new Chart(document.getElementById("attend-3"), {
+    type: "doughnut",
+    data: {
+      labels: ["出席", "欠席", "未回答"],
+      datasets: [
+        {
+          data: [500, 50, 200],
+          backgroundColor: [
+            "rgb(255, 99, 132)",
+            "rgb(54, 162, 235)",
+            "rgb(255, 205, 86)"
+          ]
+        }
+      ]
+    }
+  });
+  new Chart(document.getElementById("attend-4"), {
+    type: "doughnut",
+    data: {
+      labels: ["出席", "欠席", "未回答"],
+      datasets: [
+        {
+          data: [900, 5, 300],
+          backgroundColor: [
+            "rgb(255, 99, 132)",
+            "rgb(54, 162, 235)",
+            "rgb(255, 205, 86)"
+          ]
+        }
+      ]
+    }
+  });
+  </script>
+-->

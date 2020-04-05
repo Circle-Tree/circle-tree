@@ -1,0 +1,75 @@
+<div class="card" style="margin-bottom: 20px;">
+  <div class="card-body" style="color: black;">
+    <h4 class="card-title">出席</h4>
+    <div class="row">
+      <div class="col-12">
+        <div class="table-responsive">
+          <table id="order-listing" class="table">
+            <thead>
+              <tr>
+                <th>名前</th>
+                <th>回答日</th>
+                <th>学年</th>
+
+                <th>支払うべき額</th>
+                <th>支払った金額</th>
+
+                <th>何か</th>
+                <th>支払い状況</th>
+                <th>編集</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% @attending_answers.each do |answer| %>
+                <% user = User.find(answer.user_id) %>
+                <% transaction = Event::Transaction.find_by(event_id: @event.id, debtor_id: user.id) %>
+                <tr>
+                  <td><%= user.name %></td>
+                  <td><%= l answer.updated_at, format: :short %></td>
+                  <td><%= user.grade %></td>
+                  <%= render 'events/show/transaction', transaction: transaction %>
+                </tr>
+              <% end %>
+            </tbody>
+          </table>
+          <%= paginate @attending_answers %>
+          <button type="button" class="btn btn-danger btn-icon-text">
+            <i class="mdi mdi-check"></i> 保存
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+  let transactionSelect = $('select[id=transaction-select]');
+  transactionSelect.change(function(e) {
+    e.preventDefault(); // キャンセル可能なイベントをキャンセル
+    let select = $(this)
+    let urlToken = select.data('url-token');
+    let payment = select.data('payment');
+    let completed = select.val();
+    let transactionUrl = `/transactions/${urlToken}/change`;
+    $.ajax({
+      url: transactionUrl,
+      type: 'PATCH',
+      data: { url_token: urlToken, completed: completed },
+      // dataType: 'json',
+      // processData: false,
+      // contentType: false
+    })
+    .done(function() {
+      td = select.parent().parent();
+      select.parent().remove();
+      let html = `<a class='btn btn-success' href='/transactions/${urlToken}/receipt.pdf'>完了</a>`;
+      if (completed === 'true') {
+        $('#payment').html(payment);
+        td.append(html);
+      }
+    })
+    .fail(function() {
+      alert('失敗しました');
+    });
+  });
+</script>
+

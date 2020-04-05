@@ -1,0 +1,56 @@
+<% provide(:title, "イベント編集") %>
+<% content_for :pack_tag do %>
+  <%#= javascript_pack_tag 'events/form' %>
+  <%#= stylesheet_pack_tag 'events/form' %>
+<% end %>
+<div class="topbar1"></div>
+<div class="back"></div>
+<div class="box1"></div>
+
+<%= render 'shared/sidebar' %>
+
+<p class="name"><%= link_to "ログアウト", destroy_user_session_path, method: :delete %></p>
+<input type="search" class="search">
+
+<%= form_for(@event, url: group_event_path(group_id: @group.id, event_id: @event.id)) do |f| %>
+  <p class="text1">イベント編集</p>
+  <%= render 'shared/error_messages', object: f.object %>
+  <%= f.hidden_field :user_id, :value => current_user.id %>
+  <%= f.hidden_field :group_id, :value => @group.id %>
+
+  <%= f.label :name, "イベント名", class: "text2" %>
+  <%= f.text_field :name, class: "box2" %>
+
+  <%= f.label :amount, "集金額(予定)", class: "text3" %>
+  <%= f.number_field :amount, class: "box3" %>
+
+  <p class="text4">所属サークル</p>
+  <input type="text" class="box4">
+
+  <%= f.label :pay_deadline, "集金締め切り", class: "text5" %>
+  <%= f.date_field :pay_deadline, class: "box5" %>
+
+  <%= f.label :start_date, "開始日", class: "text6" %>
+  <%= f.date_field :start_date, class: "box6" %>
+
+  <%= f.label :end_date, "終了日", class: "text7" %>
+  <%= f.date_field :end_date, class: "box7" %>
+
+  <%= f.label :answer_deadline, "回答締め切り", class: "text8" %>
+  <%= f.date_field :answer_deadline, class: "box8" %>
+
+  <%= f.label :description, "イベント説明", class: "text9" %>
+  <%= f.text_area :description, class: "box9" %>
+
+  <%= f.submit "作成", class: "button1" %>
+<% end %>
+<ul class="ul2">
+  <li class="fa-home"></li>
+  <li class="fa-suitcase"></li>
+  <li class="fa-flask"></li>
+  <li class="fa-user"></li>
+</ul>
+
+
+
+

@@ -1,0 +1,222 @@
+
+<div class="sidebar-fixed container-scroller" style="background-color: rgb(44, 44, 44);">
+  <%= render 'shared/sidebar' %>
+  <div class="container-fluid page-body-wrapper">
+    <!-- partial:partials/_navbar.html -->
+    <%= render 'shared/topbar' %>
+    <!-- partial -->
+    <div class="main-panel">
+      <div class="content-wrapper">
+        <%= render 'shared/flash' %>
+        <div class="page-header">
+          <h3 class="page-title"> サークル情報 </h3>
+          <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+              <li class="breadcrumb-item"><a href="#">サークルページ</a></li>
+              <li class="breadcrumb-item active" aria-current="page">サークル情報</li>
+            </ol>
+          </nav>
+        </div>
+        <div class="row">
+          <div class="col-md-12 grid-margin stretch-card">
+            <div class="card">
+              <div class="card-body" style="background-color: rgb(255, 255, 255); color: #000;">
+                <h4 class="card-title" >メンバー設定</h4>
+                <ul class="nav nav-tabs" role="tablist">
+                  <li class="nav-item">
+                    <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home-1" role="tab" aria-controls="home" aria-selected="true">メンバー追加</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile-1" role="tab" aria-controls="profile" aria-selected="false">引継ぎ</a>
+                  </li>
+
+                  <li class="nav-item">
+                    <a class="nav-link" id="contact-tab" data-toggle="tab" href="#contact-1" role="tab" aria-controls="contact" aria-selected="false">任命</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" id="contact2-tab" data-toggle="tab" href="#contact-2" role="tab" aria-controls="contact2" aria-selected="false">辞退</a>
+                  </li>
+                </ul>
+
+                <div class="tab-content">
+                  <div class="tab-pane fade show active" id="home-1" role="tabpanel" aria-labelledby="home-tab">
+                    <h3>メンバー設定</h3>
+                    <section>
+                      <div class="form-group">
+                        <%= form_with url: invite_group_path(id: @group.id), local: true do |f| %>
+                        <label style="display: block;">メンバー招待</label>
+                          <%= f.email_field :email, autofocus: true, autocomplete: "email", placeholder: '招待先アドレス', class: "form-control col-md-10",
+                                                    :'aria-describedby' => "emailHelp", style: "color: white; display:inline-block ;" %>
+                          <%= button_tag type: "submit", class: "btn btn-danger btn-icon-text" do %>
+                            <i class="mdi mdi-email" style="display: inline-block;"></i> 送信
+                          <% end %>
+                          <small id="emailHelp" class="form-text text-muted">登録したいアドレスに招待メールを送ります。</small>
+                        <% end %>
+                      </div>
+                      <div class="form-group">
+                        <%= form_with url: batch_group_users_path(group_id: @group.id), local: true, multipart: true do %>
+                          <label>一括登録</label>
+                          <%= password_field_tag :password, nil, placeholder: "登録用初期パスワード", class: "form-control", style: "color: white;" %>
+                          <%= link_to csv_template_path(format: :csv), class: "btn btn-success btn-icon-text" do %>
+                            <i class="mdi mdi-debug-step-into"></i> csvダウンロード
+                          <% end %>
+                          <%# <button type="button" class="btn btn-success btn-icon-text">
+                            <i class="mdi mdi-debug-step-into"></i> csvダウンロード
+                          </button> %>
+                          <%= button_tag type: "submit", class: "btn btn-danger btn-icon-text" do %>
+                            <i class="mdi mdi-email"></i> 一括登録
+                          <% end %>
+                          <p><%= file_field_tag :file %></p>
+                          <small id="emailHelp" class="form-text text-muted">csvファイルに必要事項を記入し提出してください。</small>
+                        <% end %>
+                      </div>
+                    </section>
+                  </div>
+                  <%= render 'groups/inheritance', { group: @group } %>
+                  <%= render 'groups/assignment', { group: @group, executives: @executives } %>
+
+                  <div class="tab-pane fade" id="contact-2" role="tabpanel" aria-labelledby="contact2-tab">
+                    <h3>辞退</h3>
+                    <section>
+                      <button class="btn btn-outline-primary col-md-12" onclick="showSwal('warning-message-and-cancel')">辞退する</button>
+                    </section>
+                  </div>
+
+
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+      <!-- content-wrapper ends -->
+      <!-- content-wrapper ends -->
+      <!-- partial:partials/_footer.html -->
+      <%= render 'shared/footer' %>
+      <!-- partial -->
+    </div>
+    <!-- main-panel ends -->
+  </div>
+  <!-- page-body-wrapper ends -->
+</div>
+<script>
+  let inheritableSearch = $('#inheritable-search');
+  let assignableSearch = $('#assignable-search');
+  let groupId = inheritableSearch.data('group-id');
+  let url1 = `/groups/${groupId}/inheritable_search`
+  let url2 = `/groups/${groupId}/assignable_search`
+  inheritableSearch.on('keyup', function(e){
+    e.preventDefault(); // キャンセル可能なイベントをキャンセル
+    let input = inheritableSearch.val(); // 前後の空白を取り除いて代入
+    $.ajax({
+      url: url1,
+      type: 'GET',
+      data: { keyword: input },
+      // processData: false,
+      contentType: false,
+      dataType: 'json'
+    })
+    .done(function(data){
+      let result = $('#inheritable-result');
+      result.find('option').remove();
+      result.find('li').remove();
+      if (input.length !== 0){
+        $(data).each(function(i, user){
+          result.find('select').append(`<option value='${user.id}'>` + user.name + '</option>')
+          result.append('<li>' + user.name + '</li>') // <li>ユーザーの名前</li>を追加
+        });
+        if (result.find('li').length === 0) {
+          result.find('select').append(`<option value>` + '選択してください' + '</option>')
+          result.append('<li>' + '一致するメンバーが見つかりません' + '</li>')
+        }
+      } else {
+        result.find('select').append(`<option value>` + '選択してください' + '</option>')
+      }
+    })
+
+    .fail(function() {
+      alert('検索に失敗しました');
+    });
+  });
+
+  assignableSearch.on('keyup', function(e){
+    e.preventDefault(); // キャンセル可能なイベントをキャンセル
+    let input = assignableSearch.val(); // 前後の空白を取り除いて代入
+    $.ajax({
+      url: url2,
+      type: 'GET',
+      data: { keyword: input },
+      // processData: false,
+      contentType: false,
+      dataType: 'json'
+    })
+    .done(function(data){
+      let result = $('#assignable-result');
+      result.find('option').remove();
+      result.find('li').remove();
+      if (input.length !== 0){
+        $(data).each(function(i, user){
+          result.find('select').append(`<option value='${user.id}'>` + user.name + '</option>')
+          result.append('<li>' + user.name + '</li>') // <li>ユーザーの名前</li>を追加
+        });
+        if (result.find('li').length === 0) {
+          result.find('select').append(`<option value>` + '選択してください' + '</option>')
+          result.append('<li>' + '一致するメンバーが見つかりません' + '</li>')
+        }
+      } else {
+        result.find('select').append(`<option value>` + '選択してください' + '</option>')
+      }
+    })
+
+    .fail(function() {
+      alert('検索に失敗しました');
+    });
+  });
+
+  (function($) {
+    showSwal = function(type) {
+      'use strict';
+      let options = {
+        title: '本当に辞退しますか?',
+        text: "あなたの幹事情報が失われます！",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3f51b5',
+        cancelButtonColor: '#ff4081',
+        confirmButtonText: 'Great ',
+        buttons: {
+          cancel: {
+            text: "Cancel",
+            value: null,
+            visible: true,
+            className: "btn btn-danger",
+            closeModal: true,
+          },
+          confirm: {
+            text: "OK",
+            value: true,
+            visible: true,
+            className: "btn btn-primary",
+            closeModal: true
+          }
+        }
+      };
+      swal(options).then(function(val) {
+        let url = `/groups/${groupId}/resign`
+        if (val) {
+          // Okボタンが押された時の処理
+          window.location.href = url;
+        } else {
+          // キャンセルボタンを押した時の処理
+          swal({
+            text: "キャンセルされました",
+            icon: "warning",
+            buttons: false,
+            timer: 1000 // 2.5秒後に自動的に閉じる
+          });
+        }
+      });
+    }
+  })(jQuery);
+</script>

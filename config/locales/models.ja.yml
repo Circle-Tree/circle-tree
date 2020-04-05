@@ -1,0 +1,37 @@
+ja:
+  activerecord:
+    models:
+      user: ユーザー
+      group: グループ
+      event: イベント
+      answer: 回答
+      transaction: 記録 # 変更可能性あり
+    attributes:
+      user:
+        email: メールアドレス
+        password: パスワード
+        password_confirmation: 確認用パスワード
+        remember_me: 次回から自動的にログイン
+        current_password: 現在のパスワード
+        name: ユーザー名
+      group:
+        name: グループ名
+        email: 代表者メールアドレス
+      event:
+        name: イベント名
+        start_date: 開始日
+        end_date: 終了日
+        answer_deadline: 回答期限
+        description: イベント説明
+        amount: 集金額
+        pay_deadline: 支払い期限
+      transaction:
+        deadline: 支払い期限
+        debt: 金額
+        payment: 支払った金額
+        debtor_id: 借手
+        group_id: グループ
+        event_id: イベント
+        creditor_id: 貸手
+        type: タイプ
+
