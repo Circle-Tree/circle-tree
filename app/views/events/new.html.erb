@@ -21,12 +21,13 @@
               <div class="card-body" style="color: black;">
                 <h4 class="card-title">イベント作成</h4>
                 <%= form_with model: @event, url: group_events_path(group_id: current_user_group.id), local: true, id: :exampleform do |f| %>
-                  <!-- エラーメッセージ -->
+
                   <%= f.hidden_field :user_id, value: current_user.id %>
                   <%= f.hidden_field :group_id, value: @group.id %>
                   <div>
                     <h3>イベント概要</h3>
                     <section>
+                      <%= render 'shared/error_messages', model: f.object %>
                       <div class="form-group">
                         <%= f.label :name, 'イベント名' %>
                         <%= f.text_field :name, class: "form-control", placeholder: 'イベント名を入力してください', style: "color: white;" %>
@@ -62,7 +63,7 @@
                     <section>
                       <h3>イベント内容</h3>
                       <div class="form-group">
-                        <%= f.label :comment, 'みんなへ一言' %>
+                        <%= f.label :comment, 'みんなへ一言(40字以下)' %>
                         <%= f.text_field :comment, class: "form-control", style: "color: white;" %>
                         <small id="emailHelp" class="form-text text-muted">サムネイルに使用される一言(任意)</small>
                       </div>
@@ -89,6 +90,12 @@
   </div>
   <!-- page-body-wrapper ends -->
 </div>
+<style>
+/* div.field_with_errors {
+  background-color: #fcc;
+  padding: 2px;
+} */
+</style>
 <script>
 (function($) {
   'use strict';
