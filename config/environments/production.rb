@@ -69,7 +69,7 @@ Rails.application.configure do
   # config.active_job.queue_name_prefix = "app_name_#{Rails.env}"
 
   config.action_mailer.perform_caching = false
-  config.action_mailer.default_url_options = { host: 'https://circle-tree.herokuapp.com/' }
+  config.action_mailer.default_url_options = { host: 'circle-tree.herokuapp.com' }
   config.action_mailer.raise_delivery_errors = false
   config.action_mailer.delivery_method = :smtp
   config.action_mailer.smtp_settings = {
