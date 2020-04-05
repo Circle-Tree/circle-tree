@@ -14,7 +14,7 @@
         <li class="nav-item"> <%= link_to 'My収支情報', user_transactions_path(user_id: current_user.id), class: "nav-link" %></li>
         <li class="nav-item"> <%= link_to 'Myイベント一覧', list_user_events_path(user_id: current_user.id), class: "nav-link" %></li>
       <% end %>
-      <li class="nav-item"> <%= link_to 'プロフィール変更', edit_user_registration_path, class: "nav-link" %></li>
+      <li class="nav-item"> <%= link_to 'プロフィール変更', edit_profile_user_path(id: current_user.id), class: "nav-link" %></li>
     </ul>
   </div>
 </li>

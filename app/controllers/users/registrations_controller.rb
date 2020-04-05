@@ -17,9 +17,9 @@ class Users::RegistrationsController < Devise::RegistrationsController
   # end
 
   # GET /resource/edit
-  # def edit
-  #   super
-  # end
+  def edit
+    redirect_to edit_profile_user_url(id: current_user.id)
+  end
 
   # PUT /resource
   def update

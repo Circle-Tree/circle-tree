@@ -19,6 +19,14 @@ class UsersController < ApplicationController
 
   end
 
+  def edit_profile
+    @user = User.find(params[:id])
+  end
+
+  def edit_password
+    @user = User.find(params[:id])
+  end
+
   def share
     group = Group.find(params[:group_id])
     users = []

@@ -41,6 +41,10 @@ Rails.application.routes.draw do
   end
 
   resources :users, only: [] do
+    member do
+      get :edit_profile
+      get :edit_password
+    end
     resources :transactions, only: [:index]
     resources :events, only: [] do
       collection do

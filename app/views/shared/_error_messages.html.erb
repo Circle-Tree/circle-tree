@@ -1,12 +1,9 @@
-<% if object.errors.any? %>
-  <div id="error_explanation">
-    <div class="alert alert-danger">
-      このフォームには<%= object.errors.count %>個のエラーがあります
-    </div>
+<% if model.errors.any? %>
+  <div class="alert alert-danger">
     <ul>
-    <% object.errors.full_messages.each do |msg| %>
-      <li><%= msg %></li>
-    <% end %>
+      <% model.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
     </ul>
   </div>
 <% end %>
