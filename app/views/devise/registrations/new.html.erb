@@ -2,7 +2,7 @@
 <div class="container-scroller">
   <div class="container-fluid page-body-wrapper full-page-wrapper">
     <div class="row w-100">
-      <div class="content-wrapper full-page-wrapper d-flex align-items-center" style="background-image: url(/images/Login_bg.jpg);">
+      <div class="content-wrapper full-page-wrapper d-flex align-items-center" style="background-image: url(/images/Login_bg.jpg); background-repeat: no-repeat; background-size: cover;">
         <div class="card col-lg-4 mx-auto" style="background-color: black;">
           <div class="card-body px-5 py-5">
             <h3 class="card-title text-left mb-3" style="color: white;">新規登録</h3>
@@ -47,7 +47,7 @@
 
               <div class="form-check">
                 <label class="form-check-label">
-                  <%= f.check_box :agreement, :as => :boolean, checked: false, class: "form-check-input" %> 利用規約に同意</label>
+                <%= f.check_box :agreement, :as => :boolean, checked: false, class: "form-check-input" %> 利用規約に同意</label>
               </div>
 
               </div>
