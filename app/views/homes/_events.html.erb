@@ -18,13 +18,11 @@
                 </div>
                 <div class="preview-item-content d-sm-flex flex-grow">
                   <div class="flex-grow">
-                    <h6 class="preview-subject"><%= link_to event.name, group_event_path(group_id: event.group_id, id: event.id) %></h6>
+                    <h6 class="preview-subject"><%= link_to event.name, details_group_event_path(group_id: event.group_id, id: event.id) %></h6>
                     <p class="text-muted mb-0">
                       <% comment = event.comment %>
                       <% if comment.present? %>
                         <%= comment %>
-                      <% else %>
-                        一言なし
                       <% end %>
                     </p>
                   </div>
