@@ -20,7 +20,7 @@
                   <div class="flex-grow">
                     <h6 class="preview-subject"><%= link_to event.name, group_event_path(group_id: event.group_id, id: event.id) %></h6>
                     <p class="text-muted mb-0">
-                      <% comment =  event.comment %>
+                      <% comment = event.comment %>
                       <% if comment.present? %>
                         <%= comment %>
                       <% else %>

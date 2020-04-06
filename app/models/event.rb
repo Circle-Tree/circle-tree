@@ -28,7 +28,7 @@ class Event < ApplicationRecord
     Group.my_groups(user).each do |group|
       group_ids << group.id
     end
-    Event.where(group_id: group_ids).joins(:answers).where(answers: { status: 'attending' })
+    Event.where(group_id: group_ids).joins(:answers).where(answers: { status: 'attending' }).distinct
   end
 
   private
@@ -39,7 +39,6 @@ class Event < ApplicationRecord
     end
 
     # 終了日は開始日以降の日付
-    # 現状は今日以降の日付となってしまっている
     def end_date_not_before_start_date
       start_date = self.start_date
       end_date = self.end_date
