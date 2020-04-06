@@ -7,9 +7,7 @@ class Event < ApplicationRecord
   has_many :answers, dependent: :destroy
   has_many :users, through: :answers
   validates :name, presence: true, length: { maximum: 128 }
-  validates :start_date, presence: true
   validate  :start_date_not_before_today
-  validates :end_date, presence: true
   validate  :end_date_not_before_start_date
   validate  :answer_deadline_not_before_today
   validates :description, length: { maximum: 1024 }
@@ -43,20 +41,22 @@ class Event < ApplicationRecord
     # 終了日は開始日以降の日付
     # 現状は今日以降の日付となってしまっている
     def end_date_not_before_start_date
-      errors.add(:end_date, 'は開始日以降のものを選択してください') if end_date.blank? || end_date < Date.today.to_datetime
+      start_date = self.start_date
+      end_date = self.end_date
+      if start_date.present? && end_date.present? && end_date < start_date
+        errors.add(:end_date, 'は開始日以降のものを選択してください')
+      elsif end_date.blank?
+        errors.add(:end_date, 'は開始日以降のものを選択してください')
+      end
     end
 
     # 回答期日は今日以降の日付
     def answer_deadline_not_before_today
-      return if answer_deadline.blank?
-
-      errors.add(:answer_deadline, 'は今日以降のものを選択してください') if answer_deadline < Date.today.to_datetime
+      errors.add(:answer_deadline, 'は今日以降のものを選択してください') if answer_deadline.blank? || answer_deadline < Date.today.to_datetime
     end
 
     # 支払い期日は今日以降の日付
     def pay_deadline_not_before_today
-      return if pay_deadline.blank?
-
-      errors.add(:pay_deadline, 'は今日以降のものを選択してください') if pay_deadline < Date.today.to_datetime
+      errors.add(:pay_deadline, 'は今日以降のものを選択してください') if pay_deadline.blank? || pay_deadline < Date.today.to_datetime
     end
 end
