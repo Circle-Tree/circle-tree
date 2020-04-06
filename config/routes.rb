@@ -30,13 +30,17 @@ Rails.application.routes.draw do
       get :resign
       post :invite
     end
-    resources :users, only: [:index,:new] do
+    resources :users, only: [:index, :new] do
       collection do
         post :batch
         get  :share
       end
     end
-    resources :events
+    resources :events do
+      member do
+        get :details
+      end
+    end
     resources :orders, only: %i[index]
   end
 

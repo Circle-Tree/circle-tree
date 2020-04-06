@@ -40,6 +40,10 @@ class EventsController < ApplicationController
     @expected_total_payment = @uncompleted_transactions.sum { |h| h[:debt] }
   end
 
+  def details
+
+  end
+
   def new
     @event = Event.new
     @executives = User.executives(@group)
