@@ -20,9 +20,6 @@
         <div class="card">
           <div class="card-body">
             <h4 class="card-title">Myイベント一覧</h4>
-            <button type="button" class="btn btn-danger btn-icon-text" style="margin-bottom: 30px;">
-              <i class="mdi mdi-check"></i> 保存
-            </button>
             <div class="row">
               <div class="col-12">
                 <div class="table-responsive">
@@ -31,11 +28,10 @@
                       <tr>
                         <th>イベント名</th>
                         <th>日時</th>
-                        <th>人数</th>
-                        <th>出席率</th>
-                        <th>出金額</th>
-                        <th>総提出額</th>
+                        <th>参加人数</th>
                         <th>出欠状況</th>
+                        <th>支払うべき額</th>
+                        <th>支払った額</th>
                         <th>支払い状況</th>
                       </tr>
                     </thead>
@@ -44,7 +40,7 @@
                         <% transaction = Event::Transaction.find_by(event_id: event.id, debtor_id: current_user.id) %>
                         <% answer = Answer.find_by(event_id: event.id, user_id: current_user.id) %>
                         <tr>
-                          <td><%= event.name %></td>
+                          <td><%= event.name.truncate(22) %></td>
                           <td>
                             <% start_date, end_date = event.start_date, event.end_date %>
                             <% if start_date == end_date %>
@@ -53,20 +49,24 @@
                               <%= l start_date, format: :short %> ~ <%= l end_date, format: :short %>
                             <% end %>
                           </td>
-                          <td>?</td>
-                          <td>?</td>
-                          <td>￥<%= transaction.debt %></td>
-                          <td>￥<%= transaction.payment %></td>
+                          <td><%=  Answer.attending_count(event: event) %>人</td>
                           <td>
                             <%= render 'answer_select', answer: answer %>
                           </td>
+                          <td>￥<%= transaction.debt %></td>
+                          <td>
+                            <% payment = transaction.payment %>
+                            <% if answer.status == 'attending' %>
+                              ￥<%= payment %>
+                            <% elsif answer.status == 'absent' && payment %>
+                              ￥<%= payment %>
+                            <% end %>
+                          </td>
                           <td>
                             <% if transaction.completed? %>
-                              <%= link_to '完了', receipt_transaction_path(url_token: transaction.url_token, format: 'pdf'), class: 'btn btn-success' %>
+                              <%= link_to '発行', receipt_transaction_path(url_token: transaction.url_token, format: 'pdf'), class: 'btn btn-success' %>
                             <% else %>
-                              <%= form_with model: transaction, url: transaction_path(url_token: transaction.url_token) do |f| %>
-                                <%= f.select :completed, [['完了', true], ['未完了', false]], {}, { class: "btn btn-secondary", style: "background-color:rgb(236, 236, 236)" } %>
-                              <% end %>
+                              <label class='btn btn-danger'>未払い</label>
                             <% end %>
                           </td>
                         <% end %>
@@ -74,10 +74,6 @@
                     </tbody>
                   </table>
                   <%= paginate @events %>
-                  <button type="button" class="btn btn-danger btn-icon-text" style="margin-top: 30px;">
-                    <i class="mdi mdi-check"></i> 保存
-                  </button>
-
                 </div>
               </div>
             </div>
@@ -137,6 +133,7 @@
     })
     .done(function() {
       select.removeAttr('class')
+      select.removeAttr('style');
       if (status === 'attending') {
         select.addClass('btn btn-success')
       } else if (status === 'absent') {
