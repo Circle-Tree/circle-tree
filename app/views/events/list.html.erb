@@ -40,7 +40,7 @@
                         <% transaction = Event::Transaction.find_by(event_id: event.id, debtor_id: current_user.id) %>
                         <% answer = Answer.find_by(event_id: event.id, user_id: current_user.id) %>
                         <tr>
-                          <td><%= event.name.truncate(22) %></td>
+                          <td><%= link_to event.name.truncate(22) , details_group_event_path(group_id: event.group_id, id: event.id) %></td>
                           <td>
                             <% start_date, end_date = event.start_date, event.end_date %>
                             <% if start_date == end_date %>

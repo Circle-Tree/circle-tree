@@ -24,7 +24,7 @@
             <h4 class="card-title">詳細変更</h4>
             <%= form_with model: @event, url: group_event_path(event_id: @event.id), local: true, class: "form-sample" do |f| %>
               <p class="card-description"> イベント情報 </p>
-              <%= render 'shared/error_messages', object: f.object %>
+              <%= render 'shared/error_messages', model: f.object %>
               <div class="row">
                 <div class="col-md-6">
                   <div class="form-group row">

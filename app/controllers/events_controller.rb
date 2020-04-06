@@ -4,9 +4,9 @@ class EventsController < ApplicationController
   before_action :authenticate_user!
   before_action :confirm_definitive_registration
   before_action :set_group, except: %i[list]
-  before_action :cannot_access_to_other_groups, except: %i[list]
+  before_action :cannot_access_to_other_groups
   before_action :other_user_cannot_access, only: %i[list]
-  before_action :only_executives_can_access, except: %i[show list]
+  before_action :only_executives_can_access, except: %i[list details]
 
   def index
     @events = Event.where(group_id: current_user_group.id).order(start_date: :asc).page(params[:page]).per(10)
@@ -41,7 +41,10 @@ class EventsController < ApplicationController
   end
 
   def details
-
+    @event = Event.find(params[:id])
+    @group = Group.find(params[:group_id])
+    @answer = Answer.find_by(event_id: @event.id, user_id: current_user.id)
+    @attending_answers = Answer.where(event_id: @event.id, status: 'attending')
   end
 
   def new

@@ -1,1 +1,165 @@
-a
+<% provide(:title, "#{@event.name}の詳細") %>
+<div class="sidebar-fixed container-scroller" style="background-color: rgb(44, 44, 44);">
+  <%= render 'shared/sidebar' %>
+  <div class="container-fluid page-body-wrapper">
+    <!-- partial:partials/_navbar.html -->
+    <%= render 'shared/topbar' %>
+    <!-- partial -->
+    <div class="main-panel">
+      <div class="content-wrapper">
+        <div class="page-header">
+          <h3 class="page-title"> <%= @event.name %> </h3>
+          <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+              <li class="breadcrumb-item"><a href="#">イベントページ</a></li>
+              <li class="breadcrumb-item active" aria-current="page">出席回答</li>
+            </ol>
+          </nav>
+        </div>
+        <%= render 'shared/flash' %>
+
+        <div class="card" style="margin-bottom: 20px;">
+          <div class="card-body" style="color: black;">
+            <h4 class="card-title">出席回答</h4>
+            <%= form_with model: @answer, url: event_answer_path(id: @answer.id, event_id: @event.id), local: true do |f| %>
+              <p class="card-description"> イベント情報 </p>
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="form-group row">
+                    <label class="col-sm-3 col-form-label">出席</label>
+                    <div class="col-sm-9">
+                      <% unless @answer.status == 'unanswered' %>
+                        <%= f.select :status, [['参加', 'attending'], ['欠席', 'absent']], {}, { class: "form-control", style: "color: white;" } %>
+                      <% else %>
+                        <%= f.select :status, [['未回答', 'unanswered'], ['参加', 'attending'], ['欠席', 'absent']], {}, { class: "form-control", style: "color: white;" } %>
+                      <% end %>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="form-group row">
+                    <label class="col-sm-3 col-form-label">イベント名</label>
+                    <div class="col-sm-9">
+                      <div type="text" class="form-control"><%= @event.name %></div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group row">
+                    <label class="col-sm-3 col-form-label">出金額</label>
+                    <div class="col-sm-9">
+                      <div type="text" class="form-control">￥<%= @event.amount %></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="form-group row">
+                    <label class="col-sm-3 col-form-label">開始日</label>
+                    <div class="col-sm-9">
+                      <div class="form-control"><%= l @event.start_date, format: :long %></div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group row">
+                    <label class="col-sm-3 col-form-label">終了日</label>
+                    <div class="col-sm-9">
+                      <div class="form-control"><%= l @event.end_date, format: :long %></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="form-group row">
+                    <label class="col-sm-3 col-form-label">回答締め切り</label>
+                    <div class="col-sm-9">
+                      <div class="form-control"><%= l @event.answer_deadline, format: :long %></div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group row">
+                    <label class="col-sm-3 col-form-label">支払い締め切り</label>
+                    <div class="col-sm-9">
+                      <div class="form-control"><%= l @event.pay_deadline, format: :long %></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="row" >
+                <div class="col-md-12">
+                  <div class="form-group row">
+                    <label class="col-sm-3  col-form-label">イベント詳細</label>
+                    <div class="col-sm-12">
+                      <div type="text" class="form-control" style="height: 100px;"><%= @event.description %></div>
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+
+              <div class="row">
+                <%= button_tag type: 'submit', class: "btn btn-primary btn-icon-text col-md-3", style: "margin-right: 30px;margin-left: 30px;" do %>
+                  <i class="mdi mdi-file-check btn-icon-prepend"></i> 保存
+                <% end %>
+                <% if current_user.executive?(@group)%>
+                  <%= link_to edit_group_event_path(group_id: @group.id, id: @event.id), class: "btn btn-dark btn-icon-text col-md-3", style: "margin-right: 30px;margin-left: 30px;" do %>
+                    編集 <i class="mdi mdi-file-check btn-icon-append"></i>
+                  <% end %>
+                  <%= link_to group_event_path(group_id: @group.id, id: @event.id), class: "btn btn-dark btn-icon-text col-md-3", style: "margin-right: 30px;margin-left: 30px;" do %>
+                    イベント管理 <i class="mdi mdi-file-check btn-icon-append"></i>
+                  <% end %>
+                <% end %>
+              </div>
+            <% end %>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-body" style="color: black;" >
+            <h4 class="card-title">出席</h4>
+            <div class="row">
+              <div class="col-12">
+                <div class="table-responsive">
+                  <table id="order-listing" class="table">
+                    <thead>
+                      <tr>
+                        <th>名前</th>
+                        <th>回答日</th>
+                        <th>学年</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <% @attending_answers.each do |answer| %>
+                          <% user = User.find(answer.user_id) %>
+                          <% transaction = Event::Transaction.find_by(event_id: @event.id, debtor_id: user.id) %>
+                          <tr>
+                            <td><%= user.name %></td>
+                            <td><%= l answer.updated_at, format: :short %></td>
+                            <td><%= user.to_readable_grade %></td>
+                          </tr>
+                        <% end %>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- content-wrapper ends -->
+      <%= render 'shared/footer' %>
+    </div>
+    <!-- main-panel ends -->
+  </div>
+  <!-- page-body-wrapper ends -->
+</div>

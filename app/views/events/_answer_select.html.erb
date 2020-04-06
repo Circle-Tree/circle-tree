@@ -4,7 +4,7 @@
     <%= f.select :status, [['参加', 'attending'], ['欠席', 'absent']], {}, { id: "answer-select", class: "btn btn-success", data: { answer_id: answer.id } } %>
   <% when 'absent' %>
     <%= f.select :status, [['参加', 'attending'], ['欠席', 'absent']], {}, { id: "answer-select", class: "btn btn-danger", data: { answer_id: answer.id } } %>
-  <% else%>
+  <% else %>
     <%= f.select :status, [['未回答', 'unanswered'], ['参加', 'attending'], ['欠席', 'absent']], {}, { id: "answer-select", class: "btn btn-secondary", style: "background-color:rgb(236, 236, 236)", data: { answer_id: answer.id } } %>
   <% end %>
 <% end %>
