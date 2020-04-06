@@ -7,26 +7,7 @@
     <!-- partial -->
     <div class="main-panel">
       <div class="content-wrapper">
-        <div class="row">
-          <div class="col-12 grid-margin stretch-card">
-            <div class="card corona-gradient-card">
-              <div class="card-body py-0 px-0 px-sm-3">
-                <div class="row align-items-center">
-                  <div class="col-4 col-sm-3 col-xl-2">
-                    <img src="#" class="gradient-corona-img img-fluid" alt="">
-                  </div>
-                  <div class="col-5 col-sm-7 col-xl-8 p-0">
-                    <h4 class="mb-1 mb-sm-0">広告？</h4>
-                    <p class="mb-0 font-weight-normal d-none d-sm-block">Corona admin template now with a new facelift for enhanced legibility and aesthetics!</p>
-                  </div>
-                  <div class="col-3 col-sm-2 col-xl-2 pl-0 text-center">
-                    <button class="btn btn-outline-light btn-rounded get-started-btn">Get Started</button>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
+        <%= render 'shared/ad' %>
 
         <div class="row">
           <div class="col-md-12 grid-margin stretch-card">
@@ -57,15 +38,6 @@
                     </div>
                   <% end %>
                 <% end %>
-                <%# <div class="bg-gray-dark d-flex d-md-block d-xl-flex flex-row py-3 px-4 px-md-3 px-xl-4 rounded mt-3">
-                  <div class="text-md-center text-xl-left">
-                    <h6 class="mb-1">最近の収支</h6>
-                    <p class="text-muted mb-0">07 Jan 2019, 09:12AM</p>
-                  </div>
-                  <div class="align-self-center flex-grow text-right text-md-center text-xl-right py-md-2 py-xl-0">
-                    <h6 class="font-weight-bold mb-0">$593</h6>
-                  </div>
-                </div> %>
               </div>
             </div>
           </div>
@@ -79,13 +51,11 @@
                       <table id="order-listing" class="table">
                         <thead>
                           <tr>
-                            <th>誰から</th>
-                            <th></th>
+                            <th>イベント名</th>
                             <th>支払い期限</th>
-                            <th></th>
-                            <th>いくら</th>
-                            <th></th>
-                            <th>状態(あったら)</th>
+                            <th>金額</th>
+                            <th>支払った金額</th>
+                            <th>支払い状況</th>
                             <th>領収書発行</th>
                           </tr>
                         </thead>
@@ -93,13 +63,10 @@
                           <% @transactions.each do |transaction| %>
                             <% if event_id = transaction.event_id%>
                               <% event = Event.find(event_id) %>
-                              <% group = Group.find(event.group_id) %>
                             <% end %>
                             <tr>
-                              <td><%= event.name %></td>
-                              <td><%= group.name %></td>
+                              <td><%= link_to event.name.truncate(20), details_group_event_path(group_id: event.group_id, id: event.id) %></td>
                               <td><%= l transaction.deadline, format: :short %></td>
-                              <td>?</td>
                               <td>￥<%= transaction.debt %></td>
                               <td>￥<%= transaction.payment %></td>
                               <% if transaction.completed? %>
@@ -113,7 +80,7 @@
                                 <td>
                                   <label class="badge badge-danger">未払い</label>
                                 </td>
-                                <td>?</td>
+                                <td></td>
                               <% end %>
                             </tr>
                           <% end %>
