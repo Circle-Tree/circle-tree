@@ -2,7 +2,7 @@
 
 class UsersController < ApplicationController
   before_action :authenticate_user!
-  before_action :confirm_definitive_registration
+  before_action :confirm_definitive_registration, except: :edit_password
   before_action :set_group, only: %i[index batch]
   before_action :cannot_access_to_other_groups, only: %i[index batch]
   before_action :only_executives_can_access, only: %i[batch]

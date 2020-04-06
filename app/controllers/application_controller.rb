@@ -42,8 +42,8 @@ class ApplicationController < ActionController::Base
     def confirm_definitive_registration
       return if current_user.definitive_registration
 
-      flash_and_redirect(key: :danger, message: 'アカウントは一括登録後の状態ですので、パスワードまたはメールアドレスを変更するようにしてください。',
-                         redirect_url: edit_user_registration_url)
+      flash_and_redirect(key: :danger, message: 'アカウントは一括登録後の状態ですので、パスワードを変更するようにしてください。',
+                         redirect_url: edit_password_user_url(id: current_user.id))
     end
 
     def other_user_cannot_access
