@@ -6,6 +6,7 @@ class GroupsController < ApplicationController
   before_action :set_group
   before_action :cannot_access_to_other_groups, except: %i[show]
   before_action :only_executives_can_access, except: %i[show]
+  before_action :cannot_resign, only: :resign
 
   def show
     events = Event.my_events(current_user).order(start_date: :desc)
@@ -129,6 +130,12 @@ class GroupsController < ApplicationController
       @members = members.where('name LIKE :keyword OR furigana LIKE :keyword ', keyword: "%#{keyword.tr('ぁ-ん','ァ-ン')}%").order(furigana: :asc)
       respond_to do |format|
         format.json { render partial, json: @members }
+      end
+    end
+
+    def cannot_resign
+      if User.executives(@group).count == 1
+        flash_and_redirect(key: :danger, message: '幹事が一人しかいないため辞退できません', redirect_url: root_url)
       end
     end
 end
