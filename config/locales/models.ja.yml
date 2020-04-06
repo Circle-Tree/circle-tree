@@ -16,7 +16,18 @@ ja:
         name: ユーザー名
         furigana: フリガナ
         gender: 性別
-        grade: 学年
+        # user/gender:
+        #   true: 女性
+        #   false: 男性
+        # grade: 学年
+        # user/grade:
+        #   grade1: 1
+        #   grade2: 2
+        #   grade3: 3
+        #   grade4: 4
+        #   grade5: 5
+        #   grade6: 6
+        #   other: その他
         agreement: 利用規約
       group:
         name: グループ名

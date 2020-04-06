@@ -7,13 +7,9 @@
             <thead>
               <tr>
                 <th>名前</th>
-                <th>回答日</th>
                 <th>学年</th>
-
                 <th>出金額</th>
                 <th>提出額</th>
-
-                <th>何か</th>
                 <th>出金状況</th>
                 <th>編集</th>
               </tr>
@@ -23,8 +19,7 @@
               <% user = User.find(transaction.debtor_id) %>
               <tr>
                 <td><%= user.name %></td>
-                <td>?</td>
-                <td><%= user.grade %></td>
+                <td><%= user.to_readable_grade %></td>
                 <%= render 'events/show/transaction', transaction: transaction %>
                 <td>
                   <%= link_to '変更する', edit_event_transaction_path(event_id: transaction.event_id, url_token: transaction.url_token), class: "btn btn-outline-primary" %>

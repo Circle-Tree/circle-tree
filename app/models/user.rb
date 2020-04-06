@@ -43,6 +43,11 @@ class User < ApplicationRecord
     end
   end
 
+  def to_readable_grade
+    grade = User.grades[self.grade.to_sym]
+    return grade.zero? ? 'その他' : grade
+  end
+
   def self.import!(file:, group:, password:)
     added_users = []
     transaction do

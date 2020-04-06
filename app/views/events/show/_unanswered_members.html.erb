@@ -7,29 +7,24 @@
             <thead>
               <tr>
                 <th>名前</th>
-                <th>回答日</th>
                 <th>学年</th>
-
-                <th>出金額</th>
-                <th>提出額</th>
-
-                <th>何か</th>
-                <th></th>
-                <th>編集</th>
+                <th>支払うべき額</th>
+                <th>回答催促？(未実装)</th>
+                <%# <th>編集</th> %>
               </tr>
             </thead>
             <tbody>
               <% @unanswered_answers.each do |answer| %>
                 <% user = User.find(answer.user_id) %>
+                <% transaction = Event::Transaction.find_by(event_id: @event.id, debtor_id: user.id) %>
                 <tr>
                   <td><%= user.name %></td>
-                  <td>?</td>
-                  <td><%= user.grade %></td>
-                  <td>?</td>
-                  <td>?</td>
-                  <td>?</td>
-                  <td></td>
-                  <td>?</td>
+                  <td><%= user.to_readable_grade %></td>
+                  <td>￥<%= transaction.debt %></td>
+                  <td><button class="btn btn-outline-primary">催促</button></td>
+                  <%# <td> %>
+                    <%#= link_to '変更する', edit_event_transaction_path(event_id: transaction.event_id, url_token: transaction.url_token), class: "btn btn-outline-primary" %>
+                  <%# </td> %>
                 </tr>
               <% end %>
             </tbody>

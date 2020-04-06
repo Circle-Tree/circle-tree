@@ -9,13 +9,7 @@
                 <th>名前</th>
                 <th>回答日</th>
                 <th>学年</th>
-
-                <th>出金額</th>
-                <th>提出額</th>
-
-                <th>何か</th>
-                <th></th>
-                <th>編集</th>
+                <th>理由？</th>
               </tr>
             </thead>
             <tbody>
@@ -24,12 +18,8 @@
                 <tr>
                   <td><%= user.name %></td>
                   <td><%= l answer.updated_at, format: :short %></td>
-                  <td><%= user.grade %></td>
-                  <td>?</td>
-                  <td>?</td>
-                  <td>?</td>
-                  <td></td>
-                  <td>?</td>
+                  <td><%= user.to_readable_grade %></td>
+                  <td>バイト</td>
                 </tr>
               <% end %>
             </tbody>

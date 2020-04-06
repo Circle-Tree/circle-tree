@@ -1,6 +1,5 @@
 <td>￥<%= transaction.debt %></td>
 <td>￥<%= transaction.payment %></td>
-<td>?</td>
 <td>
   <% if transaction.completed? %>
     <%= link_to '完了', receipt_transaction_path(url_token: transaction.url_token, format: 'pdf'), class: 'btn btn-success' %>
