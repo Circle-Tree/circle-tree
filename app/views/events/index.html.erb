@@ -11,8 +11,7 @@
           <h3 class="page-title"> イベント一覧 </h3>
           <nav aria-label="breadcrumb">
             <ol class="breadcrumb">
-              <li class="breadcrumb-item"><a href="#">Tables</a></li>
-              <li class="breadcrumb-item active" aria-current="page">Data table</li>
+              <li class="breadcrumb-item active" aria-current="page">イベント一覧</li>
             </ol>
           </nav>
         </div>
@@ -28,11 +27,11 @@
                         <th>イベント名</th>
                         <th>日時</th>
                         <th>人数</th>
-                        <th>出席率</th>
-                        <th>出金額</th>
-                        <th>総提出額</th>
+                        <%# <th>出席率</th> %>
+                        <th>集金合計額</th>
+                        <th>集金割合</th>
                         <th>出金状況</th>
-                        <th>編集</th>
+                        <th>イベント編集</th>
                       </tr>
                     </thead>
                     <tbody>
@@ -47,15 +46,33 @@
                               <%= l start_date, format: :short %> ~ <%= l end_date, format: :short %>
                             <% end %>
                           </td>
-                          <td>88人</td>
-                          <td>88%</td>
-                          <td>￥<%= event.amount %></td>
-                          <td>88%</td>
+                          <% participant_count = event.answers.where(status: 'attending').count %>
+                          <td><%= participant_count %></td>
+                          <% unless participant_count == 0 %>
+                            <% expected_total_amount = Event::Transaction.expected_event_total_amount(event: event) %>
+                            <% paid_total_amount = Event::Transaction.paid_event_total_amount(event: event) %>
+                            <% completed_transactions = Event::Transaction.completed_transactions(event: event) %>
+
+                            <%# <td>88%</td> %>
+                            <td>￥<%= expected_total_amount %></td>
+                            <td><%= (paid_total_amount * 100 / expected_total_amount).to_i %> %</td>
+                            <td>
+                              <% completed_count = completed_transactions.count %>
+                                <% if completed_count == participant_count %>
+                                  <label class="badge badge-success">完了</label>
+                                <% elsif completed_count >= participant_count * 0.8 %>
+                                  <label class="badge badge-primary">もう少し</label>
+                                <% else %>
+                                  <label class="badge badge-danger">未完了</label>
+                                <% end %>
+                            </td>
+                          <% else %>
+                          <td></td>
+                          <td></td>
+                          <td></td>
+                          <% end %>
                           <td>
-                            <label class="badge badge-danger">未完</label>
-                          </td>
-                          <td>
-                            <%= link_to '変更する', edit_group_event_path(group_id: event.group_id, id: event.id), class: "btn btn-outline-primary" %>
+                            <%= link_to '編集する', edit_group_event_path(group_id: event.group_id, id: event.id), class: "btn btn-outline-primary" %>
                           </td>
                         </tr>
                       <% end %>

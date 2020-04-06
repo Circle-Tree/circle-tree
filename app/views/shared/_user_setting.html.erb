@@ -7,32 +7,29 @@
       </div>
   </a>
   <div class="dropdown-menu dropdown-menu-right navbar-dropdown preview-list" aria-labelledby="profileDropdown">
-      <h6 class="p-3 mb-0">プロフィール</h6>
-      <div class="dropdown-divider"></div>
-      <%= link_to edit_profile_user_path(id: current_user.id), class: "dropdown-item preview-item" do %>
-        <div class="preview-thumbnail">
-            <div class="preview-icon bg-dark rounded-circle">
-            <i class="mdi mdi-settings text-success"></i>
-            </div>
-        </div>
-        <div class="preview-item-content">
-            <p class="preview-subject mb-1">プロフィール設定</p>
-        </div>
-      <% end %>
-      <div class="dropdown-divider"></div>
+    <h6 class="p-3 mb-0">プロフィール</h6>
+    <div class="dropdown-divider"></div>
+    <%= link_to edit_profile_user_path(id: current_user.id), class: "dropdown-item preview-item" do %>
+      <div class="preview-thumbnail">
+          <div class="preview-icon bg-dark rounded-circle">
+          <i class="mdi mdi-settings text-success"></i>
+          </div>
+      </div>
+      <div class="preview-item-content">
+          <p class="preview-subject mb-1">プロフィール設定</p>
+      </div>
+    <% end %>
+    <div class="dropdown-divider"></div>
 
-      <%= link_to destroy_user_session_path, class: "dropdown-item preview-item", method: :delete do %>
-        <div class="preview-thumbnail">
-            <div class="preview-icon bg-dark rounded-circle">
-            <i class="mdi mdi-logout text-danger"></i>
-            </div>
-        </div>
-        <div class="preview-item-content">
-            <p class="preview-subject mb-1">ログアウト</p>
-        </div>
-      <% end %>
-
-      <div class="dropdown-divider"></div>
-      <p class="p-3 mb-0 text-center">グループ作成?</p>
+    <%= link_to destroy_user_session_path, class: "dropdown-item preview-item", method: :delete do %>
+      <div class="preview-thumbnail">
+          <div class="preview-icon bg-dark rounded-circle">
+          <i class="mdi mdi-logout text-danger"></i>
+          </div>
+      </div>
+      <div class="preview-item-content">
+          <p class="preview-subject mb-1">ログアウト</p>
+      </div>
+    <% end %>
   </div>
 </li>
