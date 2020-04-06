@@ -88,7 +88,7 @@ class UsersController < ApplicationController
     def send_template_csv
       # bom = "\uFEFF"
       csv = CSV.generate(force_quotes: true, encoding: Encoding::SJIS) do |c|
-        header = %w[名前 メールアドレス 性別 学年]
+        header = %w[名前 メールアドレス フリガナ 性別 学年]
         c << header
       end
       send_data(csv, filename: 'template.csv', type: 'application/csv')

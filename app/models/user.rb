@@ -14,6 +14,7 @@ class User < ApplicationRecord
   has_many :transactions, dependent: :destroy # :nullifyの方がよいか？
   validates :name, presence: true, length: { maximum: 100 }
   validates :definitive_registration, inclusion: { in: [true, false] }
+  validates :furigana, format: { with: /\A[\p{katakana}　ー－&&[^ -~｡-ﾟ]]+\z/, message: 'は全角カタカナのみで入力して下さい。' }, allow_blank: true
   enum grade: {
     other: 0,
     grade1: 1,
@@ -26,11 +27,7 @@ class User < ApplicationRecord
   with_options unless: -> { validation_context == :batch } do |batch|
     batch.validates :gender, inclusion: { in: [true, false] }
     batch.validates :grade, presence: true
-    batch.validates :furigana, presence: true,
-                               format: {
-                                 with: /\A[\p{katakana}　ー－&&[^ -~｡-ﾟ]]+\z/,
-                                 message: 'は全角カタカナのみで入力して下さい'
-                               }
+    batch.validates :furigana, presence: true
   end
   validates_acceptance_of :agreement, allow_nil: false, message: "への同意が必要です。", on: :create
 
@@ -52,10 +49,11 @@ class User < ApplicationRecord
       CSV.foreach(file.path, headers: true, skip_blanks: true, encoding: 'CP932:UTF-8') do |row|
         name = row['名前']
         email = row['メールアドレス']
+        furigana = row['フリガナ']&.tr('ぁ-ん','ァ-ン')
         gender = return_gender_format(row['性別'])
         grade = return_grade_format(row['学年'])
         user = User.new(name: name, email: email, password: password,
-                        definitive_registration: false, gender: gender, grade: grade)
+                        definitive_registration: false, gender: gender, grade: grade, furigana: furigana)
         user.skip_confirmation!
         user.save!(context: :batch)
         GroupUser.create!(group_id: group.id, user_id: user.id, role: GroupUser.roles[:general])
@@ -64,12 +62,17 @@ class User < ApplicationRecord
     end
     added_count = added_users.count
     { added_users: added_users, added_count: added_count, status: 'success'}
-  rescue => e
+  rescue ActiveRecord::RecordInvalid => e
     ErrorUtility.log_and_notify(e)
+    puts e.class
     failed_number = added_users.count + 1
     error_message = e.message.gsub!(/バリデーションに失敗しました: /, '')
+    puts error_message
     error_message = error_message.gsub!(/。/, '') + "(#{failed_number}人目)。" unless error_message.include?('パスワード')
     { error_message: error_message, status: 'failure' }
+  rescue => e
+    ErrorUtility.log_and_notify(e)
+    { error_message: '何らかのエラーが発生しました。', status: 'failure' }
   end
 
   # あるグループの幹事たち
