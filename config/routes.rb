@@ -54,7 +54,7 @@ Rails.application.routes.draw do
   end
 
   resources :events, only: [] do
-    resources :transactions, only: %i[new create], controller: 'events/transactions', param: :url_token
+    resources :transactions, only: %i[new create edit update], controller: 'events/transactions', param: :url_token
     resources :answers, only: %i[edit update]
   end
 

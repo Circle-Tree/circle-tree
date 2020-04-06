@@ -35,7 +35,7 @@ ja:
         group: グループ
       transaction:
         deadline: 支払い期限
-        debt: 金額
+        debt: 支払うべき金額
         payment: 支払った金額
         debtor_id: 借手
         group_id: グループ

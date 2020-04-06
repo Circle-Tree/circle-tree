@@ -37,17 +37,24 @@ class Events::TransactionsController < TransactionsController
 
   def edit
     @transaction = Event::Transaction.find_by(url_token: params[:url_token])
+    @user = User.find(@transaction.debtor_id)
+    @executives = User.executives(@group)
   end
 
   def update
     @transaction = Event::Transaction.find_by(event_id: @event.id, url_token: params[:url_token])
-    if @transaction.completed == false && params[:event_transaction][:payment] == params[:event_transaction][:debt]
-      @transaction.toggle!(:completed)
+    if params[:event_transaction][:payment] == params[:event_transaction][:debt]
+      @transaction.completed = true
+    else
+      @transaction.completed = false
     end
     if @transaction.update_attributes(update_transaction_params)
-      flash[:success] = 'イベントの情報を更新しました'
+      user = User.find(@transaction.debtor_id)
+      flash[:success] = "#{user.name}さんの支払い情報を更新しました"
       redirect_to group_event_url(group_id: @event.group_id, id: @event.id)
     else
+      @user = User.find(@transaction.debtor_id)
+      @executives = User.executives(@group)
       render 'edit'
     end
   end
@@ -55,7 +62,7 @@ class Events::TransactionsController < TransactionsController
   private
 
     def update_transaction_params
-      params.require(:event_transaction).permit(:deadline, :debt, :payment, :completed)
+      params.require(:event_transaction).permit(:deadline, :debt, :payment, :completed, :creditor_id)
     end
 
     def set_group_and_event

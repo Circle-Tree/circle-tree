@@ -12,5 +12,5 @@
   <% end %>
 </td>
 <td>
-  <%= link_to '変更', edit_transaction_path(url_token: transaction.url_token), class: "btn btn-outline-primary" %>
+  <%= link_to '変更', edit_event_transaction_path(event_id: transaction.event_id, url_token: transaction.url_token), class: "btn btn-outline-primary" %>
 </td>

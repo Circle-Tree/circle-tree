@@ -6,17 +6,11 @@ class Transaction < ApplicationRecord
   belongs_to :debtor, class_name: 'User', foreign_key: 'debtor_id'
   belongs_to :event
   belongs_to :group
-  validates :debtor_id, presence: true
-  validates :creditor_id, presence: true
-  validates :event_id, presence: true
-  validates :group_id, presence: true
   validate  :deadline_before_today
   validates :debt, presence: true
-  validates :debt, numericality: { only_integer: true }
-  validates :debt, numericality: { greater_than_or_equal_to: 0 }
+  validates :debt, numericality: { only_integer: true, greater_than_or_equal_to: 0 }, allow_blank: true
   validates :payment, presence: true
-  validates :payment, numericality: { only_integer: true }
-  validates :payment, numericality: { greater_than_or_equal_to: 0 }
+  validates :payment, numericality: { only_integer: true, greater_than_or_equal_to: 0 }, allow_blank: true
   validates :type, presence: true
   validates :url_token, presence: true, uniqueness: true
   validates :completed, inclusion: { in: [true, false] }
