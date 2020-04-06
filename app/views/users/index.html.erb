@@ -17,10 +17,10 @@
             </ol>
           </nav>
         </div>
+        <%= render 'shared/flash' %>
         <div class="card">
           <div class="card-body" style="background-color: rgb(255, 255, 255); color: #000;">
             <h4 class="card-title">メンバー設定</h4>
-            <p class="card-description">Horizontal bootstrap tab</p>
             <ul class="nav nav-tabs" role="tablist">
               <li class="nav-item">
                 <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home-1" role="tab" aria-controls="home" aria-selected="true">1年生</a>
@@ -48,352 +48,48 @@
               <div class="tab-pane fade show active" id="home-1" role="tabpanel" aria-labelledby="home-tab">
                 <h3>1年生</h3>
                 <section>
-                  <h4 class="card-title">メンバー一覧</h4>
-                  <div class="row">
-                    <div class="col-12">
-                      <div class="table-responsive">
-                        <table id="order-listing" class="table">
-                          <thead>
-                            <tr>
-                              <th>名前</th>
-                              <th></th>
-                              <th>学年?</th>
-                              <th></th>
-                              <th>性別</th>
-                              <th></th>
-                              <th>ステータス</th>
-                              <th>削除</th>
-                            </tr>
-                          </thead>
-                          <tbody>
-                            <% if @members1.try(:any?) %>
-                              <% @members1.each do |member| %>
-                                <tr>
-                                  <td><%= member.name %></td>
-                                  <td></td>
-                                  <td>?</td>
-                                  <td></td>
-                                  <td><%= member.gender %></td>
-                                  <td></td>
-                                  <td>
-                                    <% if member.executive?(@group) %>
-                                      <label class="badge badge-info">幹事</label>
-                                    <% else %>
-                                      <label class="badge badge-danger">メンバー</label>
-                                    <% end %>
-                                  </td>
-                                  <td>
-                                    <button class="btn btn-outline-primary">削除</button>
-                                  </td>
-                                </tr>
-                              <% end %>
-                            <% end %>
-                          </tbody>
-                        </table>
-                        <%= paginate @members1 if @members1.try(:any?) %>
-                      </div>
-                    </div>
-                  </div>
+                  <%= render 'members', group: @group, members: @members1 %>
                 </section>
               </div>
-
               <div class="tab-pane fade" id="profile-1" role="tabpanel" aria-labelledby="profile-tab">
                 <h3>2年生</h3>
                 <section>
-                  <h4 class="card-title">メンバー一覧</h4>
-                  <div class="row">
-                    <div class="col-12">
-                      <div class="table-responsive">
-                        <table id="order-listing" class="table">
-                          <thead>
-                            <tr>
-                              <th>名前</th>
-                              <th></th>
-                              <th>学年</th>
-                              <th></th>
-                              <th>性別</th>
-                              <th></th>
-                              <th>ステータス</th>
-                              <th>編集</th>
-                            </tr>
-                          </thead>
-                          <% if @members2.try(:any?) %>
-                              <% @members2.each do |member| %>
-                                <tr>
-                                  <td><%= member.name %></td>
-                                  <td></td>
-                                  <td>?</td>
-                                  <td></td>
-                                  <td><%= member.gender %></td>
-                                  <td></td>
-                                  <td>
-                                    <% if member.executive?(@group) %>
-                                      <label class="badge badge-info">幹事</label>
-                                    <% else %>
-                                      <label class="badge badge-danger">メンバー</label>
-                                    <% end %>
-                                  </td>
-                                  <td>
-                                    <button class="btn btn-outline-primary">削除</button>
-                                  </td>
-                                </tr>
-                              <% end %>
-                            <% end %>
-                        </table>
-                        <%= paginate @members2 if @members2.try(:any?) %>
-                      </div>
-                    </div>
-                  </div>
+                  <%= render 'members', group: @group, members: @members2 %>
                 </section>
               </div>
 
               <div class="tab-pane fade" id="contact-1" role="tabpanel" aria-labelledby="contact-tab">
                 <h3>3年生</h3>
                 <section>
-                  <h4 class="card-title">メンバー一覧</h4>
-                  <div class="row">
-                    <div class="col-12">
-                      <div class="table-responsive">
-                        <table id="order-listing" class="table">
-                          <thead>
-                            <tr>
-                              <th>名前</th>
-                              <th></th>
-                              <th>学年</th>
-                              <th></th>
-                              <th>性別</th>
-                              <th></th>
-                              <th>ステータス</th>
-                              <th>編集</th>
-                            </tr>
-                          </thead>
-                          <% if @members3.try(:any?) %>
-                            <% @members3.each do |member| %>
-                              <tr>
-                                <td><%= member.name %></td>
-                                <td></td>
-                                <td>?</td>
-                                <td></td>
-                                <td><%= member.gender %></td>
-                                <td></td>
-                                <td>
-                                  <% if member.executive?(@group) %>
-                                    <label class="badge badge-info">幹事</label>
-                                  <% else %>
-                                    <label class="badge badge-danger">メンバー</label>
-                                  <% end %>
-                                </td>
-                                <td>
-                                  <button class="btn btn-outline-primary">削除</button>
-                                </td>
-                              </tr>
-                            <% end %>
-                          <% end %>
-                        </table>
-                        <%= paginate @members3 if @members3.try(:any?) %>
-                      </div>
-                    </div>
-                  </div>
+                  <%= render 'members', group: @group, members: @members3 %>
                 </section>
               </div>
 
               <div class="tab-pane fade" id="contact-2" role="tabpanel" aria-labelledby="contact2-tab">
                 <h3>4年生</h3>
                 <section>
-                  <h4 class="card-title">メンバー一覧</h4>
-                  <div class="row">
-                    <div class="col-12">
-                      <div class="table-responsive">
-                        <table id="order-listing" class="table">
-                          <thead>
-                            <tr>
-                              <th>名前</th>
-                              <th></th>
-                              <th>学年</th>
-                              <th></th>
-                              <th>性別</th>
-                              <th></th>
-                              <th>ステータス</th>
-                              <th>編集</th>
-                            </tr>
-                          </thead>
-                          <% if @members4.try(:any?) %>
-                            <% @members4.each do |member| %>
-                              <tr>
-                                <td><%= member.name %></td>
-                                <td></td>
-                                <td>?</td>
-                                <td></td>
-                                <td><%= member.gender %></td>
-                                <td></td>
-                                <td>
-                                  <% if member.executive?(@group) %>
-                                    <label class="badge badge-info">幹事</label>
-                                  <% else %>
-                                    <label class="badge badge-danger">メンバー</label>
-                                  <% end %>
-                                </td>
-                                <td>
-                                  <button class="btn btn-outline-primary">削除</button>
-                                </td>
-                              </tr>
-                            <% end %>
-                          <% end %>
-                        </table>
-                        <%= paginate @members4 if @members4.try(:any?) %>
-                      </div>
-                    </div>
-                  </div>
+                  <%= render 'members', group: @group, members: @members4 %>
                 </section>
               </div>
 
               <div class="tab-pane fade" id="contact-3" role="tabpanel" aria-labelledby="contact3-tab">
                 <h3>5年生</h3>
                 <section>
-                  <h4 class="card-title">メンバー一覧</h4>
-                  <div class="row">
-                    <div class="col-12">
-                      <div class="table-responsive">
-                        <table id="order-listing" class="table">
-                          <thead>
-                            <tr>
-                              <th>名前</th>
-                              <th></th>
-                              <th>学年</th>
-                              <th></th>
-                              <th>性別</th>
-                              <th></th>
-                              <th>ステータス</th>
-                              <th>編集</th>
-                            </tr>
-                          </thead>
-                          <% if @members5.try(:any?) %>
-                            <% @members5.each do |member| %>
-                              <tr>
-                                <td><%= member.name %></td>
-                                <td></td>
-                                <td>?</td>
-                                <td></td>
-                                <td><%= member.gender %></td>
-                                <td></td>
-                                <td>
-                                  <% if member.executive?(@group) %>
-                                    <label class="badge badge-info">幹事</label>
-                                  <% else %>
-                                    <label class="badge badge-danger">メンバー</label>
-                                  <% end %>
-                                </td>
-                                <td>
-                                  <button class="btn btn-outline-primary">削除</button>
-                                </td>
-                              </tr>
-                            <% end %>
-                          <% end %>
-                        </table>
-                        <%= paginate @members5 if @members5.try(:any?) %>
-                      </div>
-                    </div>
-                  </div>
+                  <%= render 'members', group: @group, members: @members5 %>
                 </section>
               </div>
 
               <div class="tab-pane fade" id="contact-4" role="tabpanel" aria-labelledby="contact4-tab">
                 <h3>6年生</h3>
                 <section>
-                  <h4 class="card-title">メンバー一覧</h4>
-                  <div class="row">
-                    <div class="col-12">
-                      <div class="table-responsive">
-                        <table id="order-listing" class="table">
-                          <thead>
-                            <tr>
-                              <th>名前</th>
-                              <th></th>
-                              <th>学年</th>
-                              <th></th>
-                              <th>性別</th>
-                              <th></th>
-                              <th>ステータス</th>
-                              <th>編集</th>
-                            </tr>
-                          </thead>
-                          <% if @members6.try(:any?) %>
-                            <% @members6.each do |member| %>
-                              <tr>
-                                <td><%= member.name %></td>
-                                <td></td>
-                                <td>?</td>
-                                <td></td>
-                                <td><%= member.gender %></td>
-                                <td></td>
-                                <td>
-                                  <% if member.executive?(@group) %>
-                                    <label class="badge badge-info">幹事</label>
-                                  <% else %>
-                                    <label class="badge badge-danger">メンバー</label>
-                                  <% end %>
-                                </td>
-                                <td>
-                                  <button class="btn btn-outline-primary">削除</button>
-                                </td>
-                              </tr>
-                            <% end %>
-                          <% end %>
-                        </table>
-                        <%= paginate @members6 if @members6.try(:any?) %>
-                      </div>
-                    </div>
-                  </div>
+                  <%= render 'members', group: @group, members: @members6 %>
                 </section>
               </div>
 
               <div class="tab-pane fade" id="contact-5" role="tabpanel" aria-labelledby="contact5-tab">
                 <h3>その他</h3>
                 <section>
-                  <h4 class="card-title">メンバー一覧</h4>
-                  <div class="row">
-                    <div class="col-12">
-                      <div class="table-responsive">
-                        <table id="order-listing" class="table">
-                          <thead>
-                            <tr>
-                              <th>名前</th>
-                              <th></th>
-                              <th>学年</th>
-                              <th></th>
-                              <th>性別</th>
-                              <th></th>
-                              <th>ステータス</th>
-                              <th>編集</th>
-                            </tr>
-                          </thead>
-                          <% if @others.try(:any?) %>
-                            <% @others.each do |other| %>
-                              <tr>
-                                <td><%= other.name %></td>
-                                <td></td>
-                                <td>?</td>
-                                <td></td>
-                                <td><%= other.gender %></td>
-                                <td></td>
-                                <td>
-                                  <% if other.executive?(@group) %>
-                                    <label class="badge badge-info">幹事</label>
-                                  <% else %>
-                                    <label class="badge badge-danger">メンバー</label>
-                                  <% end %>
-                                </td>
-                                <td>
-                                  <button class="btn btn-outline-primary">削除</button>
-                                </td>
-                              </tr>
-                            <% end %>
-                          <% end %>
-                        </table>
-                        <%= paginate @others if @others.try(:any?) %>
-                      </div>
-                    </div>
-                  </div>
+                  <%= render 'members', group: @group, members: @others %>
                 </section>
               </div>
             </div>

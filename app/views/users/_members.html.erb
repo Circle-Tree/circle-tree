@@ -1,0 +1,46 @@
+<h4 class="card-title">メンバー一覧</h4>
+  <div class="row">
+    <div class="col-12">
+      <div class="table-responsive">
+        <table id="order-listing" class="table">
+          <thead>
+            <tr>
+              <th>名前</th>
+              <th>性別</th>
+              <th>ステータス</th>
+              <% is_executive = current_user.executive?(group) %>
+              <% if is_executive %>
+                <th>退会</th>
+              <% end %>
+            </tr>
+          </thead>
+          <tbody>
+            <% if members.try(:any?) %>
+              <% members.each do |member| %>
+                <tr>
+                  <td><%= member.name %></td>
+                  <td><%= member.to_readable_gender %></td>
+                  <td>
+                    <% if member.executive?(group) %>
+                      <label class="badge badge-info">幹事</label>
+                    <% else %>
+                      <label class="badge badge-danger">メンバー</label>
+                    <% end %>
+                  </td>
+                  <% if is_executive %>
+                    <td>
+                      <% relationship = GroupUser.find_by(group_id: group.id, user_id: member.id) %>
+                      <% if relationship.role == 'general' %>
+                        <%= link_to '退会', group_user_path(id: relationship.id), method: :delete, class: "btn btn-outline-primary", data: { confirm: '本当に退会させますか？' } %>
+                      <% end %>
+                    </td>
+                  <% end %>
+                </tr>
+              <% end %>
+            <% end %>
+          </tbody>
+        </table>
+        <%= paginate members if members.try(:any?) %>
+      </div>
+    </div>
+  </div>

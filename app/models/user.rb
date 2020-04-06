@@ -48,6 +48,10 @@ class User < ApplicationRecord
     return grade.zero? ? 'その他' : grade
   end
 
+  def to_readable_gender
+    self.gender ? '女性' : '男性'
+  end
+
   def self.import!(file:, group:, password:)
     added_users = []
     transaction do

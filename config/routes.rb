@@ -65,6 +65,8 @@ Rails.application.routes.draw do
     end
   end
 
+  resources :group_users, only: :destroy
+
   resources :answers, only: [] do
     member do
       patch :change
