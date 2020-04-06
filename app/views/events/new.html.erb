@@ -22,7 +22,6 @@
                 <h4 class="card-title">イベント作成</h4>
                 <%= form_with model: @event, url: group_events_path(group_id: current_user_group.id), local: true, id: :exampleform do |f| %>
 
-                  <%= f.hidden_field :user_id, value: current_user.id %>
                   <%= f.hidden_field :group_id, value: @group.id %>
                   <div>
                     <h3>イベント概要</h3>
@@ -40,6 +39,10 @@
                         <%= f.label :end_date, '終了日' %>
                         <%= f.date_field :end_date, class: "form-control" %>
                       </div>
+                      <div class="form-group">
+                        <%= f.label :answer_deadline, '出欠回答期限' %>
+                        <%= f.date_field :answer_deadline, class: "form-control" %>
+                      </div>
                     </section>
 
                     <h3>集金設定</h3>
@@ -50,11 +53,11 @@
                         <%= f.number_field :amount, class: "form-control", placeholder: '集金額を設定してください', style: "color:white;" %>
                       </div>
                       <div class="form-group">
-                        <%= f.label :answer_deadline, '出欠締め切り日' %>
-                        <%= f.date_field :answer_deadline, class: "form-control" %>
+                        <%= f.label :user_id, '集金者' %>
+                        <%= f.select :user_id, @executives.map { |executive| [executive.name, executive.id]}, { include_blank: '選択してください' }, { class: "form-control", style: "color: white;" } %>
                       </div>
                       <div class="form-group">
-                        <%= f.label :pay_deadline, '集金締め切り日' %>
+                        <%= f.label :pay_deadline, '支払い期限' %>
                         <%= f.date_field :pay_deadline, class: "form-control" %>
                       </div>
                     </section>

@@ -15,8 +15,6 @@ class Event < ApplicationRecord
   validates :description, length: { maximum: 1024 }
   validates :amount, numericality: { only_integer: true, greater_than_or_equal_to: 0 }
   validate  :pay_deadline_not_before_today
-  validates :user_id, presence: true
-  validates :group_id, presence: true
   validates :comment, length: { maximum: 40 }
 
   def self.my_events(user)

@@ -42,6 +42,7 @@ class EventsController < ApplicationController
 
   def new
     @event = Event.new
+    @executives = User.executives(@group)
   end
 
   def create
@@ -55,6 +56,7 @@ class EventsController < ApplicationController
       flash[:success] = 'イベントが作成されました。グループのユーザーにメールで作成を通知しました。'
       redirect_to group_event_url(group_id: @group.id, id: @event.id)
     else
+      @executives = User.executives(@group)
       render 'new'
     end
   end

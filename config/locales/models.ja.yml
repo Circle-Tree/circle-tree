@@ -26,11 +26,13 @@ ja:
         name: イベント名
         start_date: 開始日
         end_date: 終了日
-        answer_deadline: 回答期限
+        answer_deadline: 出欠回答期限
         description: イベント説明
         comment: 一言
         amount: 集金額
         pay_deadline: 支払い期限
+        user: 集金者
+        group: グループ
       transaction:
         deadline: 支払い期限
         debt: 金額
