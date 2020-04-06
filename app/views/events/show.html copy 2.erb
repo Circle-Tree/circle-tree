@@ -21,57 +21,39 @@
 
         集金者： <%= User.find(@event.user_id).name %>
 
-        <div class="card">
-          <div class="card-body" style="background-color: rgb(255, 255, 255); color: #000;">
-            <h4 class="card-title" >イベント管理</h4>
-            <ul class="nav nav-tabs" role="tablist">
-              <li class="nav-item">
-                <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home-1" role="tab" aria-controls="home" aria-selected="true">出席</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile-1" role="tab" aria-controls="profile" aria-selected="false">欠席</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" id="contact-tab" data-toggle="tab" href="#contact-1" role="tab" aria-controls="contact" aria-selected="false">未納</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" id="contact2-tab" data-toggle="tab" href="#contact-2" role="tab" aria-controls="contact2" aria-selected="false">未回答</a>
-              </li>
-            </ul>
+        <%= render 'events/show/attending_members' %>
+        <%= render 'events/show/absent_members' %>
+        <%= render 'events/show/uncompleted_members' %>
+        <%= render 'events/show/unanswered_members' %>
 
-            <div class="tab-content">
-              <div class="tab-pane fade show active" id="home-1" role="tabpanel" aria-labelledby="home-tab">
-                <h3>出席</h3>
-                <section>
-                  <%= render 'events/show/attending_members' %>
-                </section>
+        </div>
+        <div class="row">
+          <div class="col-lg-6 grid-margin stretch-card">
+            <div class="card">
+              <div class="card-body">
+                <h4 class="card-title">Pie chart</h4>
+                <canvas id="pieChart" style="height:250px"></canvas>
               </div>
-
-              <div class="tab-pane fade" id="profile-1" role="tabpanel" aria-labelledby="profile-tab">
-                <h3>欠席</h3>
-                <section>
-                  <%= render 'events/show/absent_members' %>
-                </section>
-              </div>
-
-              <div class="tab-pane fade" id="contact-1" role="tabpanel" aria-labelledby="contact-tab">
-                <h3>未納</h3>
-                <section>
-                  <%= render 'events/show/uncompleted_members' %>
-                </section>
-              </div>
-
-              <div class="tab-pane fade" id="contact-2" role="tabpanel" aria-labelledby="contact2-tab">
-                <h3>未回答</h3>
-                <section>
-                  <%= render 'events/show/unanswered_members' %>
-                </section>
+            </div>
+          </div>
+          <div class="col-lg-6 grid-margin stretch-card">
+            <div class="card">
+              <div class="card-body">
+                <h4 class="card-title">Scatter chart</h4>
+                <canvas id="scatterChart" style="height:250px"></canvas>
               </div>
             </div>
           </div>
         </div>
+        <div class="row">
+          <%# <button id="event-delete-button" class="btn btn-danger col-md-12" onclick="showSwal('warning-message-and-cancel')" %>
+            <%# 削除 %>
+          <%# </button> %>
+          <%= link_to '削除', group_event_path(group_id: @event.group_id, id: @event.id), method: :delete, class: "btn btn-danger col-md-12", data: { confirm: '本当に削除しますか？' } %>
+        </div>
       </div>
       <!-- content-wrapper ends -->
+
       <%= render 'shared/footer' %>
     </div>
     <!-- main-panel ends -->
@@ -79,38 +61,55 @@
   <!-- page-body-wrapper ends -->
 </div>
 <script>
-  let transactionSelect = $('.transaction-select');
-  transactionSelect.change(function(e) {
-    e.preventDefault(); // キャンセル可能なイベントをキャンセル
-    let select = $(this)
-    let urlToken = select.data('url-token');
-    let payment = select.data('payment');
-    let completed = select.val();
-    let transactionUrl = `/transactions/${urlToken}/change`;
-    $.ajax({
-      url: transactionUrl,
-      type: 'PATCH',
-      data: { url_token: urlToken, completed: completed },
-      // dataType: 'json',
-      // processData: false,
-      // contentType: false
-    })
-    .done(function() {
-      tdCompleted = select.parent().parent();
-      tdPayment = tdCompleted.prev().prev()
-      select.parent().remove();
-      let html = `<a class='btn btn-success' href='/transactions/${urlToken}/receipt.pdf'>完了</a>`;
-      if (completed === 'true') {
-        tdPayment.html(payment);
-        tdCompleted.append(html);
-      }
-    })
-    .fail(function() {
-      alert('失敗しました');
+  (function($) {
+    'use strict';
+    $(function() {
+      $('#order-listing').DataTable({
+        "aLengthMenu": [
+          [5, 10, 15, -1],
+          [5, 10, 15, "All"]
+        ],
+        "iDisplayLength": 10,
+        "language": {
+          search: ""
+        }
+      });
+      $('#order-listing').each(function() {
+        var datatable = $(this);
+        // SEARCH - Add the placeholder for Search and Turn this into in-line form control
+        var search_input = datatable.closest('.dataTables_wrapper').find('div[id$=_filter] input');
+        search_input.attr('placeholder', 'Search');
+        search_input.removeClass('form-control-sm');
+        // LENGTH - Inline-Form control
+        var length_sel = datatable.closest('.dataTables_wrapper').find('div[id$=_length] select');
+        length_sel.removeClass('form-control-sm');
+      });
     });
-  });
+  })(jQuery);
 </script>
+<script>
+  (function($) {
+    'use strict';
+    if ($('#pagination-demo').length) {
+      $('#pagination-demo').twbsPagination({
+        totalPages: 35,
+        visiblePages: 7,
+        onPageClick: function(event, page) {
+          $('#page-content').text('Page ' + page);
+        }
+      });
+    }
 
+    if ($('.sync-pagination').length) {
+      $('.sync-pagination').twbsPagination({
+        totalPages: 20,
+        onPageClick: function(evt, page) {
+          $('#content').text('Page ' + page);
+        }
+      });
+    }
+  })(jQuery);
+</script>
 <script>
   // (function($) {
   //   button = $('#event-delete-button')

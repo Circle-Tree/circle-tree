@@ -1,6 +1,5 @@
 <div class="card" style="margin-bottom: 20px;">
   <div class="card-body">
-    <h4 class="card-title">未納</h4>
     <div class="row">
       <div class="col-12">
         <div class="table-responsive">
@@ -26,28 +25,14 @@
                 <td><%= user.name %></td>
                 <td>?</td>
                 <td><%= user.grade %></td>
-                <td>￥<%= transaction.debt %></td>
-                <td>￥<%= transaction.payment %></td>
-                <td>?</td>
+                <%= render 'events/show/transaction', transaction: transaction %>
                 <td>
-                  <% if transaction.completed? %>
-                    <%= link_to '完了', receipt_event_transaction_path(event_id: transaction.event_id, url_token: transaction.url_token, format: 'pdf') %>
-                  <% else %>
-                    <%= form_with model: transaction, url: transaction_path(url_token: transaction.url_token) do |f| %>
-                      <%= f.select :completed, [['完了', true], ['未完了', false]], {}, { class: "btn btn-secondary", style: "background-color:rgb(236, 236, 236)" } %>
-                    <% end %>
-                  <% end %>
-                </td>
-                <td>
-                  <%= link_to '変更する', edit_transaction_path(url_token: transaction.url_token), class: "btn btn-outline-primary" %>
+                  <%= link_to '変更する', edit_event_transaction_path(event_id: transaction.event_id, url_token: transaction.url_token), class: "btn btn-outline-primary" %>
                 </td>
               </tr>
             <% end %>
             </tbody>
           </table>
-          <button type="button" class="btn btn-danger btn-icon-text" style="margin-top: 30px;">
-            <i class="mdi mdi-check"></i> 保存
-          </button>
           <%= paginate @uncompleted_transactions %>
         </div>
       </div>
