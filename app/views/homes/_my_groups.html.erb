@@ -15,7 +15,10 @@
                     <h6 class="preview-subject"><%= group.name %></h6>
                     <p class="text-muted text-small"></p>
                   </div>
-                  <p class="text-muted"><%= group.group_number %></p>
+                  <ul>
+                    <li class="text-muted"><%= link_to 'メンバー', group_users_path(group_id: group.id) %></li>
+                    <%# <li class="text-muted">= link_to 'イベント', group.group_number</li> %>
+                  </ul>
                 </div>
               </div>
             </div>
