@@ -2,7 +2,7 @@
 
 module ApplicationHelper
   def full_title(page_title = '')
-    base_title = 'Circle Management'
+    base_title = 'Circle Tree'
     if page_title.empty?
       base_title
     else
