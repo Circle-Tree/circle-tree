@@ -43,7 +43,7 @@ class ApplicationController < ActionController::Base
       return if current_user.definitive_registration
 
       flash_and_redirect(key: :danger, message: 'アカウントは一括登録後の状態ですので、パスワードを変更するようにしてください。',
-                         redirect_url: edit_password_user_url(id: current_user.id))
+                         redirect_url: users_edit_password_url)
     end
 
     def other_user_cannot_access

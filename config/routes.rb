@@ -10,6 +10,10 @@ Rails.application.routes.draw do
   devise_scope :user do
     get 'sign_in', to: 'users/sessions#new'
     get 'sign_out', to: 'users/sessions#destroy'
+    get "users/edit_profile", to: "users/registrations#edit_profile"
+    get "users/edit_password", to: "users/registrations#edit_password"
+    put "users/update_profile", to: "users/registrations#update_profile"
+    put "users/update_password", to: "users/registrations#update_password"
   end
 
   root 'homes#index'
@@ -45,10 +49,6 @@ Rails.application.routes.draw do
   end
 
   resources :users, only: [] do
-    member do
-      get :edit_profile
-      get :edit_password
-    end
     resources :transactions, only: [:index]
     resources :events, only: [] do
       collection do
