@@ -24,7 +24,7 @@ class User < ApplicationRecord
     grade5: 5,
     grade6: 6
   }
-  with_options unless: -> { validation_context == :batch } do |batch|
+  with_options unless: -> { validation_context == :batch || :update_password } do |batch|
     batch.validates :gender, inclusion: { in: [true, false] }
     batch.validates :grade, presence: true
     batch.validates :furigana, presence: true

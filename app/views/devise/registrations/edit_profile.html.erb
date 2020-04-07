@@ -24,11 +24,11 @@
                 <h4 class="card-title" >プロフィール設定</h4>
                 <ul class="nav nav-tabs" role="tablist">
                   <li class="nav-item">
-                    <%= link_to 'プロフィール設定', edit_profile_user_path(id: current_user.id), class: "nav-link active" %>
+                    <%= link_to 'プロフィール設定', users_edit_profile_path, class: "nav-link active" %>
                     <%# <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home-1" role="tab" aria-controls="home" aria-selected="true">プロフィール設定</a> %>
                   </li>
                   <li class="nav-item">
-                    <%= link_to 'パスワード設定', edit_password_user_path(id: current_user.id), class: "nav-link" %>
+                    <%= link_to 'パスワード設定', users_edit_password_path, class: "nav-link" %>
                     <%# <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile-1" role="tab" aria-controls="profile" aria-selected="false">パスワード設定</a> %>
                   </li>
                 </ul>
@@ -36,10 +36,10 @@
                   <div class="tab-pane fade show active" id="home-1" role="tabpanel" aria-labelledby="home-tab">
                     <h3>プロフィール設定</h3>
                     <section>
-                      <%= form_with model: @user, url: user_registration_path, class: "forms-sample", local: true do |f| %>
-                        <%= render 'shared/error_messages', model: f.object %>
-                        <% if @user.pending_reconfirmation? %>
-                          <div>現在<<%= @user.unconfirmed_email %>>の確認待ちです。</div>
+                      <%= form_for(resource, as: resource_name, url: users_update_profile_path(resource_name), html: { method: :put }) do |f| %>
+                        <%= render "devise/shared/error_messages", resource: resource %>
+                        <% if resource.pending_reconfirmation? %>
+                          <div>現在<<%= resource.unconfirmed_email %>>の確認待ちです。</div>
                         <% end %>
                         <div class="form-group row">
                           <%= f.label :name, "氏名", class: "col-sm-3 col-form-label" %>
@@ -82,7 +82,6 @@
                           </div>
                         </div>
                         <%= f.submit '変更', class: "btn btn-primary mr-2" %>
-                        <%= link_to 'リセット', edit_user_registration_path, class: "btn btn-dark" %>
                       <% end %>
                     </section>
                   </div>
@@ -99,5 +98,11 @@
   </div>
   <!-- page-body-wrapper ends -->
 </div>
-<script>
-</script>
+<style>
+.field_with_errors {
+  display: contents;
+  /* input {
+    @extend .is-invalid;
+  } */
+}
+</style>
