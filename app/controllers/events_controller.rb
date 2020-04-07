@@ -69,6 +69,7 @@ class EventsController < ApplicationController
 
   def edit
     @event = @group.events.find(params[:id])
+    @executives = User.executives(@group)
   end
 
   def update
@@ -78,6 +79,7 @@ class EventsController < ApplicationController
       UpdateEventJob.perform_later(members: members, current_user: current_user, group: @group, event: @event)
       flash_and_redirect(key: :success, message: 'イベント情報を更新しました', redirect_url: group_event_url(group_id: @group.id, id: @event.id))
     else
+      @executives = User.executives(@group)
       render 'edit'
     end
   end
