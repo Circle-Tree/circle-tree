@@ -82,8 +82,6 @@ GEM
       dotenv (= 2.7.5)
       railties (>= 3.2, < 6.1)
     e2mmap (0.1.0)
-    enum_help (0.0.17)
-      activesupport (>= 3.0.0)
     erubi (1.9.0)
     et-orbi (1.2.3)
       tzinfo
@@ -151,6 +149,7 @@ GEM
       ruby2_keywords (~> 0.0.1)
     mysql2 (0.5.3)
     mysql2 (0.5.3-x64-mingw32)
+    newrelic_rpm (6.9.0.363)
     nio4r (2.5.2)
     nokogiri (1.10.9)
       mini_portile2 (~> 2.4.0)
@@ -319,7 +318,6 @@ DEPENDENCIES
   chromedriver-helper
   devise
   dotenv-rails
-  enum_help
   gimei
   haml
   jbuilder
@@ -327,6 +325,7 @@ DEPENDENCIES
   listen
   money-rails
   mysql2
+  newrelic_rpm
   paypal-sdk-rest
   prawn
   prawn-table
