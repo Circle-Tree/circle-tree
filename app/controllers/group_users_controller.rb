@@ -1,4 +1,8 @@
 class GroupUsersController < ApplicationController
+  before_action :authenticate_user!
+  before_action :confirm_definitive_registration
+  before_action :only_executives_can_access
+
   def destroy
     relationship = GroupUser.find(params[:id])
     if relationship.destroy
