@@ -7,7 +7,7 @@ class AnswersController < ApplicationController
 
   def change
     if params[:answer_id]
-      answer = Answer.find(params[:answer_id])
+      answer = current_user.answers.find(params[:answer_id])
       if answer&.update(status: params[:status])
         flash.now[:success] = '回答を変更しました'
       else
@@ -32,8 +32,8 @@ class AnswersController < ApplicationController
     end
 
     def other_user_cannot_access
-      @answer = Answer.find(params[:id])
-      @event = Event.find(params[:event_id])
+      @answer = current_user.answers.find(params[:id])
+      @event = @answer.event
       my_answer = Answer.find_by(user_id: current_user.id, event_id: @event.id)
       return if my_answer == @answer
 
