@@ -112,4 +112,7 @@ Rails.application.configure do
   # timezone
   config.time_zone = 'Tokyo'
   config.active_record.default_timezone = :local
+
+  # for ssl
+  config.force_ssl = true
 end
