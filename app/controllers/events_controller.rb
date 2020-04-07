@@ -22,7 +22,7 @@ class EventsController < ApplicationController
   end
 
   def show
-    @event = Event.find(params[:id])
+    @event = @group.events.find(params[:id])
     @attending_count = Answer.attending_count(event: @event)
     @absent_count = Answer.absent_count(event: @event)
     @unanswered_count = Answer.unanswered_count(event: @event)
@@ -41,8 +41,7 @@ class EventsController < ApplicationController
   end
 
   def details
-    @event = Event.find(params[:id])
-    @group = Group.find(params[:group_id])
+    @event = @group.events.find(params[:id])
     @answer = Answer.find_by(event_id: @event.id, user_id: current_user.id)
     @attending_answers = Answer.where(event_id: @event.id, status: 'attending')
   end
@@ -69,11 +68,11 @@ class EventsController < ApplicationController
   end
 
   def edit
-    @event = Event.find(params[:id])
+    @event = @group.events.find(params[:id])
   end
 
   def update
-    @event = Event.find(params[:id])
+    @event = @group.events.find(params[:id])
     members = User.members(@group)
     if @event.update(event_params)
       UpdateEventJob.perform_later(members: members, current_user: current_user, group: @group, event: @event)
@@ -84,7 +83,7 @@ class EventsController < ApplicationController
   end
 
   def destroy
-    event = Event.find(params[:id])
+    event = @group.events.find(params[:id])
     if event.destroy
       flash_and_redirect(key: :success, message: 'イベントを削除しました', redirect_url: group_events_url(group_id: event.group_id, id: event.id))
     else
