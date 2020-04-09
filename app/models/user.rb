@@ -155,7 +155,7 @@ class User < ApplicationRecord
       elsif number >= 1 && number <= 6
         number
       else
-        nil
+        0
       end
     end
 end
