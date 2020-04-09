@@ -56,9 +56,10 @@ class EventsController < ApplicationController
     if @event.save
       members = User.members(@group)
       members.delete(current_user) # イベント作成者は除く
-      Event::Transaction.new_transaction_when_create_new_event(current_user, current_user, @group, @event)
+      Event::Transaction.new_transaction_when_create_new_event(member: current_user, group: @group, event: @event, creditor: current_user)
       Answer.new_answer_when_create_new_event(current_user, @event)
-      NewEventJob.perform_later(members, current_user, @group, @event)
+      creditor = User.find(@event.user_id)
+      NewEventJob.perform_later(members: members, current_user: current_user, group: @group, event: @event, creditor: creditor)
       flash[:success] = 'イベントが作成されました。グループのユーザーにメールで作成を通知しました。'
       redirect_to group_event_url(group_id: @group.id, id: @event.id)
     else
@@ -69,15 +70,18 @@ class EventsController < ApplicationController
 
   def edit
     @event = @group.events.find(params[:id])
+    @executives = User.executives(@group)
   end
 
   def update
     @event = @group.events.find(params[:id])
     members = User.members(@group)
     if @event.update(event_params)
-      UpdateEventJob.perform_later(members: members, current_user: current_user, group: @group, event: @event)
+      creditor = User.find(@event.user_id)
+      UpdateEventJob.perform_later(members: members, current_user: current_user, group: @group, event: @event, creditor: creditor)
       flash_and_redirect(key: :success, message: 'イベント情報を更新しました', redirect_url: group_event_url(group_id: @group.id, id: @event.id))
     else
+      @executives = User.executives(@group)
       render 'edit'
     end
   end

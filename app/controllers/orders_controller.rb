@@ -17,9 +17,7 @@ class OrdersController < ApplicationController
   end
 
   def step2
-    products = Product.all
-    @products_purchase = products.where(paypal_plan_name: nil)
-    @products_subscription = products - @products_purchase
+    @subscriptions = Product.limit(3)
   end
 
   def submit
@@ -38,14 +36,16 @@ class OrdersController < ApplicationController
           user_id: current_user.id,
           role: GroupUser.roles[:executive]
         )
-        return render html: '成功'
+        flash_and_redirect(key: :success, message: 'グループが作成されました', redirect_url: root_url) and return
       elsif @order.failed? && !@order.error_message.blank?
         # Render error only if order failed and there is an error_message
         return render html: @order.error_message
       end
+    else
+    puts '失敗1'
+    flash.now[:danger] = 'エラーが発生しました。もう一度お始めからやり直してください。'
+    render json: {error: '失敗1'}, status: :unprocessable_entity
     end
-    puts '失敗１'
-    render html: '失敗1'
   end
 
   def paypal_create_payment
@@ -72,7 +72,8 @@ class OrdersController < ApplicationController
     if result
       render json: { token: result }, status: :ok
     else
-      puts '失敗４'
+      puts '失敗4'
+      flash.now[:danger] = 'エラーが発生しました。もう一度お始めからやり直してください。'
       render json: {error: '失敗4'}, status: :unprocessable_entity
     end
   end
@@ -82,7 +83,8 @@ class OrdersController < ApplicationController
     if result
       render json: { id: result }, status: :ok
     else
-      puts '失敗５'
+      puts '失敗5'
+      flash.now[:danger] = 'エラーが発生しました。もう一度お始めからやり直してください。'
       render json: {error: '失敗5'}, status: :unprocessable_entity
     end
   end

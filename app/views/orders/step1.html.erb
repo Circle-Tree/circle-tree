@@ -1,21 +1,120 @@
-<% provide(:title, "グループ作成") %>
-<h1>STEP 1</h1>
-<%= form_for @group, url: step2_orders_path, method: :get do |f| %>
-  <%= render 'shared/error_messages', object: f.object %>
-  <div class="field">
-
-    <%= f.label :name, "グループ名" %>
-    <%= f.text_field :name, class: "form-control", placeholder: "例）○○テニスサークル" %><br />
-
-    <%= f.label :email, " 代表者メールアドレス" %>
-    <%= f.email_field :email, autofocus: true, autocomplete: "email" %><br />
-
-    <%= f.label :group_number, "グループID(6~25文字)" %>
-    <%= f.text_field :group_number, class: "form-control", placeholder: "英数字と_を使用できます)" %><br />
-
-    <%= f.submit "作成" %>
-
+<% provide(:title, "STEP1 グループ作成") %>
+<div class="sidebar-fixed container-scroller" style="background-color: rgb(44, 44, 44);">
+  <%= render 'shared/sidebar' %>
+  <div class="container-fluid page-body-wrapper">
+    <!-- partial:partials/_navbar.html -->
+    <%= render 'shared/topbar' %>
+    <!-- partial -->
+    <%= render 'shared/flash' %>
+    <div class="main-panel">
+      <div class="content-wrapper">
+        <div class="page-header">
+          <h3 class="page-title" style="color: black;"> サークル作成 </h3>
+          <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+              <li class="breadcrumb-item"><a href="#">サークル作成</a></li>
+            </ol>
+          </nav>
+        </div>
+        <div class="row">
+          <div class="col-md-12 grid-margin stretch-card">
+            <div class="card">
+              <div class="card-body" style="color: black;">
+                <h4 class="card-title">サークル作成</h4>
+                <p class="card-description">あなたのサークルを作成できます。</p>
+                <ul class="nav nav-tabs" role="tablist">
+                  <li class="nav-item" style="width: 50%;">
+                    <div class="nav-link active"aria-selected="true">STEP1</div>
+                  </li>
+                  <li class="nav-item" style="width: 50%;">
+                    <div class="nav-link"aria-selected="false">STEP2</div>
+                  </li>
+                </ul>
+                <%= form_with model: @group, url: step2_orders_path, local: true, method: :get do |f| %>
+                  <div class="tab-content">
+                    <div class="tab-pane fade show active" id="home-1" role="tabpanel" aria-labelledby="home-tab">
+                      <h4>サークル情報</h4>
+                      <%= render 'shared/error_messages', model: f.object %>
+                      <%= f.hidden_field :email, value: current_user.email %>
+                      <div class="form-group" style="margin-bottom: 80px;">
+                        <%= f.label :name, "グループ名", style: "margin-top: 20px;" %>
+                        <%= f.text_field :name, class: "form-control", placeholder: "サークル名を入力してください", style: "color: white;" %>
+                      </div>
+                      <div class="form-group">
+                        <%= f.label :group_number, "グループID(6~25字)" %>
+                        <%= f.text_field :group_number, class: "form-control", placeholder: "英数字と_を使用できます", style: "color: white;" %>
+                        <%# <small>サークルIDは新しいメンバーを登録する際に必要です。</small> %>
+                      </div>
+                    </div>
+                    <%= f.submit "次へ", class: "btn btn-primary btn-fw offset-md-10" %>
+                  </div>
+                <% end %>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- content-wrapper ends -->
+      <%= render 'shared/footer' %>
+    </div>
+    <!-- main-panel ends -->
   </div>
-<% end %>
+  <!-- page-body-wrapper ends -->
+</div>
+<script>
+  (function($) {
+  'use strict';
+  var form = $("#example-form");
+  form.children("div").steps({
+    headerTag: "h3",
+    bodyTag: "section",
+    transitionEffect: "slideLeft",
+    onFinished: function(event, currentIndex) {
+      alert("イベントを作成しました。");
+    }
+  });
+  var validationForm = $("#example-validation-form");
+  validationForm.val({
+    errorPlacement: function errorPlacement(error, element) {
+      element.before(error);
+    },
+    rules: {
+      confirm: {
+        equalTo: "#password"
+      }
+    }
+  });
+  validationForm.children("div").steps({
+    headerTag: "h3",
+    bodyTag: "section",
+    transitionEffect: "slideLeft",
+    onStepChanging: function(event, currentIndex, newIndex) {
+      validationForm.val({
+        ignore: [":disabled", ":hidden"]
+      })
+      return validationForm.val();
+    },
+    onFinishing: function(event, currentIndex) {
+      validationForm.val({
+        ignore: [':disabled']
+      })
+      return validationForm.val();
+    },
+    onFinished: function(event, currentIndex) {
+      alert("Submitted!");
+    }
+  });
+  var verticalForm = $("#example-vertical-wizard");
+  verticalForm.children("div").steps({
+    headerTag: "h3",
+    bodyTag: "section",
+    transitionEffect: "slideLeft",
+    stepsOrientation: "vertical",
+    onFinished: function(event, currentIndex) {
+      alert("Submitted!");
+    }
+  });
+})(jQuery);
+</script>
 
 
