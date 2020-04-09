@@ -90,18 +90,18 @@
     $.ajax({
       url: transactionUrl,
       type: 'PATCH',
-      data: { url_token: urlToken, completed: completed },
+      data: { url_token: urlToken },
       // dataType: 'json',
       // processData: false,
       // contentType: false
     })
     .done(function() {
       tdCompleted = select.parent().parent();
-      tdPayment = tdCompleted.prev().prev()
+      tdPayment = tdCompleted.prev()
       select.parent().remove();
       let html = `<a class='btn btn-success' href='/transactions/${urlToken}/receipt.pdf'>完了</a>`;
       if (completed === 'true') {
-        tdPayment.html(payment);
+        tdPayment.html(`￥${payment}`);
         tdCompleted.append(html);
       }
     })
