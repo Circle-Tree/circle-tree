@@ -46,25 +46,26 @@
                               <%= l start_date, format: :short %> ~ <%= l end_date, format: :short %>
                             <% end %>
                           </td>
-                          <% participant_count = event.answers.where(status: 'attending').count %>
+                          <% answers = event.answers.where(status: 'attending') %>
+                          <% participant_count = answers.count %>
                           <td><%= participant_count %></td>
                           <% unless participant_count == 0 %>
-                            <% expected_total_amount = Event::Transaction.expected_event_total_amount(event: event) %>
-                            <% paid_total_amount = Event::Transaction.paid_event_total_amount(event: event) %>
-                            <% completed_transactions = Event::Transaction.completed_transactions(event: event) %>
+                            <% expected_total_amount = Event::Transaction.expected_event_total_amount(event: event, answers: answers) %>
+                            <% paid_total_amount = Event::Transaction.paid_event_total_amount(event: event, answers: answers) %>
+                            <%# completed_transactions = Event::Transaction.completed_transactions(event: event) %>
+                            <% completed_rate = (paid_total_amount  * 100 / expected_total_amount) %>
 
                             <%# <td>88%</td> %>
                             <td>￥<%= expected_total_amount %></td>
-                            <td><%= (paid_total_amount * 100 / expected_total_amount).to_i %> %</td>
+                            <td><%= completed_rate.to_i %> %</td>
                             <td>
-                              <% completed_count = completed_transactions.count %>
-                                <% if completed_count == participant_count %>
-                                  <label class="badge badge-success">完了</label>
-                                <% elsif completed_count >= participant_count * 0.8 %>
-                                  <label class="badge badge-primary">もう少し</label>
-                                <% else %>
-                                  <label class="badge badge-danger">未完了</label>
-                                <% end %>
+                              <% if completed_rate == 100 %>
+                                <label class="badge badge-success">完了</label>
+                              <% elsif completed_rate >= 80 %>
+                                <label class="badge badge-primary">もう少し</label>
+                              <% else %>
+                                <label class="badge badge-danger">未完了</label>
+                              <% end %>
                             </td>
                           <% else %>
                           <td></td>
