@@ -1,0 +1,100 @@
+- provide(:title, "My収支情報ページ")
+- content_for :pack_tag do
+  = javascript_pack_tag 'orders/index'
+%script{src: "https://www.paypal.com/sdk/js?client-id=#{ENV['PAYPAL_CLIENT_ID']}&currency=JPY"}
+
+%div
+  = form_tag({:controller => "orders", :action => "submit" }, {:id => 'order-details'}) do
+    %h2 プラン
+    .form_row
+      %h4 プロダクト
+      - @products_purchase.each do |product|
+        %div{'data-charges-and-payments-section': true}
+          = radio_button_tag 'orders[product_id]', product.id, @products_purchase.first == product
+          %span{id: "radioButtonName#{product.id}"} #{product.name}
+          %span{id: "radioButtonPrice#{product.id}", :'data-price' => "#{product.price_cents}"} #{humanized_money_with_symbol product.price}
+        %br
+      %h4 サブスクリプション
+      - @products_subscription.each do |product|
+        %div
+          = radio_button_tag 'orders[product_id]', product.id
+          %span{id: "radioButtonName#{product.id}"} #{product.name}
+          %span{id: "radioButtonPrice#{product.id}", :'data-price' => "#{product.price_cents}"} #{humanized_money_with_symbol product.price}
+        %br
+    %hr
+    %h2 支払い方法
+    .form_row
+      %div
+        = radio_button_tag 'payment-selection', 'paypal'
+        %span PayPal
+    %br
+    %br
+    %div{id: 'submit-paypal'}
+    %br
+    %br
+    %hr
+
+:javascript
+  (function setupPaypal() {
+    function isPayment() {
+      // legthで要素の存在のチェック
+      return $('[data-charges-and-payments-section] input[name="orders[product_id]"]:checked').length
+    }
+
+    function submitOrderPaypal(chargeID) {
+      var $form = $("#order-details");
+      // 子要素hidden input orders[charge_id]を追加＆値(value)にchageIDを設定
+      $form.append($('<input type="hidden" name="orders[charge_id]"/>').val(chargeID));
+      // データの送信
+      $form.submit();
+    }
+
+    paypal.Buttons({
+      env: "#{ENV['PAYPAL_ENV']}",
+      createOrder: function() {
+        if (isPayment()) {
+          // paypal_createアクションにorder-detailsのデータを送信し、受け取ったtokenを返す
+          return $.post("#{paypal_create_payment_url}", $('#order-details').serialize()).then(function(data) {
+            return data.token;
+          });
+        } else {
+          return $.post("#{paypal_create_subscription_url}", $('#order-details').serialize()).then(function(data) {
+            return data.token;
+          });
+        }
+      },
+      onApprove: function(data) {
+        if (isPayment()) {
+          return $.post("#{paypal_execute_payment_url}", {
+            paymentID: data.paymentID,
+            payerID:   data.payerID
+          }).then(function() {
+            submitOrderPaypal(data.paymentID)
+          });
+        } else {
+          return $.post("#{paypal_execute_subscription_url}", {
+            subscriptionToken: data.orderID
+          }).then(function(executeData) {
+            submitOrderPaypal(executeData.id)
+          });
+        }
+      },
+      onCancel: function (data) {
+        // Show a cancel page, or return to cart
+        alert('キャンセルしました');
+      },
+      onError: function(err) {
+        // Show an error page here, when an error occurs
+        alert('エラーが発生しました'); // エラーが発生した際に書く
+      }
+    }).render('#submit-paypal');
+  }());
+
+
+:css
+  .paymentSelectionTab {
+    display: none;
+  }
+  .paymentSelectionTab.active {
+    display: block !important;
+  }

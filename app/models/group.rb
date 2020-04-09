@@ -14,9 +14,11 @@ class Group < ApplicationRecord
                     format: { with: VALID_EMAIL_REGEX } # 一意である必要はない
   # group_number
   VALID_GRPUP_NUMBER_REGEX = /\A(?=.*[a-zA-Z])(?=.*\d)[a-zA-Z\d]\w{6,25}\z/.freeze
-  validates :group_number, presence: true, uniqueness: true,
+  validates :group_number, presence: true
+  validates :group_number, uniqueness: true,
                            format: { with: VALID_GRPUP_NUMBER_REGEX },
-                           length: { in: 6..25 }
+                           length: { in: 6..25 },
+                           allow_blank: true
   enum payment_status: { unpaid: 0, paid: 1, inactive: 2 }
 
   def set_paid

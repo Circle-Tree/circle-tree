@@ -1,39 +1,97 @@
-- provide(:title, "My収支情報ページ")
-- content_for :pack_tag do
-  = javascript_pack_tag 'orders/index'
+- provide(:title, "支払い")
+.sidebar-fixed.container-scroller{style: "background-color: rgb(44, 44, 44);"}
+  = render 'shared/sidebar'
+  / partial
+  .container-fluid.page-body-wrapper
+    = render 'shared/topbar'
+    = render 'shared/flash'
+    .main-panel
+      .content-wrapper
+        .page-header
+          %h3.page-title{style: "color: black;"} サークル作成
+          %nav{"aria-label" => "breadcrumb"}
+            %ol.breadcrumb
+              %li.breadcrumb-item
+                %a{href: "#"} サークル作成
+        .row
+          .col-md-12.grid-margin.stretch-card
+            .card
+              .card-body{style: "color: black;"}
+                %h4.card-title サークル作成
+                %p.card-description あなたのサークルを作成できます。
+                %ul.nav.nav-tabs{role: "tablist"}
+                  %li.nav-item{style: "width: 50%;"}
+                    .nav-link{"aria-selected" => "false"} STEP1
+                  %li.nav-item{style: "width: 50%;"}
+                    .nav-link.active{"aria-selected" => "true"} STEP2
+                .tab-content
+                  #home-1.tab-pane.fade.show.active{"aria-labelledby" => "home-tab", role: "tabpanel"}
+                    %h3 プラン選択
+                    .form-group
+                      = form_tag({:controller => "orders", :action => "submit" }, {:id => 'order-details'}) do
+                        .row.pricing-table
+                          .col-md-4.grid-margin.stretch-card.pricing-card
+                            .card.border-primary.border.pricing-card-body
+                              .text-center.pricing-card-head
+                                %h3.text-primary #{@subscriptions[0].name}
+                                %p Basic Plan
+                                %h1.font-weight-normal.mb-4 #{humanized_money_with_symbol @subscriptions[0].price}
+                              %ul.list-unstyled.plan-features
+                                %li Email preview on air
+                                %li Spam testing and blocking
+                                %li 10 GB Space
+                                %li 50 user accounts
+                                %li Free support for one years
+                                %li Free upgrade for one year
+                              .col-sm-12
+                                .form-check
+                                  %label.form-check-label
+                                    = radio_button_tag 'orders[product_id]', @subscriptions[0].id
+                                    -# %input#membershipRadios1.form-check-input{checked: "checked", name: "membershipRadios", type: "radio", value: ""}>/
+                                    選択
+                          .col-md-4.grid-margin.stretch-card.pricing-card
+                            .card.border-success.border.pricing-card-body
+                              .text-center.pricing-card-head
+                                %h3.text-success #{@subscriptions[1].name}
+                                %p Basic Plan
+                                %h1.font-weight-normal.mb-4 #{humanized_money_with_symbol @subscriptions[1].price}
+                              %ul.list-unstyled.plan-features
+                                %li Email preview on air
+                                %li Spam testing and blocking
+                                %li 10 GB Space
+                                %li 50 user accounts
+                                %li Free support for one years
+                                %li Free upgrade for one year
+                              .col-sm-12
+                                .form-check
+                                  %label.form-check-label
+                                    = radio_button_tag 'orders[product_id]', @subscriptions[1].id
+                                    -# %input#membershipRadios1.form-check-input{checked: "checked", name: "membershipRadios", type: "radio", value: ""}>/
+                                    選択
+                          .col-md-4.grid-margin.stretch-card.pricing-card
+                            .card.border-danger.border.pricing-card-body
+                              .text-center.pricing-card-head
+                                %h3.text-danger #{@subscriptions[2].name}
+                                %p Basic Plan
+                                %h1.font-weight-normal.mb-4 #{humanized_money_with_symbol @subscriptions[2].price}
+                              %ul.list-unstyled.plan-features
+                                %li Email preview on air
+                                %li Spam testing and blocking
+                                %li 10 GB Space
+                                %li 50 user accounts
+                                %li Free support for one years
+                                %li Free upgrade for one year
+                              .col-sm-12
+                                .form-check
+                                  %label.form-check-label
+                                    = radio_button_tag 'orders[product_id]', @subscriptions[2].id
+                                    -# %input#membershipRadios1.form-check-input{checked: "checked", name: "membershipRadios", type: "radio", value: ""}>/
+                                    選択
+                        %div{id: 'submit-paypal'}
+      = render 'shared/footer'
+    / main-panel ends
+  / page-body-wrapper ends
 %script{src: "https://www.paypal.com/sdk/js?client-id=#{ENV['PAYPAL_CLIENT_ID']}&currency=JPY"}
-
-%div
-  = form_tag({:controller => "orders", :action => "submit" }, {:id => 'order-details'}) do
-    %h2 プラン
-    .form_row
-      %h4 プロダクト
-      - @products_purchase.each do |product|
-        %div{'data-charges-and-payments-section': true}
-          = radio_button_tag 'orders[product_id]', product.id, @products_purchase.first == product
-          %span{id: "radioButtonName#{product.id}"} #{product.name}
-          %span{id: "radioButtonPrice#{product.id}", :'data-price' => "#{product.price_cents}"} #{humanized_money_with_symbol product.price}
-        %br
-      %h4 サブスクリプション
-      - @products_subscription.each do |product|
-        %div
-          = radio_button_tag 'orders[product_id]', product.id
-          %span{id: "radioButtonName#{product.id}"} #{product.name}
-          %span{id: "radioButtonPrice#{product.id}", :'data-price' => "#{product.price_cents}"} #{humanized_money_with_symbol product.price}
-        %br
-    %hr
-    %h2 支払い方法
-    .form_row
-      %div
-        = radio_button_tag 'payment-selection', 'paypal'
-        %span PayPal
-    %br
-    %br
-    %div{id: 'submit-paypal'}
-    %br
-    %br
-    %hr
-
 :javascript
   (function setupPaypal() {
     function isPayment() {
