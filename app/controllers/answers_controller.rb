@@ -5,6 +5,19 @@ class AnswersController < ApplicationController
   before_action :confirm_definitive_registration
   before_action :other_user_cannot_access, only: %i[update change]
 
+  def create
+    @answer = Answer.new(create_answer_params)
+    @event = Event.find(params[:event_id])
+    if @answer.save
+      flash_and_redirect(key: :success, message: '回答を送信しました', redirect_url: details_group_event_url(group_id: @event.group_id, id: @event.id))
+    else
+      @answer = nil
+      @group = Group.find(@event.group_id)
+      @attending_answers = Answer.where(event_id: @event.id, status: 'attending')
+      flash_and_render(key: :danger, message: '回答を送信できませんでした', action: 'events/details')
+    end
+  end
+
   def change
     if params[:answer_id]
       answer = current_user.answers.find(params[:answer_id])
@@ -18,16 +31,22 @@ class AnswersController < ApplicationController
   end
 
   def update
-    if @answer.update(answer_params)
+    if @answer.update(update_answer_params)
       flash_and_redirect(key: :success, message: '回答を変更しました', redirect_url: details_group_event_url(group_id: @event.group_id, id: @event.id))
     else
+      @group = Group.find(@event.group_id)
+      @attending_answers = Answer.where(event_id: @event.id, status: 'attending')
       flash_and_render(key: :danger, message: '回答を変更できませんでした', action: 'events/details')
     end
   end
 
   private
 
-    def answer_params
+    def create_answer_params
+      params.require(:answer).permit(:status, :user_id, :event_id)
+    end
+
+    def update_answer_params
       params.require(:answer).permit(:status)
     end
 

@@ -1,0 +1,36 @@
+<p class="card-description"> イベント情報 </p>
+<div class="row">
+  <div class="col-md-12">
+    <div class="form-group row">
+      <div class="col-md-5 grid-margin stretch-card pricing-card ">
+        <label class="col-sm-4 col-form-label">出席</label>
+        <div class="card border-success border pricing-card-body">
+          <div class="text-center pricing-card-head">
+            <div class="col-sm-5" style="display: inline-block;">
+              <div class="form-check" style="display: inline-block;">
+                <label class="form-check-label text-success" style="font-size: 15px;">
+                  <%= f.radio_button :status, 'attending', class: "form-check-input", id: "membershipRadios1", style: "margin-top: 20px;" %> 出席</label>
+                <%# <label class="form-check-label text-success" style="font-size: 15px;">
+                  <input type="radio" class="form-check-input" name="membershipRadios" id="membershipRadios1" value="option2" style="margin-top: 20px;" value="" checked >出席</label> %>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-5 grid-margin stretch-card pricing-card offset-md-2">
+        <div class="card border border-danger pricing-card-body" >
+          <div class="text-center pricing-card-head" >
+            <div class="col-sm-5" style="display: inline-block;">
+              <div class="form-check" style="display: inline-block;">
+                <label class="form-check-label text-danger" style="font-size: 15px;">
+                  <%= f.radio_button :status, 'absent', class: "form-check-input", id: "membershipRadios2", style: "margin-top: 20px;" %> 欠席</label>
+                <%# <label class="form-check-label text-danger" style="font-size: 15px;">
+                  <input type="radio" class="form-check-input" name="membershipRadios" id="membershipRadios2" value="option2" style="margin-top: 20px;" value="" >欠席</label> %>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
