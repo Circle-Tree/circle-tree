@@ -49,12 +49,11 @@ class Event::Transaction < Transaction
     )
   end
 
-  def update_transaction_when_update_event(member:, user:, event:)
-    update_attributes(
+  def update_transaction_when_update_event(creditor:, event:)
+    update(
       deadline: event.pay_deadline,
       debt: event.amount,
-      creditor_id: user.id,
-      debtor_id: member.id,
+      creditor_id: creditor.id,
       url_token: SecureRandom.hex(10)
     )
   end

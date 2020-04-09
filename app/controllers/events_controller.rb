@@ -76,7 +76,8 @@ class EventsController < ApplicationController
     @event = @group.events.find(params[:id])
     members = User.members(@group)
     if @event.update(event_params)
-      UpdateEventJob.perform_later(members: members, current_user: current_user, group: @group, event: @event)
+      creditor = User.find(@event.user_id)
+      UpdateEventJob.perform_later(members: members, current_user: current_user, group: @group, event: @event, creditor: creditor)
       flash_and_redirect(key: :success, message: 'イベント情報を更新しました', redirect_url: group_event_url(group_id: @group.id, id: @event.id))
     else
       @executives = User.executives(@group)
