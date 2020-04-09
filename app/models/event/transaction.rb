@@ -36,12 +36,12 @@ class Event::Transaction < Transaction
     where(event_id: event.id, completed: false).joins(event: :answers).distinct.where(event: { answers: { status: Answer.statuses[:attending] }})
   end
 
-  def self.new_transaction_when_create_new_event(member, user, group, event)
+  def self.new_transaction_when_create_new_event(member:, creditor:, group:, event:)
     create!(
       deadline: event.pay_deadline,
       debt: event.amount,
       payment: 0,
-      creditor_id: user.id,
+      creditor_id: creditor.id,
       debtor_id: member.id,
       group_id: group.id,
       event_id: event.id,
