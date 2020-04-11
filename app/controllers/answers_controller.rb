@@ -8,7 +8,7 @@ class AnswersController < ApplicationController
   def create
     @answer = Answer.new(create_answer_params)
     @event = Event.find(params[:event_id])
-    if @answer.save
+    if @answer.status != 'unanswered' && @answer.save
       Event::Transaction.create(
         deadline: @event.pay_deadline,
         debt: @event.amount,
