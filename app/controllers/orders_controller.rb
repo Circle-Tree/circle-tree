@@ -21,7 +21,7 @@ class OrdersController < ApplicationController
   end
 
   def submit
-    @order = Orders::Paypal.finish(order_params[:charge_id])
+    @order = Orders::Paypal.finish(charge_id: order_params[:charge_id], current_user: current_user)
     if @order&.save # @orderがnilだとしてもエラーにならない(ぼっち演算子)
       group = Group.new(
         name: session[:name],
@@ -42,9 +42,9 @@ class OrdersController < ApplicationController
         return render html: @order.error_message
       end
     else
-    puts '失敗1'
-    flash.now[:danger] = 'エラーが発生しました。もう一度お始めからやり直してください。'
-    render json: {error: '失敗1'}, status: :unprocessable_entity
+      ErrorSlackNotification.new_subscription_error_notify(title: 'サブスクリプション提出時(submit)のエラー',
+                                                           message: "#{current_user&.name}さん(ID: #{current_user&.id})のエラー")
+      render json: {error: '失敗1'}, status: :unprocessable_entity
     end
   end
 
@@ -72,9 +72,10 @@ class OrdersController < ApplicationController
     if result
       render json: { token: result }, status: :ok
     else
-      puts '失敗4'
-      flash.now[:danger] = 'エラーが発生しました。もう一度お始めからやり直してください。'
-      render json: {error: '失敗4'}, status: :unprocessable_entity
+      ErrorSlackNotification.new_subscription_error_notify(title: 'サブスクリプション作成時(paypal_create_subscription)のエラー',
+                                                           message: "#{current_user&.name}さん(ID: #{current_user&.id})のエラー")
+      return
+      # render json: {error: '失敗4'}, status: :unprocessable_entity
     end
   end
 
@@ -83,9 +84,10 @@ class OrdersController < ApplicationController
     if result
       render json: { id: result }, status: :ok
     else
-      puts '失敗5'
-      flash.now[:danger] = 'エラーが発生しました。もう一度お始めからやり直してください。'
-      render json: {error: '失敗5'}, status: :unprocessable_entity
+      ErrorSlackNotification.new_subscription_error_notify(title: 'サブスクリプション実行時(paypal_execute_subscription)のエラー',
+                                                           message: "#{current_user&.name}さん(ID: #{current_user&.id})のエラー")
+      return
+      # render json: {error: '失敗5'}, status: :unprocessable_entity
     end
   end
 

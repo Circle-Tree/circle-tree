@@ -139,11 +139,11 @@
       },
       onCancel: function (data) {
         // Show a cancel page, or return to cart
-        alert('キャンセルしました');
+        alert('キャンセルしました。');
       },
       onError: function(err) {
         // Show an error page here, when an error occurs
-        alert('エラーが発生しました'); // エラーが発生した際に書く
+        alert('PayPalとの接続でエラーが発生しました。支払いは行われていません。\nしばらくしてからもう一度お試しください。');
       }
     }).render('#submit-paypal');
   }());

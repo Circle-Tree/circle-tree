@@ -1,10 +1,10 @@
 class SuccessSlackNotification
-  def self.new_subscription_notify(order)
+  def self.new_subscription_notify(order:, current_user:)
     product = Product.find(order&.product_id)
     notifier = Slack::Notifier.new(ENV['SUBSCRIPTION_SLACK_WEBHOOK_URL'])
     attachments = {
       title: '新規サブスクリプション',
-      text: "#{product.name}が購読されました！",
+      text: "#{current_user&.name}(ID: #{current_user&.id})さんによって#{product.name}が購読されました！",
       color: 'good'
     }
     notifier.post attachments: [attachments]
