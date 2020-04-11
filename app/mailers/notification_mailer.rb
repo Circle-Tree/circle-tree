@@ -68,7 +68,7 @@ class NotificationMailer < ApplicationMailer
     @user = user
     @current_user = current_user
     mail(
-      subject: '仮登録のお知らせ',
+      subject: "#{@group.name}からの招待のお知らせ",
       to: @user.email
     ) do |format|
       format.text
