@@ -83,24 +83,6 @@ class GroupsController < ApplicationController
   def statistics
   end
 
-  def invite
-    @executives = User.executives(@group)
-    email = params[:email].try(:downcase)
-    return flash_and_render(key: :danger, message: "メールアドレスを入力してください", action: 'change') if email.blank?
-
-    if user = User.find_by(email: email)
-      relationship = GroupUser.new(group_id: @group.id, user_id: user.id, role: GroupUser.roles[:general])
-      if relationship.save
-        NotificationMailer.invite(group: @group, user: user, current_user: current_user).deliver_later
-        flash_and_redirect(key: :success, message: "招待に成功しました", redirect_url: change_group_url(@group))
-      else
-        flash_and_render(key: :danger, message: 'そのメールアドレスはすでに招待済みです', action: 'change')
-      end
-    else
-      flash_and_render(key: :danger, message: "メールアドレスは登録されていないまたは間違いがあります", action: 'change')
-    end
-  end
-
   private
 
     def set_group

@@ -43,7 +43,7 @@
                     <h3>メンバー設定</h3>
                     <section>
                       <div class="form-group">
-                        <%= form_with url: invite_group_path(id: @group.id), local: true do |f| %>
+                        <%= form_with url: invite_group_users_path, local: true do |f| %>
                         <label style="display: block;">メンバー招待</label>
                           <%= f.email_field :email, autofocus: true, autocomplete: "email", placeholder: '招待先アドレス', class: "form-control col-md-10",
                                                     :'aria-describedby' => "emailHelp", style: "color: white; display:inline-block ;" %>

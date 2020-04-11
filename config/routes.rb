@@ -32,7 +32,6 @@ Rails.application.routes.draw do
       get :assignable_search
       post :assign
       get :resign
-      post :invite
     end
     resources :users, only: [:index, :new] do
       collection do
@@ -69,7 +68,11 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :group_users, only: :destroy
+  resources :group_users, only: :destroy do
+    collection do
+      post :invite
+    end
+  end
 
   resources :answers, only: [] do
     member do
