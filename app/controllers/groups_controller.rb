@@ -75,9 +75,9 @@ class GroupsController < ApplicationController
   def resign
     executive_relationship = GroupUser.executive_relationship(group: @group, user: current_user)
     if executive_relationship.update_attribute(:role, GroupUser.roles[:general])
-      flash_and_redirect(key: :success, message: '辞任しました', redirect_url: root_url)
+      flash_and_redirect(key: :success, message: '辞退しました。', redirect_url: root_url)
     else
-      flash_and_render(key: :danger, message: 'エラーが発生しました。', action: 'change')
+      flash_and_render(key: :danger, message: '辞退できませんでした。しばらくしてからもう一度やり直してください。', action: 'change')
     end
   end
 
