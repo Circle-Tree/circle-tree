@@ -46,7 +46,7 @@ class GroupsController < ApplicationController
 
     if GroupUser.inherit(group: @group, current_user: current_user, new_executive: user)
       NotificationMailer.inherit(group: @group, user: user, current_user: current_user).deliver_later
-      flash_and_redirect(key: :success, message: "#{user.name}さんへ幹事を引継ぎました。", redirect_url: root_url)
+      flash_and_redirect(key: :success, message: "#{user.name}さんへ幹事を引継ぎました。", redirect_url: change_group_url(@group))
     else
       flash_and_render(key: :danger, message: '引継ぎできませんでした。しばらくしてからもう一度やり直してください。', action: 'change')
     end
@@ -58,15 +58,17 @@ class GroupsController < ApplicationController
 
   def assign
     @executives = User.executives(@group)
-    return flash_and_render(key: :danger, message: '任命したい人を選択してください', action: 'change') if params[:new_executive].blank?
+    return flash_and_render(key: :danger, message: '任命したい人を選択してください。', action: 'change') if params[:new_executive].blank?
 
-    return flash_and_render(key: :danger, message: '選択した人はすでに他のグループの幹事です。本人にご確認ください', action: 'change') if new_executive.blank?
+    user = new_executive
+    return flash_and_render(key: :danger, message: '選択した人はすでに他のグループの幹事です。本人にご確認ください。', action: 'change') if user.blank?
 
-    general_relationship = GroupUser.general_relationship(group: @group, user: new_executive)
+    general_relationship = GroupUser.general_relationship(group: @group, user: user)
     if general_relationship.update(role: GroupUser.roles[:executive])
-      flash_and_redirect(key: :success, message: '任命に成功しました', redirect_url: root_url)
+      NotificationMailer.assign(group: @group, user: user, current_user: current_user).deliver_later
+      flash_and_redirect(key: :success, message: "#{user.name}さんを幹事に任命しました。", redirect_url: change_group_url(@group))
     else
-      flash_and_render(key: :danger, message: 'エラーが発生しました。', action: 'change')
+      flash_and_render(key: :danger, message: '任命できませんでした。しばらくしてからもう一度やり直してください。', action: 'change')
     end
   end
 
