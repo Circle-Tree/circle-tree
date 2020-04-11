@@ -12,6 +12,7 @@ services:
     depends_on:
       - mysqldb
       - redis
+    stdin_open: true
     tty: true
 
   redis:
