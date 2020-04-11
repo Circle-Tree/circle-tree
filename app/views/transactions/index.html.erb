@@ -55,6 +55,7 @@
                             <th>支払い期限</th>
                             <th>金額</th>
                             <th>支払った金額</th>
+                            <th>支払い相手</th>
                             <th>支払い状況</th>
                             <th>領収書発行</th>
                           </tr>
@@ -69,6 +70,7 @@
                               <td><%= l transaction.deadline, format: :short %></td>
                               <td>￥<%= transaction.debt %></td>
                               <td>￥<%= transaction.payment %></td>
+                              <td><%= User.find(transaction.creditor_id).name %></td>
                               <% if transaction.completed? %>
                                 <td>
                                   <label class="badge badge-success">完了</label>
