@@ -229,34 +229,18 @@ end
 end
 
 Product.create!(
-  name: 'ベーシックプラン(1年間)',
-  paypal_plan_name: 'P-9UY75926TX6644447EAODKPI',
-  price_cents: 1200
-)
-
-Product.create!(
-  name: '本番環境用テストプラン',
-  paypal_plan_name: 'P-23R0237493572070XEQ6XU6I',
+  name: '3か月プラン',
+  paypal_plan_name: 'P-92S132272T043605MKSGL7WI',
   price_cents: 100
 )
-
-Order.create!(
-  product_id: 1,
-  user_id: 2,
-  status: Order.statuses[:paid],
-  token: 'EC-6A003891L5079452E',
-  charge_id: 'I-FBNNMNE5C50B',
-  error_message: nil,
-  price_cents: 1200
+Product.create!(
+  name: '6か月プラン',
+  paypal_plan_name: 'P-92V71819AH9823618KSHTB2I',
+  price_cents: 200
 )
-
-Order.create!(
-  product_id: 1,
-  user_id: 3,
-  status: Order.statuses[:paid],
-  token: 'EC-6SE14003BW286930V',
-  charge_id: 'I-BKW5RB2HF85A',
-  error_message: nil,
-  price_cents: 1200
+Product.create!(
+  name: '12か月プラン',
+  paypal_plan_name: 'P-9UY75926TX6644447EAODKPI',
+  price_cents: 400
 )
 
