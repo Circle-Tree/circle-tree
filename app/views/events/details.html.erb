@@ -21,20 +21,26 @@
         <div class="card" style="margin-bottom: 20px;">
           <div class="card-body" style="color: black;">
             <h4 class="card-title">出席回答</h4>
-            <% if @answer.present? %>
-              <%= form_with model: @answer, url: event_answer_path(id: @answer.id, event_id: @event.id), local: true do |f| %>
-                <%= render 'events/details/answer', f: f %>
-                <%= render 'events/details/details', f: f, group: @group, event: @event %>
+            <% if @event.answer_deadline > Time.current %>
+              <% if @answer.present? %>
+                <%= form_with model: @answer, url: event_answer_path(id: @answer.id, event_id: @event.id), local: true do |f| %>
+                  <%= render 'events/details/answer', f: f %>
+                  <%= render 'events/details/details', f: f,group: @group, event: @event %>
+                <% end %>
+              <% else %>
+                <% @answer = Answer.new %>
+                <%= form_with model: @answer, url: event_answers_path(event_id: @event.id), local: true do |f| %>
+                  <%= f.hidden_field :user_id, value: current_user.id %>
+                  <%= f.hidden_field :event_id, value: @event.id %>
+                  <%= render 'events/details/answer', f: f %>
+                  <%= render 'events/details/details', f: f,group: @group, event: @event %>
+                <% end %>
               <% end %>
             <% else %>
-              <% @answer = Answer.new %>
-              <%= form_with model: @answer, url: event_answers_path(event_id: @event.id), local: true do |f| %>
-                <%= f.hidden_field :user_id, value: current_user.id %>
-                <%= f.hidden_field :event_id, value: @event.id %>
-                <%= render 'events/details/answer', f: f %>
-                <%= render 'events/details/details', f: f, group: @group, event: @event %>
-              <% end %>
+              <%= render 'events/details/answer_status', answer: @answer %>
+              <%= render 'events/details/details', group: @group, event: @event %>
             <% end %>
+
           </div>
         </div>
 
