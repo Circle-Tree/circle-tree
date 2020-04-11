@@ -36,6 +36,7 @@ class OrdersController < ApplicationController
           user_id: current_user.id,
           role: GroupUser.roles[:executive]
         )
+        SubscriptionMailer.new_subscription(group: group, user: current_user, order: @order).deliver_later
         flash_and_redirect(key: :success, message: "おめでとうございます！購読が開始され、あなたは#{group.name}の幹事となりました！", redirect_url: root_url) and return
       elsif @order.failed? && !@order.error_message.blank?
         # Render error only if order failed and there is an error_message
