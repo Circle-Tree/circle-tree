@@ -46,8 +46,9 @@ class GroupsController < ApplicationController
 
     if GroupUser.inherit(group: @group, current_user: current_user, new_executive: user)
       NotificationMailer.inherit(group: @group, user: user, current_user: current_user).deliver_later
-      flash_and_redirect(key: :success, message: "#{user.name}さんへ幹事を引継ぎました。", redirect_url: change_group_url(@group))
+      flash_and_redirect(key: :success, message: "#{user.name}さんへ幹事を引継ぎました。", redirect_url: root_url)
     else
+      ErrorSlackNotification.member_change_error_notify(title: '引継ぎ失敗', message: "グループID: #{@group&.id}, 引き継がれるユーザーID: #{user&.id}, 現在のユーザーID: #{current_user&.id}の引継ぎ失敗")
       flash_and_render(key: :danger, message: '引継ぎできませんでした。しばらくしてからもう一度やり直してください。', action: 'change')
     end
   end
