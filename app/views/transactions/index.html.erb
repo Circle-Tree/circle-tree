@@ -62,12 +62,13 @@
                         </thead>
                         <tbody>
                           <% @transactions.each do |transaction| %>
+                            <% deadline = transaction.deadline %>
                             <% if event_id = transaction.event_id%>
                               <% event = Event.find(event_id) %>
                             <% end %>
                             <tr>
                               <td><%= link_to event.name.truncate(20), details_group_event_path(group_id: event.group_id, id: event.id) %></td>
-                              <td><%= l transaction.deadline, format: :short %></td>
+                              <td><%= l deadline, format: :short %></td>
                               <td>￥<%= transaction.debt %></td>
                               <td>￥<%= transaction.payment %></td>
                               <td><%= User.find(transaction.creditor_id).name %></td>
@@ -80,7 +81,11 @@
                                 </td>
                               <% else %>
                                 <td>
-                                  <label class="badge badge-danger">未払い</label>
+                                  <% if deadline > Time.current %>
+                                    <label class="badge badge-primary">予定</label>
+                                  <% else %>
+                                    <label class="badge badge-danger">未払い</label>
+                                  <% end %>
                                 </td>
                                 <td></td>
                               <% end %>
@@ -124,11 +129,11 @@
       var $totalUnpaidDebt = $transactionHistory.data('total-unpaid-debt');
       var $totalExpectedDebt = $transactionHistory.data('total-expected-debt');
       var areaData = {
-        labels: ["支払った金額", "支払い予定金額","未払い金額"],
+        labels: ["支払い済み", "支払い予定","未払い"],
         datasets: [{
             data: [$totalPayment, $totalExpectedDebt, $totalUnpaidDebt],
             backgroundColor: [
-              "#111111","#00d25b","#ffab00"
+              "#00d25b","#1E90FF","#FF1F00"
             ]
           }
         ]
@@ -144,7 +149,7 @@
           }
         },
         legend: {
-          display: false
+          display: true // labelの表示
         },
         tooltips: {
           enabled: true
@@ -176,9 +181,9 @@
           ctx.textBaseline = "middle";
           ctx.fillStyle = "#6c7293";
 
-          var texts = "支払い",
-              textsX = Math.round((width - ctx.measureText(text).width) / 1.93),
-              textsY = height / 1.7;
+          var texts = "My収支",
+              textsX = Math.round((width - ctx.measureText(text).width) / 2.0),
+              textsY = height / 1.8;
 
           ctx.fillText(texts, textsX, textsY);
           ctx.save();
