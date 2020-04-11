@@ -40,7 +40,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
       bypass_sign_in resource, scope: resource_name if sign_in_after_change_password?
       puts '4'
       flash[:success] = 'プロフィールが変更されました'
-      redirect_to root_url
+      redirect_to users_edit_profile_url
       # respond_with resource, location: after_update_path_for(resource)
     else
       clean_up_passwords resource
@@ -65,7 +65,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
       user.toggle!(:definitive_registration) unless user.definitive_registration
       puts '4'
       flash[:success] = 'パスワードが変更されました'
-      redirect_to root_url
+      redirect_to users_edit_password_url
       # respond_with resource, location: after_update_path_for(resource)
     else
       clean_up_passwords resource
