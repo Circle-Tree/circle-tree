@@ -79,6 +79,8 @@ class GroupsController < ApplicationController
     if executive_relationship.update_attribute(:role, GroupUser.roles[:general])
       flash_and_redirect(key: :success, message: '辞退しました。', redirect_url: root_url)
     else
+      @executives = User.executives(@group)
+      ErrorSlackNotification.member_change_error_notify(title: '辞退失敗', message: "グループID: #{@group&.id}, 辞退するユーザーID: #{current_user&.id}の辞退失敗")
       flash_and_render(key: :danger, message: '辞退できませんでした。しばらくしてからもう一度やり直してください。', action: 'change')
     end
   end
