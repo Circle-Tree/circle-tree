@@ -66,10 +66,16 @@
                               <% end %>
                             </td>
                             <td>
-                              <% if completed  %>
-                                <%= link_to '発行', receipt_transaction_path(url_token: transaction.url_token, format: 'pdf'), class: 'btn btn-success' %>
-                              <% elsif !completed && status == 'attending'  %>
-                                <label class='btn btn-danger'>未払い</label>
+                              <% if status == 'attending' %>
+                                <% now = Time.current %>
+                                <% deadline = transaction.deadline %>
+                                <% if completed %>
+                                  <%= link_to '発行', receipt_transaction_path(url_token: transaction.url_token, format: 'pdf'), class: 'btn btn-success' %>
+                                <% elsif deadline > now %>
+                                  <label class='btn btn-primary'>予定</label>
+                                <% else %>
+                                  <label class='btn btn-danger'>未払い</label>
+                                <% end %>
                               <% end %>
                             </td>
                           <% else %>
