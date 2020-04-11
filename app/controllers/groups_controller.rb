@@ -69,6 +69,7 @@ class GroupsController < ApplicationController
       NotificationMailer.assign(group: @group, user: user, current_user: current_user).deliver_later
       flash_and_redirect(key: :success, message: "#{user.name}さんを幹事に任命しました。", redirect_url: change_group_url(@group))
     else
+      ErrorSlackNotification.member_change_error_notify(title: '任命失敗', message: "グループID: #{@group&.id}, 任命されるユーザーID: #{user&.id}, 現在のユーザーID: #{current_user&.id}の任命失敗")
       flash_and_render(key: :danger, message: '任命できませんでした。しばらくしてからもう一度やり直してください。', action: 'change')
     end
   end
