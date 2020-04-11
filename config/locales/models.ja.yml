@@ -13,9 +13,10 @@ ja:
         password_confirmation: 確認用パスワード
         remember_me: 次回から自動的にログイン
         current_password: 現在のパスワード
-        name: ユーザー名
+        name: 氏名
         furigana: フリガナ
         gender: 性別
+        grade: 学年
         # user/gender:
         #   true: 女性
         #   false: 男性

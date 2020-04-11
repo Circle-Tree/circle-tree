@@ -32,17 +32,21 @@ class Users::RegistrationsController < Devise::RegistrationsController
     prev_unconfirmed_email = resource.unconfirmed_email if resource.respond_to?(:unconfirmed_email)
     resource_updated = update_resource(resource, account_update_params)
     yield resource if block_given?
-    puts '1'
-    if resource_updated
-      puts '2'
-      set_flash_message_for_update(resource, prev_unconfirmed_email)
-      puts '3'
-      bypass_sign_in resource, scope: resource_name if sign_in_after_change_password?
-      puts '4'
-      flash[:success] = 'プロフィールが変更されました'
-      redirect_to users_edit_profile_url
-      # respond_with resource, location: after_update_path_for(resource)
+    if resource.furigana.present? && resource.grade.present? && resource.is_gender_boolean?
+      if resource_updated
+        set_flash_message_for_update(resource, prev_unconfirmed_email)
+        bypass_sign_in resource, scope: resource_name if sign_in_after_change_password?
+        flash[:success] = 'プロフィールが変更されました'
+        redirect_to users_edit_profile_url
+        # respond_with resource, location: after_update_path_for(resource)
+      else
+        clean_up_passwords resource
+        set_minimum_password_length
+        render :edit_profile
+      end
     else
+      resource.errors.add(:base, '入力内容に不備があります。')
+      resource.errors.delete(:current_password)
       clean_up_passwords resource
       set_minimum_password_length
       render :edit_profile
@@ -54,16 +58,11 @@ class Users::RegistrationsController < Devise::RegistrationsController
     prev_unconfirmed_email = resource.unconfirmed_email if resource.respond_to?(:unconfirmed_email)
     resource_updated = update_resource(resource, account_update_params)
     yield resource if block_given?
-    puts '0'
     if resource_updated
-      puts '1'
       set_flash_message_for_update(resource, prev_unconfirmed_email)
-      puts '2'
       bypass_sign_in resource, scope: resource_name if sign_in_after_change_password?
       user = current_user
-      puts '3'
       user.toggle!(:definitive_registration) unless user.definitive_registration
-      puts '4'
       flash[:success] = 'パスワードが変更されました'
       redirect_to users_edit_password_url
       # respond_with resource, location: after_update_path_for(resource)

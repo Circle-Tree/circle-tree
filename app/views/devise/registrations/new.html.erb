@@ -18,7 +18,7 @@
               </div>
               <div class="form-group">
                 <%= f.label :gender, '性別' %>
-                <%= f.select :gender, [['男性', false], ['女性', true]], {}, { class: "form-control p_input", style: "color: white;" } %>
+                <%= f.select :gender, [['男性', false], ['女性', true]], { include_blank: '選択してください' }, { class: "form-control p_input", style: "color: white;" } %>
               </div>
               <div class="form-group">
                 <% grades = [] %>
@@ -27,7 +27,7 @@
                 <% end %>
                 <% grades << ['その他', 'other'] %>
                 <%= f.label :grade, '学年' %>
-                <%= f.select :grade, grades, {}, { class: "form-control p_input", style: "color: white;" } %>
+                <%= f.select :grade, grades, { include_blank: '選択してください' }, { class: "form-control p_input", style: "color: white;" } %>
               </div>
               <div class="form-group">
                 <%= f.label :email, 'メールアドレス' %>
