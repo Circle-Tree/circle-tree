@@ -12,7 +12,8 @@ User.create!(
   confirmed_at: Time.now,
   gender: false,
   grade: 3,
-  admin: true
+  admin: true,
+  agreement: true
 )
 
 gimei1 = Gimei.name
@@ -26,7 +27,8 @@ User.create!(
   definitive_registration: true,
   confirmed_at: Time.now,
   gender: gimei1.female?,
-  grade: 3
+  grade: 3,
+  agreement: true
 )
 
 gimei2 = Gimei.name
@@ -40,7 +42,8 @@ User.create!(
   definitive_registration: true,
   confirmed_at: Time.now,
   gender: gimei2.female?,
-  grade: 3
+  grade: 3,
+  agreement: true
 )
 
 10.times do |i|
@@ -54,7 +57,8 @@ User.create!(
     definitive_registration: true,
     confirmed_at: Time.now,
     gender: gimei.female?,
-    grade: i % 3
+    grade: i % 3,
+    agreement: true
   )
 end
 gimei3 = Gimei.name
@@ -67,7 +71,8 @@ User.create!(
   definitive_registration: false,
   confirmed_at: Time.now,
   gender: gimei3.female?,
-  grade: 1
+  grade: 1,
+  agreement: true
 )
 
 # Group

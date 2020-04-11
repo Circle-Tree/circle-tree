@@ -1,0 +1,51 @@
+<div class="row">
+  <div class="col-md-12">
+    <div class="form-group row">
+      <div class="col-md-5 grid-margin stretch-card pricing-card ">
+        <label class="col-sm-4 col-form-label">回答状況</label>
+        <% if answer && answer.status != 'unanswered' %>
+          <% if answer.status == 'attending' %>
+            <div class="card border-success border pricing-card-body">
+              <div class="text-center pricing-card-head">
+                <div class="col-sm-5" style="display: inline-block;">
+                  <div class="form-check" style="display: inline-block;">
+                    <label class="form-check-label text-success" style="font-size: 15px;">
+                      <div>出席</div>
+                    <%# <label class="form-check-label text-success" style="font-size: 15px;">
+                      <input type="radio" class="form-check-input" name="membershipRadios" id="membershipRadios1" value="option2" style="margin-top: 20px;" value="" checked >出席</label> %>
+                  </div>
+                </div>
+              </div>
+            </div>
+          <% else %>
+            <div class="card border-danger border pricing-card-body">
+              <div class="text-center pricing-card-head">
+                <div class="col-sm-5" style="display: inline-block;">
+                  <div class="form-check" style="display: inline-block;">
+                    <label class="form-check-label text-danger" style="font-size: 15px;">
+                      <div>欠席</div>
+                    <%# <label class="form-check-label text-success" style="font-size: 15px;">
+                      <input type="radio" class="form-check-input" name="membershipRadios" id="membershipRadios1" value="option2" style="margin-top: 20px;" value="" checked >出席</label> %>
+                  </div>
+                </div>
+              </div>
+            </div>
+          <% end %>
+        <% else %>
+          <div class="card border-info border pricing-card-body">
+            <div class="text-center pricing-card-head">
+              <div class="col-sm-5" style="display: inline-block;">
+                <div class="form-check" style="display: inline-block;">
+                  <label class="form-check-label text-info" style="font-size: 15px;">
+                    <div>回答終了</div>
+                  <%# <label class="form-check-label text-success" style="font-size: 15px;">
+                    <input type="radio" class="form-check-input" name="membershipRadios" id="membershipRadios1" value="option2" style="margin-top: 20px;" value="" checked >出席</label> %>
+                </div>
+              </div>
+            </div>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>

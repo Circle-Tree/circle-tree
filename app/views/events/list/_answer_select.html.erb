@@ -1,0 +1,32 @@
+<% today = Time.current.midnight %>
+<% answer_deadline = event.answer_deadline %>
+<% if answer %>
+  <% if answer_deadline > today %>
+    <%= form_with model: answer, url: change_answer_path(id: answer.id) do |f| %>
+      <% case answer.status %>
+      <% when 'attending' %>
+        <%= f.select :status, [['参加　', 'attending'], ['欠席　', 'absent']], {}, { id: "answer-select", class: "btn btn-success", data: { answer_id: answer.id } } %>
+      <% when 'absent' %>
+        <%= f.select :status, [['参加　', 'attending'], ['欠席　', 'absent']], {}, { id: "answer-select", class: "btn btn-danger", data: { answer_id: answer.id } } %>
+      <% else %>
+        <%= f.select :status, [['未回答', 'unanswered'], ['参加　', 'attending'], ['欠席　', 'absent']], {}, { id: "answer-select", class: "btn btn-secondary", style: "background-color:rgb(236, 236, 236)", data: { answer_id: answer.id } } %>
+      <% end %>
+    <% end %>
+  <% else %>
+    <% case answer.status %>
+    <% when 'attending' %>
+      <div  class="btn btn-success">参加</div>
+    <% when 'absent' %>
+      <div  class="btn btn-danger">欠席</div>
+    <% else %>
+      <div class='btn btn-info'>終了</div>
+    <% end %>
+  <% end %>
+<% else %>
+  <% if answer_deadline > today %>
+    <%= link_to '回答する', details_group_event_path(group_id: event.group.id, id: event.id), class: "btn btn-primary" %>
+  <% else  %>
+    <div class='btn btn-info'>終了</div>
+  <% end %>
+<% end %>
+

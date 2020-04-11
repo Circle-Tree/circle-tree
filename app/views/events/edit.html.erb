@@ -119,6 +119,7 @@
             <% end %>
           </div>
         </div>
+        <%= link_to '削除', group_event_path(group_id: @event.group_id, id: @event.id), method: :delete, class: "btn btn-danger col-md-12", data: { confirm: '本当に削除しますか？イベントに関する情報がすべて失われます。' } %>
       </div>
       <!-- content-wrapper ends -->
 
@@ -128,3 +129,11 @@
   </div>
   <!-- page-body-wrapper ends -->
 </div>
+<style>
+  .field_with_errors {
+    display: contents;
+    /* input {
+        @extend .is-invalid;
+      } */
+    }
+</style>

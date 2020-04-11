@@ -49,26 +49,34 @@
                               <%= l start_date, format: :short %> ~ <%= l end_date, format: :short %>
                             <% end %>
                           </td>
-                          <td><%=  Answer.attending_count(event: event) %>人</td>
+                          <td><%= Answer.attending_count(event: event) %>人</td>
                           <td>
-                            <%= render 'answer_select', answer: answer %>
+                            <%= render 'events/list/answer_select', answer: answer, event: event %>
                           </td>
-                          <td>￥<%= transaction.debt %></td>
-                          <td>
-                            <% payment = transaction.payment %>
-                            <% if answer.status == 'attending' %>
-                              ￥<%= payment %>
-                            <% elsif answer.status == 'absent' && payment %>
-                              ￥<%= payment %>
-                            <% end %>
-                          </td>
-                          <td>
-                            <% if transaction.completed? %>
-                              <%= link_to '発行', receipt_transaction_path(url_token: transaction.url_token, format: 'pdf'), class: 'btn btn-success' %>
-                            <% else %>
-                              <label class='btn btn-danger'>未払い</label>
-                            <% end %>
-                          </td>
+                          <% if transaction && answer %>
+                            <% status = answer.status %>
+                            <% completed = transaction.completed? %>
+                            <td>￥<%= transaction.debt %></td>
+                            <td>
+                              <% payment = transaction.payment %>
+                              <% if status == 'attending' %>
+                                ￥<%= payment %>
+                              <% elsif status == 'absent' && payment != 0 %>
+                                ￥<%= payment %>
+                              <% end %>
+                            </td>
+                            <td>
+                              <% if completed  %>
+                                <%= link_to '発行', receipt_transaction_path(url_token: transaction.url_token, format: 'pdf'), class: 'btn btn-success' %>
+                              <% elsif !completed && status == 'attending'  %>
+                                <label class='btn btn-danger'>未払い</label>
+                              <% end %>
+                            </td>
+                          <% else %>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                          <% end %>
                         <% end %>
                         </tr>
                     </tbody>

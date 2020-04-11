@@ -14,6 +14,7 @@ class User < ApplicationRecord
   has_many :transactions, dependent: :destroy # :nullifyの方がよいか？
   validates :name, presence: true, length: { maximum: 100 }
   validates :definitive_registration, inclusion: { in: [true, false] }
+  validates :furigana, presence: true, on: %i[create]
   validates :furigana, format: { with: /\A[\p{katakana}　ー－&&[^ -~｡-ﾟ]]+\z/, message: 'は全角カタカナのみで入力して下さい。' }, allow_blank: true
   enum grade: {
     other: 0,
@@ -24,11 +25,13 @@ class User < ApplicationRecord
     grade5: 5,
     grade6: 6
   }
-  with_options unless: -> { validation_context == :batch || :update_password } do |batch|
-    batch.validates :gender, inclusion: { in: [true, false] }
-    batch.validates :grade, presence: true
-    batch.validates :furigana, presence: true
-  end
+  validates :grade, presence: true, on: %i[create]
+  validates :gender, inclusion: { in: [true, false], message: 'が入力されていません。'  }, on: %i[create]
+  # with_options unless: -> { validation_context == :batch || :update_password } do |batch|
+  #   batch.validates :gender, inclusion: { in: [true, false] }
+  #   batch.validates :grade, presence: true
+  #   batch.validates :furigana, presence: true
+  # end
   validates_acceptance_of :agreement, allow_nil: false, message: "への同意が必要です。", on: :create
 
   def admin?
@@ -41,6 +44,11 @@ class User < ApplicationRecord
     else
       false
     end
+  end
+
+  # オープンクラスにいずれ移動
+  def is_gender_boolean?
+    !!(self.gender) == self.gender
   end
 
   def to_readable_grade
@@ -155,7 +163,7 @@ class User < ApplicationRecord
       elsif number >= 1 && number <= 6
         number
       else
-        nil
+        0
       end
     end
 end

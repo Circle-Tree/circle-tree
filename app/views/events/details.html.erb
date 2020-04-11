@@ -21,146 +21,26 @@
         <div class="card" style="margin-bottom: 20px;">
           <div class="card-body" style="color: black;">
             <h4 class="card-title">出席回答</h4>
-            <%= form_with model: @answer, url: event_answer_path(id: @answer.id, event_id: @event.id), local: true do |f| %>
-              <p class="card-description"> イベント情報 </p>
-              <div class="row">
-                <div class="col-md-12">
-                  <div class="form-group row">
-                    <div class="col-md-5 grid-margin stretch-card pricing-card ">
-                      <label class="col-sm-4 col-form-label">出席</label>
-                      <div class="card border-success border pricing-card-body">
-                        <div class="text-center pricing-card-head">
-                          <div class="col-sm-5" style="display: inline-block;">
-                            <div class="form-check" style="display: inline-block;">
-                              <label class="form-check-label text-success" style="font-size: 15px;">
-                                <%= f.radio_button :status, 'attending', class: "form-check-input", id: "membershipRadios1", style: "margin-top: 20px;" %> 出席</label>
-                              <%# <label class="form-check-label text-success" style="font-size: 15px;">
-                                <input type="radio" class="form-check-input" name="membershipRadios" id="membershipRadios1" value="option2" style="margin-top: 20px;" value="" checked >出席</label> %>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="col-md-5 grid-margin stretch-card pricing-card offset-md-2">
-                      <div class="card border border-danger pricing-card-body" >
-                        <div class="text-center pricing-card-head" >
-                          <div class="col-sm-5" style="display: inline-block;">
-                            <div class="form-check" style="display: inline-block;">
-                              <label class="form-check-label text-danger" style="font-size: 15px;">
-                                <%= f.radio_button :status, 'absent', class: "form-check-input", id: "membershipRadios2", style: "margin-top: 20px;" %> 欠席</label>
-                              <%# <label class="form-check-label text-danger" style="font-size: 15px;">
-                                <input type="radio" class="form-check-input" name="membershipRadios" id="membershipRadios2" value="option2" style="margin-top: 20px;" value="" >欠席</label> %>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-
-
-              <div class="row">
-                <div class="col-md-6">
-                  <div class="form-group row">
-                    <label class="col-sm-3 col-form-label">イベント名</label>
-                    <div class="col-sm-9">
-                      <div type="text" class="form-control"><%= @event.name %></div>
-                    </div>
-                  </div>
-                </div>
-                <div class="col-md-6">
-                  <div class="form-group row">
-                    <label class="col-sm-3 col-form-label">出金額</label>
-                    <div class="col-sm-9">
-                      <div type="text" class="form-control">￥<%= @event.amount %></div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="row">
-                <div class="col-md-6">
-                  <div class="form-group row">
-                    <label class="col-sm-3 col-form-label">開始日</label>
-                    <div class="col-sm-9">
-                      <div class="form-control"><%= l @event.start_date, format: :long %></div>
-                    </div>
-                  </div>
-                </div>
-                <div class="col-md-6">
-                  <div class="form-group row">
-                    <label class="col-sm-3 col-form-label">終了日</label>
-                    <div class="col-sm-9">
-                      <div class="form-control"><%= l @event.end_date, format: :long %></div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <div class="row">
-                <div class="col-md-6">
-                  <div class="form-group row">
-                    <label class="col-sm-3 col-form-label">回答締め切り</label>
-                    <div class="col-sm-9">
-                      <div class="form-control"><%= l @event.answer_deadline, format: :long %></div>
-                    </div>
-                  </div>
-                </div>
-                <div class="col-md-6">
-                  <div class="form-group row">
-                    <label class="col-sm-3 col-form-label">支払い締め切り</label>
-                    <div class="col-sm-9">
-                      <div class="form-control"><%= l @event.pay_deadline, format: :long %></div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <div class="row">
-                <div class="col-md-6">
-                  <div class="form-group row">
-                    <label class="col-sm-3 col-form-label">集金者</label>
-                    <div class="col-sm-9">
-                      <div class="form-control" style="color: white;"><%= User.find(@event.user_id).name %></div>
-                    </div>
-                  </div>
-                </div>
-                <div class="col-md-6">
-                  <div class="form-group row">
-                    <label class="col-sm-3 col-form-label">一言</label>
-                    <div class="col-sm-9">
-                      <div class="form-control" style="color: white;"><%= @event.comment %></div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <div class="row" >
-                <div class="col-md-12">
-                  <div class="form-group row">
-                    <label class="col-sm-3  col-form-label">イベント詳細</label>
-                    <div class="col-sm-12">
-                      <div type="text" class="form-control" style="height: 100px;"><%= @event.description %></div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <div class="row">
-                <%= button_tag type: 'submit', class: "btn btn-primary btn-icon-text col-md-3", style: "margin-right: 30px;margin-left: 30px;" do %>
-                  <i class="mdi mdi-file-check btn-icon-prepend"></i> 保存
+            <% if @event.answer_deadline > Time.current %>
+              <% if @answer.present? %>
+                <%= form_with model: @answer, url: event_answer_path(id: @answer.id, event_id: @event.id), local: true do |f| %>
+                  <%= render 'events/details/answer', f: f %>
+                  <%= render 'events/details/details', f: f,group: @group, event: @event %>
                 <% end %>
-                <% if current_user.executive?(@group)%>
-                  <%= link_to edit_group_event_path(group_id: @group.id, id: @event.id), class: "btn btn-dark btn-icon-text col-md-3", style: "margin-right: 30px;margin-left: 30px;" do %>
-                    編集 <i class="mdi mdi-file-check btn-icon-append"></i>
-                  <% end %>
-                  <%= link_to group_event_path(group_id: @group.id, id: @event.id), class: "btn btn-dark btn-icon-text col-md-3", style: "margin-right: 30px;margin-left: 30px;" do %>
-                    イベント管理 <i class="mdi mdi-file-check btn-icon-append"></i>
-                  <% end %>
+              <% else %>
+                <% @answer = Answer.new %>
+                <%= form_with model: @answer, url: event_answers_path(event_id: @event.id), local: true do |f| %>
+                  <%= f.hidden_field :user_id, value: current_user.id %>
+                  <%= f.hidden_field :event_id, value: @event.id %>
+                  <%= render 'events/details/answer', f: f %>
+                  <%= render 'events/details/details', f: f,group: @group, event: @event %>
                 <% end %>
-              </div>
+              <% end %>
+            <% else %>
+              <%= render 'events/details/answer_status', answer: @answer %>
+              <%= render 'events/details/details', group: @group, event: @event %>
             <% end %>
+
           </div>
         </div>
 

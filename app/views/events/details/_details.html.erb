@@ -1,0 +1,101 @@
+<div class="row">
+  <div class="col-md-6">
+    <div class="form-group row">
+      <label class="col-sm-3 col-form-label">イベント名</label>
+      <div class="col-sm-9">
+        <div type="text" class="form-control"><%= event.name %></div>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-6">
+    <div class="form-group row">
+      <label class="col-sm-3 col-form-label">出金額</label>
+      <div class="col-sm-9">
+        <div type="text" class="form-control">￥<%= event.amount %></div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-6">
+    <div class="form-group row">
+      <label class="col-sm-3 col-form-label">開始日</label>
+      <div class="col-sm-9">
+        <div class="form-control"><%= l event.start_date, format: :long %></div>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-6">
+    <div class="form-group row">
+      <label class="col-sm-3 col-form-label">終了日</label>
+      <div class="col-sm-9">
+        <div class="form-control"><%= l event.end_date, format: :long %></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-md-6">
+    <div class="form-group row">
+      <label class="col-sm-3 col-form-label">回答締め切り</label>
+      <div class="col-sm-9">
+        <div class="form-control"><%= l event.answer_deadline, format: :long %></div>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-6">
+    <div class="form-group row">
+      <label class="col-sm-3 col-form-label">支払い締め切り</label>
+      <div class="col-sm-9">
+        <div class="form-control"><%= l event.pay_deadline, format: :long %></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-md-6">
+    <div class="form-group row">
+      <label class="col-sm-3 col-form-label">集金者</label>
+      <div class="col-sm-9">
+        <div class="form-control" style="color: white;"><%= User.find(event.user_id).name %></div>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-6">
+    <div class="form-group row">
+      <label class="col-sm-3 col-form-label">一言</label>
+      <div class="col-sm-9">
+        <div class="form-control" style="color: white;"><%= event.comment %></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row" >
+  <div class="col-md-12">
+    <div class="form-group row">
+      <label class="col-sm-3  col-form-label">イベント詳細</label>
+      <div class="col-sm-12">
+        <div type="text" class="form-control" style="height: 100px;"><%= event.description %></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row">
+  <% if @event.answer_deadline > Time.current %>
+    <%= button_tag type: 'submit', class: "btn btn-primary btn-icon-text col-md-3", style: "margin-right: 30px;margin-left: 30px;" do %>
+      <i class="mdi mdi-file-check btn-icon-prepend"></i> 保存
+    <% end %>
+  <% end %>
+  <% if current_user.executive?(group) %>
+    <%= link_to edit_group_event_path(group_id: group.id, id: event.id), class: "btn btn-dark btn-icon-text col-md-3", style: "margin-right: 30px;margin-left: 30px;" do %>
+      編集 <i class="mdi mdi-file-check btn-icon-append"></i>
+    <% end %>
+    <%= link_to group_event_path(group_id: group.id, id: event.id), class: "btn btn-dark btn-icon-text col-md-3", style: "margin-right: 30px;margin-left: 30px;" do %>
+      イベント管理 <i class="mdi mdi-file-check btn-icon-append"></i>
+    <% end %>
+  <% end %>
+</div>
