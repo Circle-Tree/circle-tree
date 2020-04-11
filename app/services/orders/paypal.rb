@@ -6,6 +6,7 @@ class Orders::Paypal
     return nil if order.nil?
 
     order.set_paid # statusをset_paidに変更
+    SuccessSlackNotification.new_subscription_notify(order)
     order
   end
 
@@ -59,7 +60,8 @@ class Orders::Paypal
     agreement = PayPal::SDK::REST::Agreement.new({
       name: product.name,
       description: "#{product.name}のサブスクリプション",
-      start_date: (Time.current + 1.minute).iso8601,
+      # start_date: (Time.current.tomorrow + 1.minute).iso8601, # 開発環境用
+      start_date: (Time.current + 1.minute).iso8601, # 本番環境用
       payer: {
         payment_method: "paypal"
       },
