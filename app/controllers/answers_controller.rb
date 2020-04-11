@@ -9,6 +9,17 @@ class AnswersController < ApplicationController
     @answer = Answer.new(create_answer_params)
     @event = Event.find(params[:event_id])
     if @answer.save
+      Event::Transaction.create(
+        deadline: @event.pay_deadline,
+        debt: @event.amount,
+        payment: 0,
+        debtor_id: current_user.id,
+        creditor_id: @event.user_id,
+        completed: false,
+        url_token: SecureRandom.hex(10),
+        event_id: @event.id,
+        group_id: @event.group_id
+      )
       flash_and_redirect(key: :success, message: '回答を送信しました', redirect_url: details_group_event_url(group_id: @event.group_id, id: @event.id))
     else
       @answer = nil
@@ -26,7 +37,8 @@ class AnswersController < ApplicationController
       else
         flash.now[:danger] = '回答を変更できませんでした'
       end
-      render partial: 'events/answer_select', locals: { answer: answer }
+      event = Event.find(answer.event_id)
+      render partial: 'events/list/answer_select', locals: { answer: answer, event: event }
     end
   end
 
