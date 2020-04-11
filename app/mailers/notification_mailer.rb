@@ -74,4 +74,16 @@ class NotificationMailer < ApplicationMailer
       format.text
     end
   end
+
+  def inherit(group:, user:, current_user:)
+    @group = group
+    @user = user
+    @current_user = current_user
+    mail(
+      subject: "#{@group.name}の幹事引継ぎのお知らせ",
+      to: @user.email
+    ) do |format|
+      format.text
+    end
+  end
 end
