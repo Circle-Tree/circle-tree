@@ -75,6 +75,7 @@ group :development do
   gem 'spring'
   gem 'spring-watcher-listen'
   gem 'brakeman', :require => false
+  gem 'bullet'
 end
 
 group :test do
