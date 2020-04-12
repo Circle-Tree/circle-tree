@@ -10,8 +10,8 @@
     <ul class="nav flex-column sub-menu">
       <li class="nav-item"> <%= link_to 'サークルプロフィール', group_path(id: current_user_group.id), class: "nav-link" %></li>
       <li class="nav-item"> <a class="nav-link" href="#">サークルカレンダー(未)</a></li>
-      <li class="nav-item"> <%= link_to '統計情報(未)', statistics_group_path(id: current_user_group.id), class: "nav-link" %></li>
-      <li class="nav-item"> <%= link_to 'デポジット(未)', deposit_group_path(id: current_user_group.id), class: "nav-link" %></li>
+      <li class="nav-item"> <a class="nav-link" href="#">統計情報(未)</a><%#= link_to '統計情報(未)', statistics_group_path(id: current_user_group.id), class: "nav-link" %></li>
+      <li class="nav-item"> <a class="nav-link" href="#">デポジット(未)</a><%#= link_to 'デポジット(未)', deposit_group_path(id: current_user_group.id), class: "nav-link" %></li>
     </ul>
   </div>
 </li>

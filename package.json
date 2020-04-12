@@ -6,13 +6,9 @@
     "yarn": "1.17.3"
   },
   "dependencies": {
-    "@fortawesome/fontawesome-free": "^5.13.0",
     "@rails/webpacker": "4.2.2",
-    "bootstrap": "3.3.0",
-    "bootstrap-sass": "3.3.0",
     "chart.js": "^2.9.3",
     "datatables.net-dt": "^1.10.20",
-    "intro.js": "^2.9.3",
     "jquery": "^3.4.1",
     "popper.js": "^1.16.1",
     "rails-ujs": "^5.2.4-1",
