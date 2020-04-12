@@ -60,6 +60,9 @@ GEM
       msgpack (~> 1.0)
     brakeman (4.8.0)
     builder (3.2.4)
+    bullet (6.1.0)
+      activesupport (>= 3.0.0)
+      uniform_notifier (~> 1.11)
     byebug (11.1.1)
     capybara (3.31.0)
       addressable
@@ -298,6 +301,7 @@ GEM
     tzinfo-data (1.2019.3)
       tzinfo (>= 1.0.0)
     unicode-display_width (1.6.1)
+    uniform_notifier (1.13.0)
     warden (1.2.8)
       rack (>= 2.0.6)
     web-console (3.7.0)
@@ -325,6 +329,7 @@ DEPENDENCIES
   binding_of_caller
   bootsnap
   brakeman
+  bullet
   byebug
   capybara
   chart-js-rails
