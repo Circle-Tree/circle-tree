@@ -4,10 +4,12 @@
     <%= render 'shared/sidebar/profile' %>
     <%= render 'shared/sidebar/home' %>
     <%= render 'shared/sidebar/my_page' %>
-    <% unless current_user_group.blank? %>
+    <% if current_user_group.present? %>
       <%= render 'shared/sidebar/circle_page' %>
       <%= render 'shared/sidebar/event' %>
       <%= render 'shared/sidebar/circle_setting' %>
+    <% else %>
+      <%= render 'shared/sidebar/new_circle' %>
     <% end %>
     <%= render 'shared/sidebar/faq' %>
     <%= render 'shared/sidebar/customize' %>
