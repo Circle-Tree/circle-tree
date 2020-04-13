@@ -51,7 +51,7 @@
                             <% paid_total_amount = hash[:total_payment] %>
                             <% completed_rate = (paid_total_amount  * 100 / expected_total_amount) %>
                             <td><%= number_to_currency(expected_total_amount) %></td>
-                            <td><%= completed_rate.to_i %> %</td>
+                            <td><%= number_to_percentage(completed_rate.to_i, precision: 0) %></td>
                             <td>
                               <% if completed_rate == 100 %>
                                 <label class="badge badge-success">完了</label>
