@@ -5,23 +5,15 @@ class Event::Transaction < Transaction
     where(debtor_id: user.id).joins(event: :answers).distinct.where(event: { answers: { status: Answer.statuses[:attending] } }).sum('payment')
   end
 
-  def self.paid_event_total_amount(event:, answers:)
+  def self.event_total_amount_and_payment(answers)
+    amount = 0
     payment = 0
     answers.each do |answer|
-      payment += Event::Transaction.find_by(event_id: event.id, debtor_id: answer.user_id).payment
+      transaction = Event::Transaction.find_by(event_id: answer.event_id, debtor_id: answer.user_id)
+      amount += transaction.debt
+      payment += transaction.payment
     end
-    payment
-    # where(event_id: event.id).sum('payment')
-  end
-
-  # 未完成
-  def self.expected_event_total_amount(event:, answers:)
-    debt = 0
-    answers.each do |answer|
-      debt += Event::Transaction.find_by(event_id: event.id, debtor_id: answer.user_id).debt
-    end
-    debt
-    # includes(event: :answers).where(event_id: event.id, event: { answers: { status: Answer.statuses[:attending] } }).sum('debt')
+    { expected_total_amount: amount, total_payment: payment }
   end
 
   def self.unpaid_total_amount(user)
