@@ -6,13 +6,12 @@
   <% urgent_transactions.each do |transaction| %>
     <div class="bg-gray-dark d-flex d-md-block d-xl-flex flex-row py-3 px-4 px-md-3 px-xl-4 rounded mt-3">
       <div class="text-md-center text-xl-left">
-        <h6 class="mb-1">期限間近の支払い</h6>
+        <h6 class="mb-1">期限間近の支払い(日付はどこに配置？)</h6>
         <p class="text-muted mb-0">
-          <% if transaction.event_id.present? %>
-            <% event = Event.find(transaction.event_id) %>
+          <% if event = transaction.event %>
             <%= link_to event.name, group_event_path(group_id: event.group_id, id: event.id) %>
           <% else %>
-            <%= User.find(transaction.creditor_id).name %>
+            <%= transaction.creditor.name %>
           <% end %>
         </p>
       </div>
