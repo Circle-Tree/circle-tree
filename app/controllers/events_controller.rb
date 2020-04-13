@@ -22,11 +22,14 @@ class EventsController < ApplicationController
     @attending_answers = answer_hash[:attending].page(params[:page]).per(10) # 出席
     @absent_answers = answer_hash[:absent].page(params[:page]).per(10) # 欠席
     @unanswered_answers = answer_hash[:unanswered].page(params[:page]).per(10) # 未回答
+
     uncompleted_hash = User.uncompleted_transactions_and_members(answers: answer_hash[:attending].includes(:user), event: @event)
     @uncompleted_transactions = Kaminari.paginate_array(uncompleted_hash[:uncompleted_transactions]).page(params[:page]).per(10)
     @unpaid_members = uncompleted_hash[:unpaid_members]
-    @total_payment = @uncompleted_transactions.sum { |transaction| transaction[:payment] }
-    @expected_total_payment = @uncompleted_transactions.sum { |transaction| transaction[:debt] }
+
+    # @total_payment = @uncompleted_transactions.sum { |transaction| transaction[:payment] }
+    # @expected_total_payment = @uncompleted_transactions.sum { |transaction| transaction[:debt] }
+
     @counts = {
       attending_count: answer_hash[:attending].count,
       absent_count: answer_hash[:absent].count,
