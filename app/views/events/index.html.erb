@@ -49,13 +49,8 @@
                             <% hash = Event::Transaction.event_total_amount_and_payment(answers) %>
                             <% expected_total_amount = hash[:expected_total_amount] %>
                             <% paid_total_amount = hash[:total_payment] %>
-                            <%# expected_total_amount = Event::Transaction.expected_event_total_amount(answers) %>
-                            <%# paid_total_amount = Event::Transaction.paid_event_total_amount(event: event, answers: answers) %>
-                            <%# completed_transactions = Event::Transaction.completed_transactions(event: event) %>
                             <% completed_rate = (paid_total_amount  * 100 / expected_total_amount) %>
-
-                            <%# <td>88%</td> %>
-                            <td>￥<%= expected_total_amount %></td>
+                            <td><%= number_to_currency(expected_total_amount) %></td>
                             <td><%= completed_rate.to_i %> %</td>
                             <td>
                               <% if completed_rate == 100 %>
