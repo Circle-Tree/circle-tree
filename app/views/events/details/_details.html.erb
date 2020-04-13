@@ -7,14 +7,6 @@
       </div>
     </div>
   </div>
-  <div class="col-md-6">
-    <div class="form-group row">
-      <label class="col-sm-3 col-form-label">出金額</label>
-      <div class="col-sm-9">
-        <div type="text" class="form-control">￥<%= event.amount %></div>
-      </div>
-    </div>
-  </div>
 </div>
 <div class="row">
   <div class="col-md-6">
@@ -55,14 +47,6 @@
 </div>
 
 <div class="row">
-  <div class="col-md-6">
-    <div class="form-group row">
-      <label class="col-sm-3 col-form-label">集金者</label>
-      <div class="col-sm-9">
-        <div class="form-control" style="color: white;"><%= User.find(event.user_id).name %></div>
-      </div>
-    </div>
-  </div>
   <div class="col-md-6">
     <div class="form-group row">
       <label class="col-sm-3 col-form-label">一言</label>
