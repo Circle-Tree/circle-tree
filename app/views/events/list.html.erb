@@ -42,12 +42,7 @@
                         <tr>
                           <td><%= link_to event.name.truncate(22) , details_group_event_path(group_id: event.group_id, id: event.id) %></td>
                           <td>
-                            <% start_date, end_date = event.start_date, event.end_date %>
-                            <% if start_date == end_date %>
-                              <%= l start_date, format: :short %>
-                            <% else %>
-                              <%= l start_date, format: :short %> ~ <%= l end_date, format: :short %>
-                            <% end %>
+                            <%= readable_event_date(event) %>
                           </td>
                           <td><%= Answer.attending_count(event: event) %>人</td>
                           <td>
