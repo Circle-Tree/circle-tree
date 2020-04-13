@@ -8,7 +8,7 @@ class HomesController < ApplicationController
     @my_groups = Group.my_groups(user)
     today = Time.current.midnight
     @events = Event.my_attending_events(user).where('start_date >= ?', today).order(start_date: :asc).limit(5)
-    @new_events = Event.my_events(user).where(created_at: (today - 7.days)..today.end_of_day).limit(4).order(created_at: :desc)
+    @new_events = Event.my_groups_events(user).where(created_at: (today - 7.days)..today.end_of_day).limit(4).order(created_at: :desc)
     transactions = Transaction.transactions_for_attending_event_by_user(user)
     @total_payment = transactions.sum { |transaction| transaction[:payment] }
     uncompleted_transactions = Transaction.uncompleted_transactions_by_user(transactions)

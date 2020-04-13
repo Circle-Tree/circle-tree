@@ -15,19 +15,13 @@ class Event < ApplicationRecord
   validate  :pay_deadline_not_before_today
   validates :comment, length: { maximum: 40 }
 
-  def self.my_events(user)
-    group_ids = []
-    Group.my_groups(user).each do |group|
-      group_ids << group.id
-    end
+  def self.my_groups_events(user)
+    group_ids = Group.my_groups(user).map(&:id)
     Event.where(group_id: group_ids)
   end
 
   def self.my_attending_events(user)
-    group_ids = []
-    Group.my_groups(user).each do |group|
-      group_ids << group.id
-    end
+    group_ids = Group.my_groups(user).map(&:id)
     Event.where(group_id: group_ids).joins(:answers).where(answers: { status: 'attending' }).distinct
   end
 

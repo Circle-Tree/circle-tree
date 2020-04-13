@@ -13,12 +13,7 @@ class EventsController < ApplicationController
   end
 
   def list
-    user = User.find(params[:user_id])
-    group_ids = []
-    Group.my_groups(user).each do |group|
-      group_ids << group.id
-    end
-    @events = Event.where(group_id: group_ids).order(start_date: :asc).page(params[:page]).per(10)
+    @events = Event.my_groups_events(current_user).order(start_date: :asc).page(params[:page]).per(10)
   end
 
   def show
