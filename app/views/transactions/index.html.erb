@@ -42,29 +42,39 @@
                         <tbody>
                           <% @transactions.each do |transaction| %>
                             <% deadline = transaction.deadline %>
-                            <% if event_id = transaction.event_id%>
-                              <% event = Event.find(event_id) %>
-                            <% end %>
+                            <% debt = transaction.debt %>
+                            <% payment = transaction.payment %>
                             <tr>
-                              <td><%= link_to event.name.truncate(20), details_group_event_path(group_id: event.group_id, id: event.id) %></td>
+                              <td>
+                                <% if event = transaction.event %>
+                                  <%= link_to event.name.truncate(20), details_group_event_path(group_id: event.group_id, id: event.id) %>
+                                <% else %>
+                                  <%= transaction.creditor.name %>
+                                <% end %>
+                              </td>
                               <td><%= l deadline, format: :short %></td>
                               <td>￥<%= transaction.debt %></td>
                               <td>￥<%= transaction.payment %></td>
-                              <td><%= User.find(transaction.creditor_id).name %></td>
-                              <% if transaction.completed? %>
+                              <td><%= transaction.creditor.name %></td>
+                              <% if debt == payment %>
                                 <td>
                                   <label class="badge badge-success">完了</label>
                                 </td>
                                 <td>
                                   <%= link_to "発行", receipt_transaction_path(url_token: transaction.url_token, format: "pdf"), class: "btn btn-outline-primary" %>
                                 </td>
-                              <% else %>
+                              <% elsif debt > payment %>
                                 <td>
-                                  <% if deadline > Time.current %>
+                                  <% if deadline < @today %>
                                     <label class="badge badge-primary">予定</label>
                                   <% else %>
                                     <label class="badge badge-danger">未払い</label>
                                   <% end %>
+                                </td>
+                                <td></td>
+                              <% else %>
+                                <td>
+                                  <label class="badge badge-info">過払い</label>
                                 </td>
                                 <td></td>
                               <% end %>
