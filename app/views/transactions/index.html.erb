@@ -14,7 +14,9 @@
             <div class="card">
               <div class="card-body" style="color: white;">
                 <h4 class="card-title">My収支情報</h4>
-                <%= render 'shared/balance_chart' %>
+                <% values = { total_payment: @total_payment, total_overdue_debt: @total_overdue_debt,
+                              total_non_overdue_debt: @total_non_overdue_debt, urgent_transactions: @urgent_transactions } %>
+                <%= render 'shared/balance_chart', values %>
               </div>
             </div>
           </div>

@@ -1,9 +1,9 @@
 <canvas id="transaction-history" class="transaction-chart"
-        data-total-payment="<%= @total_payment %>"
-        data-total-unpaid-debt="<%= @total_overdue_debt %>"
-        data-total-expected-debt="<%= @total_non_overdue_debt %>"></canvas>
-<% if @urgent_transactions.any? %>
-  <% @urgent_transactions.each do |transaction| %>
+        data-total-payment="<%= total_payment %>"
+        data-total-unpaid-debt="<%= total_overdue_debt %>"
+        data-total-expected-debt="<%= total_non_overdue_debt %>"></canvas>
+<% if urgent_transactions.any? %>
+  <% urgent_transactions.each do |transaction| %>
     <div class="bg-gray-dark d-flex d-md-block d-xl-flex flex-row py-3 px-4 px-md-3 px-xl-4 rounded mt-3">
       <div class="text-md-center text-xl-left">
         <h6 class="mb-1">期限間近の支払い</h6>
