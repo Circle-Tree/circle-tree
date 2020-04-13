@@ -4,24 +4,24 @@
       <h4 class="card-title"><%= link_to 'My収支情報', user_transactions_path(user_id: current_user.id) %></h4>
       <canvas id="transaction-history" class="transaction-chart"
               data-total-payment="<%= @total_payment %>"
-              data-total-unpaid-debt="<%= @total_unpaid_debt %>"
-              data-total-expected-debt="<%= @total_expected_debt %>"></canvas>
-      <% if @urgent_expected_debts.present? %>
-        <% @urgent_expected_debts.each do |debt| %>
+              data-total-unpaid-debt="<%#= @total_unpaid_debt %><%= @total_overdue_debt %>"
+              data-total-expected-debt="<%#= @total_expected_debt %><%= @total_non_overdue_debt %>"></canvas>
+      <% if @urgent_transactions.any? %>
+        <% @urgent_transactions.each do |transaction| %>
           <div class="bg-gray-dark d-flex d-md-block d-xl-flex flex-row py-3 px-4 px-md-3 px-xl-4 rounded mt-3">
             <div class="text-md-center text-xl-left">
               <h6 class="mb-1">期限間近の支払い</h6>
               <p class="text-muted mb-0">
-                <% if debt.event_id.present? %>
-                  <% event = Event.find(debt.event_id) %>
+                <% if transaction.event_id.present? %>
+                  <% event = Event.find(transaction.event_id) %>
                   <%= link_to event.name, group_event_path(group_id: event.group_id, id: event.id) %>
                 <% else %>
-                  <%= User.find(debt.creditor_id).name %>
+                  <%= User.find(transaction.creditor_id).name %>
                 <% end %>
               </p>
             </div>
             <div class="align-self-center flex-grow text-right text-md-center text-xl-right py-md-2 py-xl-0">
-              <h6 class="font-weight-bold mb-0">￥<%= debt.debt - debt.payment %></h6>
+              <h6 class="font-weight-bold mb-0">￥<%= transaction.debt - transaction.payment %></h6>
             </div>
           </div>
         <% end %>

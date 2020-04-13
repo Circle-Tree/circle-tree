@@ -9,13 +9,13 @@ class HomesController < ApplicationController
     today = Time.current.midnight
     @events = Event.my_attending_events(user).where('start_date >= ?', today).order(start_date: :asc).limit(5)
     @new_events = Event.my_events(user).where(created_at: (today - 7.days)..today.end_of_day).limit(4).order(created_at: :desc)
-    @total_payment = Transaction.total_payment_by_user(user)
-    all_debts = Transaction.joins(event: :answers).where(completed: false, debtor_id: user.id, event: { answers: { status: 'attending' } }).distinct
-    t = Time.current.end_of_day
-    unpaid_debts = all_debts.where('deadline <= ?', t)
-    @total_unpaid_debt = unpaid_debts.sum('debt') - unpaid_debts.sum('payment')
-    expected_debts = all_debts.where('deadline >= ?', t)
-    @total_expected_debt = expected_debts.sum('debt') - expected_debts.sum('payment')
-    @urgent_expected_debts = all_debts.where(deadline: t..t.since(7.days)).order(deadline: :asc).limit(2)
+    transactions = Transaction.transactions_for_attending_event_by_user(user)
+    @total_payment = transactions.sum { |transaction| transaction[:payment] }
+    uncompleted_transactions = Transaction.uncompleted_transactions_by_user(transactions)
+    overdue_transactions = Transaction.overdue_transactions_by_user(uncompleted_transactions: uncompleted_transactions, today: today)
+    @total_overdue_debt = overdue_transactions.sum { |transaction| transaction[:debt] } - overdue_transactions.sum { |transaction| transaction[:payment] }
+    non_overdue_transactions = uncompleted_transactions - overdue_transactions
+    @total_non_overdue_debt = non_overdue_transactions.sum { |transaction| transaction[:debt] } - non_overdue_transactions.sum { |transaction| transaction[:payment] }
+    @urgent_transactions = Transaction.urgent_transactions_by_user(non_overdue_transactions: non_overdue_transactions, max: 2, today: today)
   end
 end
