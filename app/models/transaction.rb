@@ -21,7 +21,15 @@ class Transaction < ApplicationRecord
   end
 
   def completed?
-    completed
+    debt == payment
+  end
+
+  def uncompleted?
+    debt > payment
+  end
+
+  def overpayment?
+    debt < payment
   end
 
   def total_payment
