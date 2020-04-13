@@ -58,7 +58,7 @@ GEM
       debug_inspector (>= 0.0.1)
     bootsnap (1.4.6)
       msgpack (~> 1.0)
-    brakeman (4.8.0)
+    brakeman (4.8.1)
     builder (3.2.4)
     bullet (6.1.0)
       activesupport (>= 3.0.0)
@@ -95,16 +95,16 @@ GEM
       railties (>= 3.2, < 6.1)
     e2mmap (0.1.0)
     erubi (1.9.0)
-    et-orbi (1.2.3)
+    et-orbi (1.2.4)
       tzinfo
-    faraday (1.0.0)
+    faraday (1.0.1)
       multipart-post (>= 1.2, < 3)
     ffi (1.12.2)
     ffi (1.12.2-x64-mingw32)
-    fugit (1.3.3)
+    fugit (1.3.4)
       et-orbi (~> 1.1, >= 1.1.8)
       raabro (~> 1.1)
-    gimei (0.4.0)
+    gimei (0.5.0)
       romaji
     globalid (0.4.2)
       activesupport (>= 4.2.0)
@@ -161,7 +161,7 @@ GEM
       ruby2_keywords (~> 0.0.1)
     mysql2 (0.5.3)
     mysql2 (0.5.3-x64-mingw32)
-    newrelic_rpm (6.9.0.363)
+    newrelic_rpm (6.10.0.364)
     nio4r (2.5.2)
     nokogiri (1.10.9)
       mini_portile2 (~> 2.4.0)
@@ -262,7 +262,7 @@ GEM
       rubyzip (>= 1.2.2)
     sentry-raven (3.0.0)
       faraday (>= 1.0)
-    sidekiq (6.0.5)
+    sidekiq (6.0.6)
       connection_pool (>= 2.2.2)
       rack (~> 2.0)
       rack-protection (>= 2.0.0)
@@ -368,7 +368,7 @@ DEPENDENCIES
   spring-watcher-listen
   tzinfo-data
   web-console
-  webpacker
+  webpacker (= 4.2.2)
 
 RUBY VERSION
    ruby 2.6.5p114
