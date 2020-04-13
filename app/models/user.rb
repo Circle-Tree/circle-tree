@@ -129,18 +129,18 @@ class User < ApplicationRecord
   end
 
   # 支払いが済んでいない人たち
-  def self.unpaid_members(answers:, event:)
+  def self.uncompleted_transactions_and_members(answers:, event:)
     users = []
     transactions = []
     answers.each do |answer|
-      user = User.find(answer.user_id)
+      user = answer.user
       transaction = Event::Transaction.find_by(event_id: event.id, debtor_id: user.id)
       unless transaction.completed?
         transactions << transaction
         users << user
       end
     end
-    {uncompleted_transactions: transactions, unpaid_members: users}
+    { uncompleted_transactions: transactions, unpaid_members: users }
   end
 
   private
