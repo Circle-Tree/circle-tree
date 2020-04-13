@@ -18,21 +18,21 @@ class EventsController < ApplicationController
 
   def show
     @event = @group.events.find(params[:id])
-    @attending_count = Answer.attending_count(event: @event)
-    @absent_count = Answer.absent_count(event: @event)
-    @unanswered_count = Answer.unanswered_count(event: @event)
-
-    h1 = Answer.divide_answers_in_three(@event)
-    @attending_answers = h1[:attending].page(params[:page]).per(10) # 出席
-    @absent_answers = h1[:absent].page(params[:page]).per(10) # 欠席
-    @unanswered_answers = h1[:unanswered].page(params[:page]).per(10) # 未回答
-
-    @hash = User.unpaid_members(answers: @attending_answers, event: @event)
-    @uncompleted_transactions = Kaminari.paginate_array(@hash[:uncompleted_transactions]).page(params[:page]).per(10)
-    @unpaid_members = @hash[:unpaid_members]
-    @unpaid_members_count = @unpaid_members.count
-    @total_payment = @uncompleted_transactions.sum { |h| h[:payment] }
-    @expected_total_payment = @uncompleted_transactions.sum { |h| h[:debt] }
+    answer_hash = Answer.divide_answers_in_three(@event)
+    @attending_answers = answer_hash[:attending].page(params[:page]).per(10) # 出席
+    @absent_answers = answer_hash[:absent].page(params[:page]).per(10) # 欠席
+    @unanswered_answers = answer_hash[:unanswered].page(params[:page]).per(10) # 未回答
+    uncompleted_hash = User.uncompleted_transactions_and_members(answers: answer_hash[:attending].includes(:user), event: @event)
+    @uncompleted_transactions = Kaminari.paginate_array(uncompleted_hash[:uncompleted_transactions]).page(params[:page]).per(10)
+    @unpaid_members = uncompleted_hash[:unpaid_members]
+    @total_payment = @uncompleted_transactions.sum { |transaction| transaction[:payment] }
+    @expected_total_payment = @uncompleted_transactions.sum { |transaction| transaction[:debt] }
+    @counts = {
+      attending_count: answer_hash[:attending].count,
+      absent_count: answer_hash[:absent].count,
+      uncompleted_count: uncompleted_hash[:unpaid_members].count,
+      unanswered_count: answer_hash[:unanswered].count
+    }
   end
 
   def details
