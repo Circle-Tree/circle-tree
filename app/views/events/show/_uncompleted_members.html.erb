@@ -16,7 +16,7 @@
             </thead>
             <tbody>
             <% @uncompleted_transactions.each do |transaction| %>
-              <% user = User.find(transaction.debtor_id) %>
+              <% user = transaction.debtor %>
               <tr>
                 <td><%= user.name %></td>
                 <td><%= user.to_readable_grade %></td>
