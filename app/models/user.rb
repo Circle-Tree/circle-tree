@@ -90,7 +90,6 @@ class User < ApplicationRecord
   rescue => e
     ErrorUtility.log_and_notify(e)
     { error_message: '何らかのエラーが発生しました。', status: 'failure' }
-    # Slackに通知
   end
 
   # あるグループの幹事たち
