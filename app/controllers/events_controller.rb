@@ -37,8 +37,8 @@ class EventsController < ApplicationController
 
   def details
     @event = @group.events.find(params[:id])
-    @answer = Answer.find_by(event_id: @event.id, user_id: current_user.id)
-    @attending_answers = Answer.where(event_id: @event.id, status: 'attending')
+    @answer = @event.answers.find_by(user_id: current_user.id)
+    @attending_answers = @event.answers.where(status: 'attending')
   end
 
   def new
