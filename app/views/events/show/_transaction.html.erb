@@ -1,12 +1,17 @@
-<td>￥<%= transaction.debt %></td>
-<td>￥<%= transaction.payment %></td>
+<% debt = transaction.debt %>
+<% payment = transaction.payment %>
+<% url_token = transaction.url_token %>
+<td><%= number_to_currency(debt) %></td>
+<td><%= number_to_currency(payment) %></td>
 <td>
   <% if transaction.completed? %>
-    <%= link_to '完了', receipt_transaction_path(url_token: transaction.url_token, format: 'pdf'), class: 'btn btn-success' %>
-  <% else %>
-    <%= form_with model: transaction, url: change_transaction_path(url_token: transaction.url_token) do |f| %>
+    <%= link_to '完了', receipt_transaction_path(url_token: url_token, format: 'pdf'), class: 'btn btn-success' %>
+  <% elsif transaction.uncompleted? %>
+    <%= form_with model: transaction, url: change_transaction_path(url_token: url_token) do |f| %>
       <%= f.select :completed, [['完了', true], ['未完了', false]], {}, { class: "btn btn-secondary transaction-select", style: "background-color:rgb(236, 236, 236)",
-                                                                          data: { url_token: transaction.url_token, payment: transaction.debt } } %>
+                                                                          data: { url_token: url_token, payment: debt } } %>
     <% end %>
+  <% else %>
+    <label class='btn btn-info'>過払い</label>
   <% end %>
 </td>
