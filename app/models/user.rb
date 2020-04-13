@@ -25,8 +25,8 @@ class User < ApplicationRecord
     grade5: 5,
     grade6: 6
   }
-  validates :grade, presence: true, on: %i[create]
-  validates :gender, inclusion: { in: [true, false], message: 'が入力されていません。'  }, on: %i[create]
+  validates :grade, presence: true
+  validates :gender, inclusion: { in: [true, false], message: 'が入力されていません。'  }
   # with_options unless: -> { validation_context == :batch || :update_password } do |batch|
   #   batch.validates :gender, inclusion: { in: [true, false] }
   #   batch.validates :grade, presence: true
@@ -90,6 +90,7 @@ class User < ApplicationRecord
   rescue => e
     ErrorUtility.log_and_notify(e)
     { error_message: '何らかのエラーが発生しました。', status: 'failure' }
+    # Slackに通知
   end
 
   # あるグループの幹事たち
@@ -163,7 +164,7 @@ class User < ApplicationRecord
       elsif number >= 1 && number <= 6
         number
       else
-        0
+        nil
       end
     end
 end
