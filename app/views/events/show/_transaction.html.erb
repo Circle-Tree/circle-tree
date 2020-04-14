@@ -8,8 +8,8 @@
     <%= link_to '完了', receipt_transaction_path(url_token: url_token, format: 'pdf'), class: 'btn btn-success' %>
   <% elsif transaction.uncompleted? %>
     <%= form_with model: transaction, url: change_transaction_path(url_token: url_token) do |f| %>
-      <%= f.select :completed, [['完了', true], ['未完了', false]], {}, { class: "btn btn-secondary transaction-select", style: "background-color:rgb(236, 236, 236)",
-                                                                          data: { url_token: url_token, payment: debt } } %>
+      <%= f.select :payment, [['完了', transaction.debt], ['未完了', transaction.payment]], {}, { class: "btn btn-secondary transaction-select", style: "background-color:rgb(236, 236, 236)",
+                                                                          data: { url_token: url_token, debt: debt } } %>
     <% end %>
   <% else %>
     <label class='btn btn-info'>過払い</label>
