@@ -34,7 +34,7 @@ class Answer < ApplicationRecord
     where(event_id: event.id, status: statuses[:unanswered]).count
   end
 
-  def self.new_answer_when_create_new_event(user, event)
+  def self.new_answer_when_create_new_event(user:, event:)
     create!(
       status: statuses[:unanswered],
       user_id: user.id,
