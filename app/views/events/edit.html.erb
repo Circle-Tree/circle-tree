@@ -34,14 +34,6 @@
                     </div>
                   </div>
                 </div>
-                <div class="col-md-6">
-                  <div class="form-group row">
-                    <%= f.label :amount, "集金額", class: "col-sm-3 col-form-label" %>
-                    <div class="col-sm-9">
-                      <%= f.number_field :amount, style: "color: white;", class: "form-control", placeholder: "現在の集金額" %>
-                    </div>
-                  </div>
-                </div>
               </div>
               <div class="row">
                 <div class="col-md-6">
@@ -82,14 +74,6 @@
               </div>
 
               <div class="row">
-                <div class="col-md-6">
-                  <div class="form-group row">
-                    <%= f.label :comment, "集金者", class: "col-sm-3 col-form-label" %>
-                    <div class="col-sm-9">
-                      <%= f.select :user_id, @executives.map { |executive| [executive.name, executive.id]}, { include_blank: '選択してください' }, { class: "form-control", style: "color: white;" } %>
-                    </div>
-                  </div>
-                </div>
                 <div class="col-md-6">
                   <div class="form-group row">
                     <%= f.label :comment, "みんなへ一言", class: "col-sm-3 col-form-label" %>
