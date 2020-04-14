@@ -44,8 +44,8 @@ class TransactionsController < ApplicationController
   def change
     if params[:url_token] && transaction = Transaction.find_by(url_token: params[:url_token])
       debt = transaction.debt
-      if transaction&.update(payment: debt, completed: true)
-        flash.now[:success] = '変更しました'
+      if transaction&.update(payment: debt)
+        render partial: 'events/show/transaction', locals: { transaction: transaction }
       else
         flash.now[:danger] = '変更できませんでした'
       end
