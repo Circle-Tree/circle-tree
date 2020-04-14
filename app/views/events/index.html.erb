@@ -29,7 +29,7 @@
                         <th>日時</th>
                         <th>人数</th>
                         <%# <th>出席率</th> %>
-                        <th>集金合計額</th>
+                        <th>予定合計額</th>
                         <th>集金割合</th>
                         <th>出金状況</th>
                         <th>イベント編集</th>
@@ -40,25 +40,18 @@
                         <tr>
                           <td><%=link_to event.name, group_event_path(group_id: event.group_id, id: event.id) %></td>
                           <td>
-                            <% start_date, end_date = event.start_date, event.end_date %>
-                            <% if start_date == end_date %>
-                              <%= l start_date, format: :short %>
-                            <% else %>
-                              <%= l start_date, format: :short %> ~ <%= l end_date, format: :short %>
-                            <% end %>
+                            <%= readable_event_date(event) %>
                           </td>
                           <% answers = event.answers.where(status: 'attending') %>
                           <% participant_count = answers.count %>
-                          <td><%= participant_count %></td>
+                          <td><%= participant_count %>人</td>
                           <% unless participant_count == 0 %>
-                            <% expected_total_amount = Event::Transaction.expected_event_total_amount(event: event, answers: answers) %>
-                            <% paid_total_amount = Event::Transaction.paid_event_total_amount(event: event, answers: answers) %>
-                            <%# completed_transactions = Event::Transaction.completed_transactions(event: event) %>
+                            <% hash = Event::Transaction.event_total_amount_and_payment(answers) %>
+                            <% expected_total_amount = hash[:expected_total_amount] %>
+                            <% paid_total_amount = hash[:total_payment] %>
                             <% completed_rate = (paid_total_amount  * 100 / expected_total_amount) %>
-
-                            <%# <td>88%</td> %>
-                            <td>￥<%= expected_total_amount %></td>
-                            <td><%= completed_rate.to_i %> %</td>
+                            <td><%= number_to_currency(expected_total_amount) %></td>
+                            <td><%= number_to_percentage(completed_rate.to_i, precision: 0) %></td>
                             <td>
                               <% if completed_rate == 100 %>
                                 <label class="badge badge-success">完了</label>

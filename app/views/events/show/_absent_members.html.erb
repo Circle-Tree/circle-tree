@@ -14,7 +14,7 @@
             </thead>
             <tbody>
               <% @absent_answers.each do |answer| %>
-                <% user = User.find(answer.user_id) %>
+                <% user = answer.user %>
                 <tr>
                   <td><%= user.name %></td>
                   <td><%= l answer.updated_at, format: :short %></td>

@@ -13,37 +13,35 @@ class EventsController < ApplicationController
   end
 
   def list
-    user = User.find(params[:user_id])
-    group_ids = []
-    Group.my_groups(user).each do |group|
-      group_ids << group.id
-    end
-    @events = Event.where(group_id: group_ids).order(start_date: :asc).page(params[:page]).per(10)
+    @events = Event.my_groups_events(current_user).order(start_date: :asc).page(params[:page]).per(10)
   end
 
   def show
     @event = @group.events.find(params[:id])
-    @attending_count = Answer.attending_count(event: @event)
-    @absent_count = Answer.absent_count(event: @event)
-    @unanswered_count = Answer.unanswered_count(event: @event)
+    answer_hash = Answer.divide_answers_in_three(@event)
+    @attending_answers = answer_hash[:attending].page(params[:page]).per(10) # 出席
+    @absent_answers = answer_hash[:absent].page(params[:page]).per(10) # 欠席
+    @unanswered_answers = answer_hash[:unanswered].includes(:user).page(params[:page]).per(10) # 未回答
 
-    h1 = Answer.divide_answers_in_three(@event)
-    @attending_answers = h1[:attending].page(params[:page]).per(10) # 出席
-    @absent_answers = h1[:absent].page(params[:page]).per(10) # 欠席
-    @unanswered_answers = h1[:unanswered].page(params[:page]).per(10) # 未回答
+    uncompleted_hash = User.uncompleted_transactions_and_members(answers: answer_hash[:attending].includes(:user), event: @event)
+    @uncompleted_transactions = Kaminari.paginate_array(uncompleted_hash[:uncompleted_transactions]).page(params[:page]).per(10)
+    @unpaid_members = uncompleted_hash[:unpaid_members]
 
-    @hash = User.unpaid_members(answers: @attending_answers, event: @event)
-    @uncompleted_transactions = Kaminari.paginate_array(@hash[:uncompleted_transactions]).page(params[:page]).per(10)
-    @unpaid_members = @hash[:unpaid_members]
-    @unpaid_members_count = @unpaid_members.count
-    @total_payment = @uncompleted_transactions.sum { |h| h[:payment] }
-    @expected_total_payment = @uncompleted_transactions.sum { |h| h[:debt] }
+    # @total_payment = @uncompleted_transactions.sum { |transaction| transaction[:payment] }
+    # @expected_total_payment = @uncompleted_transactions.sum { |transaction| transaction[:debt] }
+
+    @counts = {
+      attending_count: answer_hash[:attending].count,
+      absent_count: answer_hash[:absent].count,
+      uncompleted_count: uncompleted_hash[:unpaid_members].count,
+      unanswered_count: answer_hash[:unanswered].count
+    }
   end
 
   def details
     @event = @group.events.find(params[:id])
-    @answer = Answer.find_by(event_id: @event.id, user_id: current_user.id)
-    @attending_answers = Answer.where(event_id: @event.id, status: 'attending')
+    @answer = @event.answers.find_by(user_id: current_user.id)
+    @attending_answers = @event.answers.where(status: 'attending')
   end
 
   def new

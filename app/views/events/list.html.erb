@@ -36,45 +36,40 @@
                       </tr>
                     </thead>
                     <tbody>
+                      <% today = Time.current.midnight %>
                       <% @events.each do |event| %>
                         <% transaction = Event::Transaction.find_by(event_id: event.id, debtor_id: current_user.id) %>
                         <% answer = Answer.find_by(event_id: event.id, user_id: current_user.id) %>
                         <tr>
                           <td><%= link_to event.name.truncate(22) , details_group_event_path(group_id: event.group_id, id: event.id) %></td>
                           <td>
-                            <% start_date, end_date = event.start_date, event.end_date %>
-                            <% if start_date == end_date %>
-                              <%= l start_date, format: :short %>
-                            <% else %>
-                              <%= l start_date, format: :short %> ~ <%= l end_date, format: :short %>
-                            <% end %>
+                            <%= readable_event_date(event) %>
                           </td>
                           <td><%= Answer.attending_count(event: event) %>人</td>
                           <td>
                             <%= render 'events/list/answer_select', answer: answer, event: event %>
                           </td>
                           <% if transaction && answer %>
+                            <% debt = transaction.debt %>
+                            <% payment = transaction.payment %>
+                            <% deadline = transaction.deadline %>
                             <% status = answer.status %>
-                            <% completed = transaction.completed? %>
-                            <td>￥<%= transaction.debt %></td>
+                            <td>￥<%= debt %></td>
                             <td>
-                              <% payment = transaction.payment %>
-                              <% if status == 'attending' %>
-                                ￥<%= payment %>
-                              <% elsif status == 'absent' && payment != 0 %>
+                              <% if status == 'attending' || (status == 'absent' && payment != 0) %>
                                 ￥<%= payment %>
                               <% end %>
                             </td>
                             <td>
                               <% if status == 'attending' %>
-                                <% now = Time.current %>
-                                <% deadline = transaction.deadline %>
-                                <% if completed %>
+                                <% if debt == payment %>
                                   <%= link_to '発行', receipt_transaction_path(url_token: transaction.url_token, format: 'pdf'), class: 'btn btn-success' %>
-                                <% elsif deadline > now %>
-                                  <label class='btn btn-primary'>予定</label>
-                                <% else %>
+                                <% elsif debt < payment %>
+                                  <label class='btn btn-info'>過払い</label>
+                                <% elsif deadline < today %>
                                   <label class='btn btn-danger'>未払い</label>
+                                <% else %>
+                                  <label class='btn btn-primary'>予定</label>
                                 <% end %>
                               <% end %>
                             </td>

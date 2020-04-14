@@ -21,7 +21,15 @@ class Transaction < ApplicationRecord
   end
 
   def completed?
-    completed
+    debt == payment
+  end
+
+  def uncompleted?
+    debt > payment
+  end
+
+  def overpayment?
+    debt < payment
   end
 
   def total_payment
@@ -35,6 +43,39 @@ class Transaction < ApplicationRecord
   def self.total_payment_by_user(user)
     # Transaction.where(debtor_id: user.id, completed: true).joins(event: :answers).where(event: { answers: { status: 'attending' } }).sum('debt')
     Transaction.joins(event: :answers).where(debtor_id: user.id, completed: true, event: { answers: { status: 'attending' } }).distinct.sum('debt')
+  end
+
+  def self.transactions_for_attending_event_by_user(user)
+    Transaction.includes(event: :answers).where(debtor_id: user.id, event: { answers: { status: 'attending' } }).distinct
+  end
+
+  def self.uncompleted_transactions_by_user(transactions)
+    uncompleted_transactions = []
+    transactions.each do |transaction|
+      uncompleted_transactions << transaction if transaction.debt != transaction.payment
+    end
+    uncompleted_transactions
+  end
+
+  def self.overdue_transactions_by_user(uncompleted_transactions:, today:)
+    overdue_transactions = []
+    uncompleted_transactions.each do |transaction|
+      overdue_transactions << transaction if transaction.deadline < today
+    end
+    overdue_transactions
+  end
+
+  def self.urgent_transactions_by_user(non_overdue_transactions:, max:, today:)
+    urgent_transactions = []
+    non_overdue_transactions.each do |transaction|
+      count = 0
+      if transaction.deadline < today.since(7.days)
+        urgent_transactions << transaction
+        count += 1
+      end
+      break if count == max
+    end
+    urgent_transactions
   end
 
   private

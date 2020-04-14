@@ -18,24 +18,21 @@
           </nav>
         </div>
         <%= render 'shared/flash' %>
-
-        集金者： <%= User.find(@event.user_id).name %>
-
         <div class="card">
           <div class="card-body" style="background-color: rgb(255, 255, 255); color: #000;">
             <h4 class="card-title" >イベント管理</h4>
             <ul class="nav nav-tabs" role="tablist">
               <li class="nav-item">
-                <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home-1" role="tab" aria-controls="home" aria-selected="true">出席</a>
+                <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home-1" role="tab" aria-controls="home" aria-selected="true">出席(<%= @counts[:attending_count] %>人)</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile-1" role="tab" aria-controls="profile" aria-selected="false">欠席</a>
+                <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile-1" role="tab" aria-controls="profile" aria-selected="false">欠席(<%= @counts[:absent_count] %>人)</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" id="contact-tab" data-toggle="tab" href="#contact-1" role="tab" aria-controls="contact" aria-selected="false">未納</a>
+                <a class="nav-link" id="contact-tab" data-toggle="tab" href="#contact-1" role="tab" aria-controls="contact" aria-selected="false">未完了(<%= @counts[:uncompleted_count] %>人)</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" id="contact2-tab" data-toggle="tab" href="#contact-2" role="tab" aria-controls="contact2" aria-selected="false">未回答</a>
+                <a class="nav-link" id="contact2-tab" data-toggle="tab" href="#contact-2" role="tab" aria-controls="contact2" aria-selected="false">未回答(<%= @counts[:unanswered_count] %>人)</a>
               </li>
             </ul>
 
@@ -84,13 +81,13 @@
     e.preventDefault(); // キャンセル可能なイベントをキャンセル
     let select = $(this)
     let urlToken = select.data('url-token');
-    let payment = select.data('payment');
-    let completed = select.val();
+    let debt = select.data('debt');
+    let payment = select.val();
     let transactionUrl = `/transactions/${urlToken}/change`;
     $.ajax({
       url: transactionUrl,
       type: 'PATCH',
-      data: { url_token: urlToken },
+      data: { url_token: urlToken, payment: payment },
       // dataType: 'json',
       // processData: false,
       // contentType: false
@@ -100,13 +97,13 @@
       tdPayment = tdCompleted.prev()
       select.parent().remove();
       let html = `<a class='btn btn-success' href='/transactions/${urlToken}/receipt.pdf'>完了</a>`;
-      if (completed === 'true') {
-        tdPayment.html(`￥${payment}`);
+      if (debt.toString() === payment.toString()) {
+        tdPayment.html(`￥${debt}`);
         tdCompleted.append(html);
       }
     })
     .fail(function() {
-      alert('失敗しました');
+      alert('エラーが発生しました。');
     });
   });
 </script>

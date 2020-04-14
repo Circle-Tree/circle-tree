@@ -9,7 +9,7 @@ class GroupsController < ApplicationController
   before_action :cannot_resign, only: :resign
 
   def show
-    events = Event.my_events(current_user).order(start_date: :desc)
+    events = Event.my_groups_events(current_user).order(start_date: :desc)
     @events = Kaminari.paginate_array(events).page(params[:page]).per(5)
   end
 

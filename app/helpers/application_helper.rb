@@ -17,4 +17,14 @@ module ApplicationHelper
   def me?(user)
     user == current_user
   end
+
+  def readable_event_date(event)
+    start_date = event.start_date
+    end_date = event.end_date
+    if start_date == end_date
+      l start_date, format: :short
+    else
+      "#{l start_date, format: :short} ~ #{l end_date, format: :short}"
+    end
+  end
 end
