@@ -21,7 +21,7 @@ class EventsController < ApplicationController
     answer_hash = Answer.divide_answers_in_three(@event)
     @attending_answers = answer_hash[:attending].page(params[:page]).per(10) # 出席
     @absent_answers = answer_hash[:absent].page(params[:page]).per(10) # 欠席
-    @unanswered_answers = answer_hash[:unanswered].page(params[:page]).per(10) # 未回答
+    @unanswered_answers = answer_hash[:unanswered].includes(:user).page(params[:page]).per(10) # 未回答
 
     uncompleted_hash = User.uncompleted_transactions_and_members(answers: answer_hash[:attending].includes(:user), event: @event)
     @uncompleted_transactions = Kaminari.paginate_array(uncompleted_hash[:uncompleted_transactions]).page(params[:page]).per(10)
