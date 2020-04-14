@@ -42,9 +42,11 @@ class TransactionsController < ApplicationController
   end
 
   def change
-    if params[:url_token] && transaction = Transaction.find_by(url_token: params[:url_token])
-      debt = transaction.debt
-      if transaction&.update(payment: debt)
+    url_token = params[:url_token]
+    payment = params[:payment]
+    if url_token && payment && transaction = Transaction.find_by(url_token: url_token)
+      if transaction&.update(payment: payment)
+        # メールの送信
         render partial: 'events/show/transaction', locals: { transaction: transaction }
       else
         message = "#{current_user.name}(ID: #{current_user&.id})さんがTransaction ID: #{transaction&.id}のステータスを「完了」にできないエラー"

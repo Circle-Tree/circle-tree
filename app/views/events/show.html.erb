@@ -81,13 +81,13 @@
     e.preventDefault(); // キャンセル可能なイベントをキャンセル
     let select = $(this)
     let urlToken = select.data('url-token');
-    let payment = select.data('payment');
-    let completed = select.val();
+    let debt = select.data('debt');
+    let payment = select.val();
     let transactionUrl = `/transactions/${urlToken}/change`;
     $.ajax({
       url: transactionUrl,
       type: 'PATCH',
-      data: { url_token: urlToken },
+      data: { url_token: urlToken, payment: payment },
       // dataType: 'json',
       // processData: false,
       // contentType: false
@@ -97,8 +97,8 @@
       tdPayment = tdCompleted.prev()
       select.parent().remove();
       let html = `<a class='btn btn-success' href='/transactions/${urlToken}/receipt.pdf'>完了</a>`;
-      if (completed === 'true') {
-        tdPayment.html(`￥${payment}`);
+      if (debt.toString() === payment.toString()) {
+        tdPayment.html(`￥${debt}`);
         tdCompleted.append(html);
       }
     })
