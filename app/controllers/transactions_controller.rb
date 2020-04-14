@@ -46,7 +46,7 @@ class TransactionsController < ApplicationController
     payment = params[:payment]
     if url_token && payment && transaction = Transaction.find_by(url_token: url_token)
       if transaction&.update(payment: payment)
-        # メールの送信
+        NotificationMailer.update_event_transaction(group: transaction.event.group, transaction: transaction, current_user: current_user).deliver_later
         render partial: 'events/show/transaction', locals: { transaction: transaction }
       else
         message = "#{current_user.name}(ID: #{current_user&.id})さんがTransaction ID: #{transaction&.id}のステータスを「完了」にできないエラー"
