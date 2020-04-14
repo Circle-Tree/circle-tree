@@ -135,9 +135,11 @@ class User < ApplicationRecord
     answers.each do |answer|
       user = answer.user
       transaction = Event::Transaction.find_by(event_id: event.id, debtor_id: user.id)
-      unless transaction.completed?
-        transactions << transaction
-        users << user
+      if transaction
+        unless transaction.completed?
+          transactions << transaction
+          users << user
+        end
       end
     end
     { uncompleted_transactions: transactions, unpaid_members: users }
