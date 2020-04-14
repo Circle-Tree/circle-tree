@@ -47,9 +47,12 @@ class TransactionsController < ApplicationController
       if transaction&.update(payment: debt)
         render partial: 'events/show/transaction', locals: { transaction: transaction }
       else
-        flash.now[:danger] = '変更できませんでした'
+        message = "#{current_user.name}(ID: #{current_user&.id})さんがTransaction ID: #{transaction&.id}のステータスを「完了」にできないエラー"
+        ErrorSlackNotification.general_error_notify(title: 'Transactionのステータスを完了にできないエラー', message: message)
+        render json: { error: '404 error' }, status: 404
       end
-      render partial: 'events/show/transaction', locals: { transaction: transaction }
+    else
+      render json: { error: '404 error' }, status: 404
     end
   end
 
