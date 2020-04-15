@@ -13,7 +13,7 @@ class EventsController < ApplicationController
   end
 
   def list
-    @events = Event.my_groups_events(current_user).order(start_date: :asc).page(params[:page]).per(10)
+    @events = Event.my_groups_events(current_user).includes(:group).order(start_date: :asc).page(params[:page]).per(10)
   end
 
   def show
