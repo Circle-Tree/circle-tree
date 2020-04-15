@@ -25,8 +25,8 @@ class User < ApplicationRecord
     grade5: 5,
     grade6: 6
   }
-  validates :grade, presence: true, on: %i[create]
-  validates :gender, inclusion: { in: [true, false], message: 'が入力されていません。'  }, on: %i[create]
+  validates :grade, presence: true
+  validates :gender, inclusion: { in: [true, false], message: 'が入力されていません。'  }
   # with_options unless: -> { validation_context == :batch || :update_password } do |batch|
   #   batch.validates :gender, inclusion: { in: [true, false] }
   #   batch.validates :grade, presence: true
@@ -129,18 +129,20 @@ class User < ApplicationRecord
   end
 
   # 支払いが済んでいない人たち
-  def self.unpaid_members(answers:, event:)
+  def self.uncompleted_transactions_and_members(answers:, event:)
     users = []
     transactions = []
     answers.each do |answer|
-      user = User.find(answer.user_id)
+      user = answer.user
       transaction = Event::Transaction.find_by(event_id: event.id, debtor_id: user.id)
-      unless transaction.completed?
-        transactions << transaction
-        users << user
+      if transaction
+        unless transaction.completed?
+          transactions << transaction
+          users << user
+        end
       end
     end
-    {uncompleted_transactions: transactions, unpaid_members: users}
+    { uncompleted_transactions: transactions, unpaid_members: users }
   end
 
   private
@@ -163,7 +165,7 @@ class User < ApplicationRecord
       elsif number >= 1 && number <= 6
         number
       else
-        0
+        nil
       end
     end
 end

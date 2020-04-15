@@ -3,6 +3,7 @@
 class Event < ApplicationRecord
   belongs_to :user
   belongs_to :group
+  self.ignored_columns = %w[amount pay_deadline]
   has_many :transactions, dependent: :destroy
   has_many :answers, dependent: :destroy
   has_many :users, through: :answers
@@ -11,23 +12,15 @@ class Event < ApplicationRecord
   validate  :end_date_not_before_start_date
   validate  :answer_deadline_not_before_today
   validates :description, length: { maximum: 1024 }
-  validates :amount, numericality: { only_integer: true, greater_than_or_equal_to: 0 }
-  validate  :pay_deadline_not_before_today
   validates :comment, length: { maximum: 40 }
 
-  def self.my_events(user)
-    group_ids = []
-    Group.my_groups(user).each do |group|
-      group_ids << group.id
-    end
+  def self.my_groups_events(user)
+    group_ids = Group.my_groups(user).map(&:id)
     Event.where(group_id: group_ids)
   end
 
   def self.my_attending_events(user)
-    group_ids = []
-    Group.my_groups(user).each do |group|
-      group_ids << group.id
-    end
+    group_ids = Group.my_groups(user).map(&:id)
     Event.where(group_id: group_ids).joins(:answers).where(answers: { status: 'attending' }).distinct
   end
 
@@ -52,10 +45,5 @@ class Event < ApplicationRecord
     # 回答期日は今日以降の日付
     def answer_deadline_not_before_today
       errors.add(:answer_deadline, 'は今日以降のものを選択してください') if answer_deadline.blank? || answer_deadline < Date.today.to_datetime
-    end
-
-    # 支払い期日は今日以降の日付
-    def pay_deadline_not_before_today
-      errors.add(:pay_deadline, 'は今日以降のものを選択してください') if pay_deadline.blank? || pay_deadline < Date.today.to_datetime
     end
 end

@@ -127,9 +127,7 @@ end
     start_date: Date.today.next_year(3).to_datetime,
     end_date: Date.today.next_year(3).to_datetime,
     answer_deadline: Date.today.next_year(3).to_datetime,
-    amount: (i + 1) * 1000,
     description: "これは合宿#{i + 1}用のテスト説明です。",
-    pay_deadline: Date.today.next_year(3).to_datetime,
     comment: '楽しいぞ！！！！！'
   )
 end
@@ -143,9 +141,8 @@ end
     start_date: Date.today.next_year(3).to_datetime,
     end_date: Date.today.next_year(3).to_datetime,
     answer_deadline: Date.today.next_year(3).to_datetime,
-    amount: (i + 1) * 1000,
     description: "これは旅行#{i + 1}用のテスト説明です。",
-    pay_deadline: Date.today.next_year(3).to_datetime
+    comment: '楽しいぞ！！！！！'
   )
 end
 
@@ -159,8 +156,7 @@ end
     debtor_id: 2,
     group_id: 1,
     event_id: n + 1,
-    url_token: SecureRandom.hex(10),
-    completed: true
+    url_token: SecureRandom.hex(10)
   )
   Answer.create!(
     status: Answer.statuses[:attending],
@@ -177,8 +173,7 @@ end
       debtor_id: i + 4,
       group_id: 1,
       event_id: n + 1,
-      url_token: SecureRandom.hex(10),
-      completed: false
+      url_token: SecureRandom.hex(10)
     )
     Answer.create!(
       status: Answer.statuses[:attending],
@@ -199,8 +194,7 @@ end
     debtor_id: 3,
     group_id: 2,
     event_id: n + 16,
-    url_token: SecureRandom.hex(10),
-    completed: true
+    url_token: SecureRandom.hex(10)
   )
   Answer.create!(
     status: Answer.statuses[:attending],
@@ -217,8 +211,7 @@ end
       debtor_id: i + 9,
       group_id: 2,
       event_id: n + 16,
-      url_token: SecureRandom.hex(10),
-      completed: false
+      url_token: SecureRandom.hex(10)
     )
     Answer.create!(
       status: Answer.statuses[:unanswered],

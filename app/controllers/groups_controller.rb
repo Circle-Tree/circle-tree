@@ -9,7 +9,7 @@ class GroupsController < ApplicationController
   before_action :cannot_resign, only: :resign
 
   def show
-    events = Event.my_events(current_user).order(start_date: :desc)
+    events = Event.my_groups_events(current_user).order(start_date: :desc)
     @events = Kaminari.paginate_array(events).page(params[:page]).per(5)
   end
 
@@ -48,7 +48,7 @@ class GroupsController < ApplicationController
       NotificationMailer.inherit(group: @group, user: user, current_user: current_user).deliver_later
       flash_and_redirect(key: :success, message: "#{user.name}さんへ幹事を引継ぎました。", redirect_url: root_url)
     else
-      ErrorSlackNotification.member_change_error_notify(title: '引継ぎ失敗', message: "グループID: #{@group&.id}, 引き継がれるユーザーID: #{user&.id}, 現在のユーザーID: #{current_user&.id}の引継ぎ失敗")
+      ErrorSlackNotification.general_error_notify(title: '引継ぎ失敗', message: "グループID: #{@group&.id}, 引き継がれるユーザーID: #{user&.id}, 現在のユーザーID: #{current_user&.id}の引継ぎ失敗")
       flash_and_render(key: :danger, message: '引継ぎできませんでした。しばらくしてからもう一度やり直してください。', action: 'change')
     end
   end
@@ -69,7 +69,7 @@ class GroupsController < ApplicationController
       NotificationMailer.assign(group: @group, user: user, current_user: current_user).deliver_later
       flash_and_redirect(key: :success, message: "#{user.name}さんを幹事に任命しました。", redirect_url: change_group_url(@group))
     else
-      ErrorSlackNotification.member_change_error_notify(title: '任命失敗', message: "グループID: #{@group&.id}, 任命されるユーザーID: #{user&.id}, 現在のユーザーID: #{current_user&.id}の任命失敗")
+      ErrorSlackNotification.general_error_notify(title: '任命失敗', message: "グループID: #{@group&.id}, 任命されるユーザーID: #{user&.id}, 現在のユーザーID: #{current_user&.id}の任命失敗")
       flash_and_render(key: :danger, message: '任命できませんでした。しばらくしてからもう一度やり直してください。', action: 'change')
     end
   end
@@ -80,7 +80,7 @@ class GroupsController < ApplicationController
       flash_and_redirect(key: :success, message: '辞退しました。', redirect_url: root_url)
     else
       @executives = User.executives(@group)
-      ErrorSlackNotification.member_change_error_notify(title: '辞退失敗', message: "グループID: #{@group&.id}, 辞退するユーザーID: #{current_user&.id}の辞退失敗")
+      ErrorSlackNotification.general_error_notify(title: '辞退失敗', message: "グループID: #{@group&.id}, 辞退するユーザーID: #{current_user&.id}の辞退失敗")
       flash_and_render(key: :danger, message: '辞退できませんでした。しばらくしてからもう一度やり直してください。', action: 'change')
     end
   end

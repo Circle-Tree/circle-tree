@@ -7,14 +7,6 @@
       </div>
     </div>
   </div>
-  <div class="col-md-6">
-    <div class="form-group row">
-      <label class="col-sm-3 col-form-label">出金額</label>
-      <div class="col-sm-9">
-        <div type="text" class="form-control">￥<%= event.amount %></div>
-      </div>
-    </div>
-  </div>
 </div>
 <div class="row">
   <div class="col-md-6">
@@ -44,25 +36,9 @@
       </div>
     </div>
   </div>
-  <div class="col-md-6">
-    <div class="form-group row">
-      <label class="col-sm-3 col-form-label">支払い締め切り</label>
-      <div class="col-sm-9">
-        <div class="form-control"><%= l event.pay_deadline, format: :long %></div>
-      </div>
-    </div>
-  </div>
 </div>
 
 <div class="row">
-  <div class="col-md-6">
-    <div class="form-group row">
-      <label class="col-sm-3 col-form-label">集金者</label>
-      <div class="col-sm-9">
-        <div class="form-control" style="color: white;"><%= User.find(event.user_id).name %></div>
-      </div>
-    </div>
-  </div>
   <div class="col-md-6">
     <div class="form-group row">
       <label class="col-sm-3 col-form-label">一言</label>
@@ -85,7 +61,7 @@
 </div>
 
 <div class="row">
-  <% if @event.answer_deadline > Time.current %>
+  <% if @event.answer_deadline > today %>
     <%= button_tag type: 'submit', class: "btn btn-primary btn-icon-text col-md-3", style: "margin-right: 30px;margin-left: 30px;" do %>
       <i class="mdi mdi-file-check btn-icon-prepend"></i> 保存
     <% end %>

@@ -5,18 +5,16 @@ class TransactionsController < ApplicationController
   before_action :confirm_definitive_registration
   before_action :other_user_cannot_access, only: %i[index]
   def index
-    @transactions = Transaction.joins(event: :answers).includes(:group, :event).where(debtor_id: current_user.id, event: { answers: { status: 'attending' } }).distinct.order(deadline: :asc).page(params[:page]).per(5)
-    # @paid_total_amount = Event::Transaction.paid_total_amount(current_user)
-    # @unpaid_total_amount = Event::Transaction.unpaid_total_amount(current_user)
-    user = current_user
-    @total_payment = Transaction.total_payment_by_user(user)
-    all_debts = Transaction.joins(event: :answers).where(completed: false, debtor_id: user.id, event: { answers: { status: 'attending' } }).distinct
-    t = Time.current.end_of_day
-    unpaid_debts = all_debts.where('deadline <= ?', t)
-    @total_unpaid_debt = unpaid_debts.sum('debt') - unpaid_debts.sum('payment')
-    expected_debts = all_debts.where('deadline >= ?', t)
-    @total_expected_debt = expected_debts.sum('debt') - expected_debts.sum('payment')
-    @urgent_expected_debts = all_debts.where(deadline: t..t.since(7.days)).order(deadline: :asc).limit(2)
+    @today = Time.current.midnight
+    transactions = Transaction.transactions_for_attending_event_by_user(current_user)
+    @transactions = transactions.includes(:creditor).order(deadline: :asc).page(params[:page]).per(5)
+    @total_payment = transactions.sum { |transaction| transaction[:payment] }
+    uncompleted_transactions = Transaction.uncompleted_transactions_by_user(transactions)
+    overdue_transactions = Transaction.overdue_transactions_by_user(uncompleted_transactions: uncompleted_transactions, today: @today)
+    @total_overdue_debt = overdue_transactions.sum { |transaction| transaction[:debt] } - overdue_transactions.sum { |transaction| transaction[:payment] }
+    non_overdue_transactions = uncompleted_transactions - overdue_transactions
+    @total_non_overdue_debt = non_overdue_transactions.sum { |transaction| transaction[:debt] } - non_overdue_transactions.sum { |transaction| transaction[:payment] }
+    @urgent_transactions = Transaction.urgent_transactions_by_user(non_overdue_transactions: non_overdue_transactions, max: 2, today: @today)
   end
 
   # def new
@@ -44,14 +42,19 @@ class TransactionsController < ApplicationController
   end
 
   def change
-    if params[:url_token] && transaction = Transaction.find_by(url_token: params[:url_token])
-      debt = transaction.debt
-      if transaction&.update(payment: debt, completed: true)
-        flash.now[:success] = '変更しました'
+    url_token = params[:url_token]
+    payment = params[:payment]
+    if url_token && payment && transaction = Transaction.find_by(url_token: url_token)
+      if transaction&.update(payment: payment)
+        NotificationMailer.update_event_transaction(group: transaction.event.group, transaction: transaction, current_user: current_user).deliver_later
+        render partial: 'events/show/transaction', locals: { transaction: transaction }
       else
-        flash.now[:danger] = '変更できませんでした'
+        message = "#{current_user.name}(ID: #{current_user&.id})さんがTransaction ID: #{transaction&.id}のステータスを「完了」にできないエラー"
+        ErrorSlackNotification.general_error_notify(title: 'Transactionのステータスを完了にできないエラー', message: message)
+        render json: { error: '404 error' }, status: 404
       end
-      render partial: 'events/show/transaction', locals: { transaction: transaction }
+    else
+      render json: { error: '404 error' }, status: 404
     end
   end
 

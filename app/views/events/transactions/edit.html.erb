@@ -8,13 +8,13 @@
     <div class="main-panel">
       <div class="content-wrapper">
         <div class="page-header">
-          <h2 class="page-title" style="color: black;"> <%= @user.name %>さんの支払い情報変更 </h2>
+          <h2 class="page-title" style="color: black;"> 支払い情報変更 </h2>
           <nav aria-label="breadcrumb">
             <ol class="breadcrumb">
               <li class="breadcrumb-item"><a href="#">イベントページ</a></li>
               <li class="breadcrumb-item active" aria-current="page" style="color: black;">イベント一覧</li>
               <li class="breadcrumb-item active" aria-current="page" style="color: black;">詳細情報</li>
-              <li class="breadcrumb-item active" aria-current="page" style="color: black;"><%= @user.name %>さんの支払い情報変更</li>
+              <li class="breadcrumb-item active" aria-current="page" style="color: black;">支払い情報変更</li>
             </ol>
           </nav>
         </div>
@@ -22,7 +22,7 @@
         <div class="col-md-12 grid-margin stretch-card">
           <div class="card">
             <div class="card-body" style="background-color: rgb(255, 255, 255); color: #000;">
-              <h4 class="card-title"><%= @user.name %>さんの支払い情報変更</h4>
+              <h4 class="card-title"><%= @user.name %>さんの<%= @event.name %>の支払い情報変更</h4>
               <%= form_with model: @transaction, url: event_transaction_path(event_id: @event.id, url_token: @transaction.url_token), class: 'forms-sample', local: true do |f| %>
                 <%= render 'shared/error_messages', model: f.object %>
                 <div class="form-group row">

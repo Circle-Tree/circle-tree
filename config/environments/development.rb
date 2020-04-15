@@ -13,7 +13,7 @@ Rails.application.configure do
   # Do not eager load code on boot.
   config.eager_load = false
 
-  # Show full error reports.
+  # trueにすると、すべてのエラーをブラウザに表示できる
   config.consider_all_requests_local = false
 
   # Enable/disable caching. By default caching is disabled.
@@ -91,5 +91,8 @@ Rails.application.configure do
     # Bullet.add_footer = true
     # Bullet.skip_html_injection = false
     # Bullet.slack = { webhook_url: 'http://some.slack.url', channel: '#default', username: 'notifier' }
+    # 最後にコメントをはずす
+    # Bullet.add_whitelist type: :unused_eager_loading, class_name: 'Event::Transaction', association: %i[event creditor]
+    # Bullet.add_whitelist type: :unused_eager_loading, class_name: 'Event', association: %i[answer]
   end
 end

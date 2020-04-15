@@ -12,7 +12,7 @@ class NotificationMailer < ApplicationMailer
     end
   end
 
-  def send_when_make_new_event(user, current_user, group, event)
+  def send_when_make_new_event(user:, current_user:, group:, event:)
     @user = user
     @current_user = current_user
     @group = group
@@ -93,6 +93,25 @@ class NotificationMailer < ApplicationMailer
     @current_user = current_user
     mail(
       subject: "#{@group.name}の幹事任命のお知らせ",
+      to: @user.email
+    ) do |format|
+      format.text
+    end
+  end
+
+  def update_event_transaction(group:, transaction:, current_user:)
+    @transaction = transaction
+    event = @transaction.event
+    @user = @transaction.debtor
+    if @transaction.completed?
+      @message = "#{current_user.name}さんによって#{event.name}(#{group.name})の支払いが完了状態となりました。"
+      subject = "#{event.name}(#{group.name})の支払い完了のお知らせ"
+    else
+      @message = "#{current_user.name}さんが#{event.name}(#{group.name})の支払い情報を変更しました。"
+      subject = "#{event.name}(#{group.name})の支払い情報変更のお知らせ"
+    end
+    mail(
+      subject: subject,
       to: @user.email
     ) do |format|
       format.text

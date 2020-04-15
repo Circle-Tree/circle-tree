@@ -1,6 +1,6 @@
 <%= @user.name %> さん
 
-<%= @current_user.name %>さんが<%= @group.name %>のイベント情報を更新しました。
+<%= @current_user.name %>さんが「<%= @event.name %>」(<%= @group.name %>)の情報を更新しました。
 
 確認はこちらから
-<%= group_event_url(group_id: @group.id, id: @event.id) %>
+<%= details_group_event_url(group_id: @group.id, id: @event.id) %>

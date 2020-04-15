@@ -17,7 +17,7 @@
             </thead>
             <tbody>
               <% @attending_answers.each do |answer| %>
-                <% user = User.find(answer.user_id) %>
+                <% user = answer.user %>
                 <% transaction = Event::Transaction.find_by(event_id: @event.id, debtor_id: user.id) %>
                 <tr>
                   <td><%= user.name %></td>
@@ -25,7 +25,9 @@
                   <td><%= user.to_readable_grade %></td>
                   <%= render 'events/show/transaction', transaction: transaction %>
                   <td>
-                    <%= link_to '変更する', edit_event_transaction_path(event_id: transaction.event_id, url_token: transaction.url_token), class: "btn btn-outline-primary" %>
+                    <% if transaction %>
+                      <%= link_to '変更する', edit_event_transaction_path(event_id: transaction.event_id, url_token: transaction.url_token), class: "btn btn-outline-primary" %>
+                    <% end %>
                   </td>
                 </tr>
               <% end %>
