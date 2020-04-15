@@ -11,7 +11,6 @@ class Event < ApplicationRecord
   validate  :end_date_not_before_start_date
   validate  :answer_deadline_not_before_today
   validates :description, length: { maximum: 1024 }
-  validate  :pay_deadline_not_before_today
   validates :comment, length: { maximum: 40 }
 
   def self.my_groups_events(user)
@@ -45,10 +44,5 @@ class Event < ApplicationRecord
     # 回答期日は今日以降の日付
     def answer_deadline_not_before_today
       errors.add(:answer_deadline, 'は今日以降のものを選択してください') if answer_deadline.blank? || answer_deadline < Date.today.to_datetime
-    end
-
-    # 支払い期日は今日以降の日付
-    def pay_deadline_not_before_today
-      errors.add(:pay_deadline, 'は今日以降のものを選択してください') if pay_deadline.blank? || pay_deadline < Date.today.to_datetime
     end
 end

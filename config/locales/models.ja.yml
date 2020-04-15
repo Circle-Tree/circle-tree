@@ -41,17 +41,15 @@ ja:
         answer_deadline: 出欠回答期限
         description: イベント説明
         comment: 一言
-        amount: 集金額
-        pay_deadline: 支払い期限
-        user: 集金者
+        user: 作成者
         group: グループ
       transaction:
         deadline: 支払い期限
         debt: 支払うべき金額
         payment: 支払った金額
-        debtor_id: 借手
-        group_id: グループ
-        event_id: イベント
-        creditor_id: 貸手
+        debtor: 借手
+        group: グループ
+        event: イベント
+        creditor: 貸手
         type: タイプ
 
