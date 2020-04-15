@@ -41,9 +41,9 @@
                         <%= f.text_field :name, class: "form-control", placeholder: "サークル名を入力してください", style: "color: white;" %>
                       </div>
                       <div class="form-group">
-                        <%= f.label :group_number, "グループID(6~25字)" %>
-                        <%= f.text_field :group_number, class: "form-control", placeholder: "英数字と_を使用できます", style: "color: white;" %>
-                        <%# <small>サークルIDは新しいメンバーを登録する際に必要です。</small> %>
+                        <%= f.label :group_number, "サークルID" %>
+                        <%= f.text_field :group_number, class: "form-control", style: "color: white;" %>
+                        <small class="form-text text-muted">サークルIDは文字数は6~25字、英数字(アルファベットと数字は必須)とアンダーバー(_)のみ使用できます。</small>
                       </div>
                     </div>
                     <%= f.submit "次へ", class: "btn btn-primary btn-fw offset-md-10" %>
