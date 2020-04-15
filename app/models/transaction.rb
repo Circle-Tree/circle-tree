@@ -6,6 +6,7 @@ class Transaction < ApplicationRecord
   belongs_to :debtor, class_name: 'User', foreign_key: 'debtor_id'
   belongs_to :event
   belongs_to :group
+  self.ignored_columns = %w[completed]
   validate  :deadline_before_today, on: :create
   validates :debt, presence: true
   validates :debt, numericality: { only_integer: true, greater_than_or_equal_to: 0 }, allow_blank: true
@@ -14,7 +15,6 @@ class Transaction < ApplicationRecord
   validate :payment_is_equal_or_smaller_than_debt
   validates :type, presence: true
   validates :url_token, presence: true, uniqueness: true
-  # validates :completed, inclusion: { in: [true, false] }
 
   def to_param
     url_token

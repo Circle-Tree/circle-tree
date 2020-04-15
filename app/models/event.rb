@@ -3,6 +3,7 @@
 class Event < ApplicationRecord
   belongs_to :user
   belongs_to :group
+  self.ignored_columns = %w[amount pay_deadline]
   has_many :transactions, dependent: :destroy
   has_many :answers, dependent: :destroy
   has_many :users, through: :answers

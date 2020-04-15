@@ -24,8 +24,6 @@
 
                   <%= f.hidden_field :group_id, value: @group.id %>
                   <%= f.hidden_field :user_id, value: current_user.id %>
-                  <%= f.hidden_field :amount, value: 1 %>
-                  <%= f.hidden_field :pay_deadline, value: Time.current.midnight.since(3.days) %>
                   <div>
                     <h3>イベント概要</h3>
                     <section>
