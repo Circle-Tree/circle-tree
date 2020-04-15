@@ -47,20 +47,26 @@
                           <td><%= participant_count %>人</td>
                           <% unless participant_count == 0 %>
                             <% hash = Event::Transaction.event_total_amount_and_payment(answers) %>
-                            <% expected_total_amount = hash[:expected_total_amount] %>
-                            <% paid_total_amount = hash[:total_payment] %>
-                            <% completed_rate = (paid_total_amount  * 100 / expected_total_amount) %>
-                            <td><%= number_to_currency(expected_total_amount) %></td>
-                            <td><%= number_to_percentage(completed_rate.to_i, precision: 0) %></td>
-                            <td>
-                              <% if completed_rate == 100 %>
-                                <label class="badge badge-success">完了</label>
-                              <% elsif completed_rate >= 80 %>
-                                <label class="badge badge-primary">もう少し</label>
-                              <% else %>
-                                <label class="badge badge-danger">未完了</label>
-                              <% end %>
-                            </td>
+                            <% if hash.present? %>
+                              <% expected_total_amount = hash[:expected_total_amount] %>
+                              <% paid_total_amount = hash[:total_payment] %>
+                              <% completed_rate = (paid_total_amount  * 100 / expected_total_amount) %>
+                              <td><%= number_to_currency(expected_total_amount) %></td>
+                              <td><%= number_to_percentage(completed_rate.to_i, precision: 0) %></td>
+                              <td>
+                                <% if completed_rate == 100 %>
+                                  <label class="badge badge-success">完了</label>
+                                <% elsif completed_rate >= 80 %>
+                                  <label class="badge badge-primary">もう少し</label>
+                                <% else %>
+                                  <label class="badge badge-danger">未完了</label>
+                                <% end %>
+                              </td>
+                            <% else %>
+                              <td></td>
+                              <td></td>
+                              <td></td>
+                            <% end %>
                           <% else %>
                           <td></td>
                           <td></td>
