@@ -41,7 +41,7 @@ class EventsController < ApplicationController
   def details
     @event = @group.events.find(params[:id])
     @answer = @event.answers.find_by(user_id: current_user.id)
-    @attending_answers = @event.answers.where(status: 'attending')
+    @attending_answers = @event.answers.where(status: 'attending').includes(:user)
   end
 
   def new
@@ -92,7 +92,6 @@ class EventsController < ApplicationController
 
     def event_params
       params.require(:event).permit(:name, :start_date, :end_date, :answer_deadline,
-                                    :description, :comment, :amount,
-                                    :pay_deadline, :user_id, :group_id)
+                                    :description, :comment, :user_id, :group_id)
     end
 end

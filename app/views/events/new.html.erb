@@ -24,7 +24,6 @@
 
                   <%= f.hidden_field :group_id, value: @group.id %>
                   <%= f.hidden_field :user_id, value: current_user.id %>
-                  <%= f.hidden_field :amount, value: 1 %>
                   <div>
                     <h3>イベント概要</h3>
                     <section>
@@ -48,10 +47,6 @@
                       <div class="form-group">
                         <%= f.label :answer_deadline, '出欠回答期限' %>
                         <%= f.date_field :answer_deadline, class: "form-control" %>
-                      </div>
-                      <div class="form-group">
-                        <%= f.label :pay_deadline, '支払い期限' %>
-                        <%= f.date_field :pay_deadline, class: "form-control" %>
                       </div>
                     </section>
 
