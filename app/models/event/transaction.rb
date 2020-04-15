@@ -10,9 +10,13 @@ class Event::Transaction < Transaction
     payment = 0
     answers.each do |answer|
       transaction = Event::Transaction.find_by(event_id: answer.event_id, debtor_id: answer.user_id)
-      amount += transaction.debt
-      payment += transaction.payment
+      if transaction
+        amount += transaction.debt
+        payment += transaction.payment
+      end
     end
+    return {} if amount.zero?
+
     { expected_total_amount: amount, total_payment: payment }
   end
 
