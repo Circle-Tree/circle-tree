@@ -13,7 +13,7 @@ class EventsController < ApplicationController
   end
 
   def list
-    @events = Event.my_groups_events(current_user).order(start_date: :asc).page(params[:page]).per(10)
+    @events = Event.my_groups_events(current_user).includes(:group).order(start_date: :asc).page(params[:page]).per(10)
   end
 
   def show
@@ -46,7 +46,6 @@ class EventsController < ApplicationController
 
   def new
     @event = Event.new
-    @executives = User.executives(@group)
   end
 
   def create
@@ -54,32 +53,28 @@ class EventsController < ApplicationController
     if @event.save
       members = User.members(@group)
       members.delete(current_user) # イベント作成者は除く
-      Event::Transaction.new_transaction_when_create_new_event(member: current_user, group: @group, event: @event, creditor: current_user)
-      Answer.new_answer_when_create_new_event(current_user, @event)
-      creditor = User.find(@event.user_id)
-      NewEventJob.perform_later(members: members, current_user: current_user, group: @group, event: @event, creditor: creditor)
+      # Event::Transaction.new_transaction_when_create_new_event(member: current_user, group: @group, event: @event, creditor: current_user)
+      Answer.new_answer_when_create_new_event(user: current_user, event: @event)
+      # creditor = User.find(@event.user_id)
+      NewEventJob.perform_later(members: members, current_user: current_user, group: @group, event: @event)
       flash[:success] = 'イベントが作成されました。グループのユーザーにメールで作成を通知しました。'
       redirect_to group_event_url(group_id: @group.id, id: @event.id)
     else
-      @executives = User.executives(@group)
       render 'new'
     end
   end
 
   def edit
     @event = @group.events.find(params[:id])
-    @executives = User.executives(@group)
   end
 
   def update
     @event = @group.events.find(params[:id])
     members = User.members(@group)
     if @event.update(event_params)
-      creditor = User.find(@event.user_id)
-      UpdateEventJob.perform_later(members: members, current_user: current_user, group: @group, event: @event, creditor: creditor)
-      flash_and_redirect(key: :success, message: 'イベント情報を更新しました', redirect_url: group_event_url(group_id: @group.id, id: @event.id))
+      UpdateEventJob.perform_later(members: members, current_user: current_user, group: @group, event: @event)
+      flash_and_redirect(key: :success, message: 'イベント情報を更新しました。グループのユーザーにメールで変更を通知しました。', redirect_url: group_event_url(group_id: @group.id, id: @event.id))
     else
-      @executives = User.executives(@group)
       render 'edit'
     end
   end

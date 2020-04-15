@@ -11,7 +11,6 @@ class Event < ApplicationRecord
   validate  :end_date_not_before_start_date
   validate  :answer_deadline_not_before_today
   validates :description, length: { maximum: 1024 }
-  validates :amount, numericality: { only_integer: true, greater_than_or_equal_to: 0 }
   validate  :pay_deadline_not_before_today
   validates :comment, length: { maximum: 40 }
 

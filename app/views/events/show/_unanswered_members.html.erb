@@ -20,7 +20,11 @@
                 <tr>
                   <td><%= user.name %></td>
                   <td><%= user.to_readable_grade %></td>
-                  <td>￥<%= transaction.debt %></td>
+                  <td>
+                    <% if transaction %>
+                      <%= number_to_currency(transaction.debt) %>
+                    <% end %>
+                  </td>
                   <td><button class="btn btn-outline-primary">催促</button></td>
                   <%# <td> %>
                     <%#= link_to '変更する', edit_event_transaction_path(event_id: transaction.event_id, url_token: transaction.url_token), class: "btn btn-outline-primary" %>

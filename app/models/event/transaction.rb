@@ -20,14 +20,6 @@ class Event::Transaction < Transaction
     where(debtor_id: user.id).joins(event: :answers).distinct.where(event: { answers: { status: Answer.statuses[:attending] } }).sum('debt') - paid_total_amount(user)
   end
 
-  def self.completed_transactions(event:)
-    where(event_id: event.id, completed: true)
-  end
-
-  def self.uncompleted_transactions(event:)
-    where(event_id: event.id, completed: false).joins(event: :answers).distinct.where(event: { answers: { status: Answer.statuses[:attending] }})
-  end
-
   def self.new_transaction_when_create_new_event(member:, creditor:, group:, event:)
     create!(
       deadline: event.pay_deadline,
