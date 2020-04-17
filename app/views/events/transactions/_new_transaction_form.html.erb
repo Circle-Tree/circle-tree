@@ -1,0 +1,39 @@
+<div class="row">
+  <div class="col-md-6">
+    <div class="form-group row">
+      <%= f.label :creditor_id, "支払い相手", class: "col-sm-3 col-form-label" %>
+      <div class="col-sm-9">
+        <%= f.select :creditor_id, @executives.map { |executive| [executive.name, executive.id]}, {}, { class: "form-control", style: "color: white;" } %>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-6">
+    <div class="form-group row">
+      <%= f.label :debt, "金額", class: "col-sm-3 col-form-label" %>
+      <div class="col-sm-9">
+        <%= f.number_field :debt, class: "form-control", style: "color: white;", placeholder: '金額' %>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-6">
+    <div class="form-group row">
+      <%= f.label :deadline, "支払い期限", class: "col-sm-3 col-form-label" %>
+      <div class="col-sm-9">
+        <%= f.date_field :deadline, class: "form-control", style: "color: white;" %>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-6">
+    <div class="form-group row">
+      <%= button_tag type: 'submit', class: "btn btn-primary btn-icon-text col-md-6", style: "margin-right: 30px;margin-left: 30px;" do %>
+        <i class="mdi mdi-file-check btn-icon-prepend"></i> 保存
+      <% end %>
+    </div>
+  </div>
+</div>
