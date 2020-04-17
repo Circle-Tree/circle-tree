@@ -7,33 +7,40 @@ class Events::TransactionsController < TransactionsController
   before_action :cannot_access_to_other_groups
   before_action :only_executives_can_access
 
-  # def new
-  #   @transaction = Event::Transaction.new
-  #   @users = []
-  #   GroupUser.where(group_id: @group.id).each do |relationship|
-  #     user = User.find(relationship.user_id)
-  #     unless Event::Transaction.where(group_id: @group.id, event_id: @event.id, debtor_id: relationship.user_id)
-  #       @users << user
-  #     end
-  #   end
-  # end
+  def new
+    @transaction = Event::Transaction.new
+    @executives = User.executives(@group)
+  end
 
-  # def create
-  #   @transaction = Event::Transaction.new(transaction_params)
-  #   @users = [] # createでも定義しないといけない
-  #   GroupUser.where(group_id: @group.id).each do |relationship|
-  #     user = User.find(relationship.user_id)
-  #     unless Event::Transaction.where(group_id: @group.id, event_id: @event.id, debtor_id: relationship.user_id)
-  #       @users << user
-  #     end
-  #   end
-  #   if @transaction.save
-  #     flash[:success] = '作成成功！'
-  #     redirect_to group_event_url(group_id: @group.id, id: @event.id)
-  #   else
-  #     render 'new'
-  #   end
-  # end
+  def create
+    transaction = @event.transactions.build(create_transaction_params)
+    transaction.debtor_id = 1
+    if transaction.valid?
+      transaction = nil
+      grade = params[:grade]
+      members = User.members_by_grade(group: @group, grade: grade)
+      puts members.count
+      if members.any?
+        NewTransactionsJob.perform_later(members: members, event: @event, params: create_transaction_params,
+                                        current_user: current_user)
+        number = User.grades[grade.to_sym]
+        if number.zero?
+          message = '出席するその他の人たちに通知しました。'
+        else
+          message = "出席する#{number}年生に通知しました。"
+        end
+        flash_and_redirect(key: :success, message: message, redirect_url: new_event_transaction_url(event_id: @event.id))
+      else
+        @executives = User.executives(@group)
+        flash_and_render(key: :danger, message: 'メンバーがいないため作成できませんでした。', action: 'new')
+      end
+    else
+      puts '4'
+      @transaction = transaction
+      @executives = User.executives(@group)
+      @transaction = nil
+    end
+  end
 
   def edit
     @transaction = Event::Transaction.find_by(url_token: params[:url_token])
@@ -55,6 +62,10 @@ class Events::TransactionsController < TransactionsController
   end
 
   private
+
+    def create_transaction_params
+      params.require(:event_transaction).permit(:deadline, :debt, :creditor_id, :grade)
+    end
 
     def update_transaction_params
       params.require(:event_transaction).permit(:deadline, :debt, :payment, :creditor_id)

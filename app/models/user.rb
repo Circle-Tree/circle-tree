@@ -46,6 +46,10 @@ class User < ApplicationRecord
     end
   end
 
+  def attending?(event)
+    self.answers.find_by(event_id: event.id, status: Answer.statuses[:attending]).present?
+  end
+
   # オープンクラスにいずれ移動
   def is_gender_boolean?
     !!(self.gender) == self.gender

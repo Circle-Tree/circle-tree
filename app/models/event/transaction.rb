@@ -1,6 +1,9 @@
 # frozen_string_literal: true
 
 class Event::Transaction < Transaction
+  belongs_to :event
+  validates :event_id, uniqueness: { scope: [:debtor_id] }
+
   def self.paid_total_amount(user)
     where(debtor_id: user.id).joins(event: :answers).distinct.where(event: { answers: { status: Answer.statuses[:attending] } }).sum('payment')
   end
