@@ -1,32 +1,154 @@
-<%= form_for(@transaction, url: event_transactions_path(event_id: @event.id)) do |f| %>
-  <%= render 'shared/error_messages', object: f.object %>
-  <div class="field">
+<% provide(:title, "#{@event.name}の支払い情報作成") %>
+<div class="sidebar-fixed container-scroller" style="background-color: rgb(44, 44, 44);">
+  <%= render 'shared/sidebar' %>
+  <div class="container-fluid page-body-wrapper">
+    <!-- partial:partials/_navbar.html -->
+    <%= render 'shared/topbar' %>
+    <!-- partial -->
+    <div class="main-panel">
+      <div class="content-wrapper">
+        <div class="page-header">
+          <h2 class="page-title" style="color: black;"> <%= @event.name %>の支払い情報作成 </h2>
+          <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+              <li class="breadcrumb-item"><a href="#">イベントページ</a></li>
+              <li class="breadcrumb-item active" aria-current="page" style="color: black;">イベント一覧</li>
+              <li class="breadcrumb-item active" aria-current="page" style="color: black;">詳細情報</li>
+              <li class="breadcrumb-item active" aria-current="page" style="color: black;">支払い情報作成</li>
+            </ol>
+          </nav>
+        </div>
+        <%= render 'shared/flash' %>
 
-    <%= f.hidden_field :creditor_id, :value => current_user.id %>
-    <%= f.hidden_field :event_id, :value => @event.id %>
-    <%= f.hidden_field :group_id, :value => @group.id %>
+        <div class="col-md-12 grid-margin stretch-card">
+          <div class="card">
+            <div class="card-body" style="background-color: rgb(255, 255, 255); color: #000;">
+              <h4 class="card-title" >支払い情報</h4>
+              <p class="card-description">学年ごとに支払い情報を指定できます。</p>
+              <ul class="nav nav-tabs" role="tablist">
+                <li class="nav-item">
+                  <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home-1" role="tab" aria-controls="home" aria-selected="true">1年生</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile-1" role="tab" aria-controls="profile" aria-selected="false">2年生</a>
+                </li>
 
-    <%= f.label :debtor_id, "支払う人" %> <br />
+                <li class="nav-item">
+                  <a class="nav-link" id="contact-tab" data-toggle="tab" href="#contact-1" role="tab" aria-controls="contact" aria-selected="false">3年生</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" id="contact2-tab" data-toggle="tab" href="#contact-2" role="tab" aria-controls="contact2" aria-selected="false">4年生</a>
+                </li>
 
-    <%# users = [] %>
-    <%# GroupUser.where(group_id: @group.id).each do |relationship| %>
-      <%# if relationship.user_id != current_user.id %>
-        <%# users << User.find(relationship.user_id) %>
-      <%# end %>
-    <%# end %>
-    <%= f.select :debtor_id,
-        options_from_collection_for_select(@users, :id, :name),
-          {
-            class: "form-control", :prompt => "選択できます"
-          }
-    %><br />
+                <li class="nav-item">
+                  <a class="nav-link" id="contact3-tab" data-toggle="tab" href="#contact-3" role="tab" aria-controls="contact3" aria-selected="false">5年生</a>
+                </li>
 
-    <%= f.label :debt, "支払うべき金額" %> <br />
-    <%= f.number_field :debt, value: @event.amount, class: "form-control" %> <br />
+                <li class="nav-item">
+                  <a class="nav-link" id="contact4-tab" data-toggle="tab" href="#contact-4" role="tab" aria-controls="contact4" aria-selected="false">6年生</a>
+                </li>
 
-    <%= f.label :payment, "支払い済み金額" %> <br />
-    <%= f.number_field :payment, class: "form-control" %> <br />
+                <li class="nav-item">
+                  <a class="nav-link" id="contact5-tab" data-toggle="tab" href="#contact-5" role="tab" aria-controls="contact5" aria-selected="false">その他</a>
+                </li>
+              </ul>
 
-    <%= f.submit "作成"%>
+              <div class="tab-content">
+                <div class="tab-pane fade show active" id="home-1" role="tabpanel" aria-labelledby="home-tab">
+                  <h3>1年生の支払い設定</h3>
+                  <section>
+                    <%= form_with model: @transaction, url: event_transactions_path(event_id: @event.id), local: true do |f| %>
+                      <%= render 'shared/error_messages', model: f.object %>
+                      <%= hidden_field_tag :grade, 'grade1' %>
+                      <%= render 'new_transaction_form', f: f %>
+                    <% end %>
+                  </section>
+                </div>
+
+                <div class="tab-pane fade" id="profile-1" role="tabpanel" aria-labelledby="profile-tab">
+                  <h3>2年生の支払い設定</h3>
+                  <section>
+                    <%= form_with model: @transaction, url: event_transactions_path(event_id: @event.id), local: true do |f| %>
+                      <%= render 'shared/error_messages', model: f.object %>
+                      <%= hidden_field_tag :grade, 'grade2' %>
+                      <%= render 'new_transaction_form', f: f %>
+                    <% end %>
+                  </section>
+                </div>
+
+                <div class="tab-pane fade" id="contact-1" role="tabpanel" aria-labelledby="contact-tab">
+                  <h3>3年生の支払い設定</h3>
+                  <section>
+                    <%= form_with model: @transaction, url: event_transactions_path(event_id: @event.id), local: true do |f| %>
+                      <%= render 'shared/error_messages', model: f.object %>
+                      <%= hidden_field_tag :grade, 'grade3' %>
+                      <%= render 'new_transaction_form', f: f %>
+                    <% end %>
+                  </section>
+                </div>
+
+                <div class="tab-pane fade" id="contact-2" role="tabpanel" aria-labelledby="contact2-tab">
+                  <h3>4年生の支払い設定</h3>
+                  <section>
+                    <%= form_with model: @transaction, url: event_transactions_path(event_id: @event.id), local: true do |f| %>
+                      <%= render 'shared/error_messages', model: f.object %>
+                      <%= hidden_field_tag :grade, 'grade4' %>
+                      <%= render 'new_transaction_form', f: f %>
+                    <% end %>
+                  </section>
+                </div>
+
+                <div class="tab-pane fade" id="contact-3" role="tabpanel" aria-labelledby="contact3-tab">
+                 <h3>5年生の支払い設定</h3>
+                  <section>
+                    <%= form_with model: @transaction, url: event_transactions_path(event_id: @event.id), local: true do |f| %>
+                      <%= render 'shared/error_messages', model: f.object %>
+                      <%= hidden_field_tag :grade, 'grade5' %>
+                      <%= render 'new_transaction_form', f: f %>
+                    <% end %>
+                  </section>
+                </div>
+
+                <div class="tab-pane fade" id="contact-4" role="tabpanel" aria-labelledby="contact4-tab">
+                  <h3>6年生の支払い設定</h3>
+                  <section>
+                    <%= form_with model: @transaction, url: event_transactions_path(event_id: @event.id), local: true do |f| %>
+                      <%= render 'shared/error_messages', model: f.object %>
+                      <%= hidden_field_tag :grade, 'grade6' %>
+                      <%= render 'new_transaction_form', f: f %>
+                    <% end %>
+                  </section>
+                </div>
+
+                <div class="tab-pane fade" id="contact-5" role="tabpanel" aria-labelledby="contact5-tab">
+                  <h3>その他の支払い設定</h3>
+                  <section>
+                    <%= form_with model: @transaction, url: event_transactions_path(event_id: @event.id), local: true do |f| %>
+                      <%= render 'shared/error_messages', model: f.object %>
+                      <%= hidden_field_tag :grade, 'other' %>
+                      <%= render 'new_transaction_form', f: f %>
+                    <% end %>
+                  </section>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- content-wrapper ends -->
+      <%= render 'shared/footer' %>
+    </div>
+    <!-- main-panel ends -->
   </div>
-<% end %>
+  <!-- page-body-wrapper ends -->
+</div>
+<style>
+  .field_with_errors {
+    display: contents;
+    /* input {
+        @extend .is-invalid;
+      } */
+    }
+</style>
+
+

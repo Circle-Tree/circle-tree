@@ -37,6 +37,7 @@ class Transaction < ApplicationRecord
     count('debt')
   end
 
+  # これらはEvent::Transactionに移動すべき
   def self.total_payment_by_user(user)
     Transaction.joins(event: :answers).where(debtor_id: user.id, completed: true, event: { answers: { status: 'attending' } }).distinct.sum('debt')
   end
@@ -81,6 +82,8 @@ class Transaction < ApplicationRecord
     end
 
     def payment_is_equal_or_smaller_than_debt
-      errors.add(:payment, 'は支払うべき金額以下でなければなりません') if payment > debt
+      if payment.present? && debt.present?
+        errors.add(:payment, 'は支払うべき金額以下でなければなりません') if payment > debt
+      end
     end
 end
