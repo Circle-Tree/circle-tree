@@ -19,7 +19,6 @@ class Events::TransactionsController < TransactionsController
       transaction = nil
       grade = params[:grade]
       members = User.members_by_grade(group: @group, grade: grade)
-      puts members.count
       if members.any?
         NewTransactionsJob.perform_later(members: members, event: @event, params: create_transaction_params,
                                         current_user: current_user)
@@ -35,10 +34,9 @@ class Events::TransactionsController < TransactionsController
         flash_and_render(key: :danger, message: 'メンバーがいないため作成できませんでした。', action: 'new')
       end
     else
-      puts '4'
       @transaction = transaction
       @executives = User.executives(@group)
-      @transaction = nil
+      render 'new'
     end
   end
 
