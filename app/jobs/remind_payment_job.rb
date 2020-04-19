@@ -4,7 +4,7 @@ class RemindPaymentJob < ApplicationJob
   def perform
     today = Time.current.midnight
     day = today.since(3.days) # 3日前
-    transactions = Event::Transaction.includes({ event: :group }, :debtor).where('deadline >= ? AND deadline <= ?', day, today)
+    transactions = Event::Transaction.includes({ event: :group }, :debtor).where('deadline >= ? AND deadline <= ?', today, day)
     return unless transactions.present?
 
     transactions.each do |transaction|

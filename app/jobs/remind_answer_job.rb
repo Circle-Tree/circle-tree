@@ -4,7 +4,7 @@ class RemindAnswerJob < ApplicationJob
   def perform
     today = Time.current.midnight
     day = today.since(3.days) # 3日前
-    events = Event.includes(:group, :answers).where('answer_deadline >= ? AND answer_deadline <= ?', day, today)
+    events = Event.includes(:group, :answers).where('answer_deadline >= ? AND answer_deadline <= ?', today, day)
     return unless events.present?
 
     events.each do |event|
