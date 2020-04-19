@@ -2,8 +2,8 @@ class RemindPaymentJob < ApplicationJob
   queue_as :default
 
   def perform
-    day = Date.today.prev_day(3).to_time # 3日前
-    today = Date.today.to_time
+    today = Time.current.midnight
+    day = today.since(3.days) # 3日前
     transactions = Event::Transaction.includes({ event: :group }, :debtor).where('deadline >= ? AND deadline <= ?', day, today)
     return unless transactions.present?
 
