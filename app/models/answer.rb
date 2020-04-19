@@ -12,6 +12,7 @@ class Answer < ApplicationRecord
   validates :user_id, presence: true
   validates :event_id, presence: true
   validates_uniqueness_of :event_id, scope: :user_id
+  scope :my_attending_answers, -> (user){ where(user_id: user.id, status: Answer.statuses[:attending]) }
 
   def self.divide_answers_in_three(event)
     answers = event.answers
