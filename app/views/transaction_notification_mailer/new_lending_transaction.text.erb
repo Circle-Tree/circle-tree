@@ -1,0 +1,6 @@
+<%= @user.name %> さん
+
+<%= @current_user.name %>さんがあなたに対して新規支払い情報を作成しました。
+
+確認はこちらから
+<%= user_transactions_url(user_id: @user.id) %>

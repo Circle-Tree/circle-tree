@@ -1,0 +1,6 @@
+<%= @user.name %> さん
+
+<%= @current_user.name %>さんがあなたに対する支払い情報を変更しました。
+
+確認はこちらから
+<%= user_transactions_url(user_id: @user.id) %>

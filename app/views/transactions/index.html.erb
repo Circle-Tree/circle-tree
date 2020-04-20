@@ -8,12 +8,13 @@
     <div class="main-panel">
       <div class="content-wrapper">
         <%= render 'shared/ad' %>
+        <%= render 'shared/flash' %>
 
         <div class="row">
           <div class="col-md-12 grid-margin stretch-card">
             <div class="card">
               <div class="card-body" style="color: white;">
-                <h4 class="card-title">My収支情報</h4>
+                <h4 class="card-title">イベント収支情報</h4>
                 <% values = { total_payment: @total_payment, total_overdue_debt: @total_overdue_debt,
                               total_non_overdue_debt: @total_non_overdue_debt, urgent_transactions: @urgent_transactions } %>
                 <%= render 'shared/balance_chart', values %>
@@ -23,7 +24,7 @@
           <div class="col-md-12 grid-margin stretch-card">
             <div class="card">
               <div class="card-body" style="color: black;">
-                <h4 class="card-title">収支履歴</h4>
+                <h4 class="card-title">イベント収支履歴</h4>
                 <div class="row">
                   <div class="col-12">
                     <div class="table-responsive">
@@ -65,7 +66,7 @@
                                 </td>
                               <% elsif debt > payment %>
                                 <td>
-                                  <% if deadline < @today %>
+                                  <% if deadline > @today %>
                                     <label class="badge badge-primary">予定</label>
                                   <% else %>
                                     <label class="badge badge-danger">未払い</label>
@@ -83,6 +84,79 @@
                         </tbody>
                       </table>
                       <%= paginate @transactions %>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-12 grid-margin stretch-card">
+            <div class="card">
+              <div class="card-body" style="color: black;">
+                <h4 class="card-title">個人間収支履歴</h4>
+                <div class="row">
+                  <div class="col-12">
+                    <div class="table-responsive">
+                      <table id="order-listing" class="table">
+                        <thead>
+                          <tr>
+                            <th>貸し借り</th>
+                            <th>期限</th>
+                            <th>金額</th>
+                            <th>支払った金額</th>
+                            <th>支払い相手</th>
+                            <th>支払い状況</th>
+                            <th>変更</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <% @individual_transactions.each do |transaction| %>
+                            <% deadline = transaction.deadline %>
+                            <% debt = transaction.debt %>
+                            <% payment = transaction.payment %>
+                            <% url_token = transaction.url_token %>
+                            <tr>
+                              <td>
+                                <% is_lending = transaction.lending?(user: current_user) %>
+                                <% if is_lending %>
+                                  <label class="btn btn-outline-primary">貸した</label>
+                                <% else %>
+                                  <label class="btn btn-outline-danger">借りた</label>
+                                <% end %>
+                              </td>
+                              <td><%= l deadline, format: :short %></td>
+                              <td>￥<%= transaction.debt %></td>
+                              <td>￥<%= transaction.payment %></td>
+                              <td>
+                                <% if is_lending %>
+                                  <%= transaction.debtor.name %>
+                                <% else %>
+                                  <%= transaction.creditor.name %>
+                                <% end %>
+                              </td>
+                              <% if debt == payment %>
+                                <td>
+                                  <label class="badge badge-success">完了</label>
+                                </td>
+                              <% elsif debt > payment %>
+                                <td>
+                                  <% if deadline > @today %>
+                                    <label class="badge badge-primary">予定</label>
+                                  <% else %>
+                                    <label class="badge badge-danger">未完了</label>
+                                  <% end %>
+                                </td>
+                              <% else %>
+                                <td>
+                                  <label class="badge badge-info">過払い</label>
+                                </td>
+                              <% end %>
+                              <td><%= link_to '変更する', edit_users_transaction_path(url_token: url_token), class: "btn btn-outline-primary" %></td>
+                            </tr>
+                          <% end %>
+                        </tbody>
+                      </table>
+                      <%= paginate @individual_transactions %>
                     </div>
                   </div>
                 </div>

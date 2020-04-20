@@ -1,0 +1,76 @@
+<% provide(:title, "#{@user.name}さんとの支払い情報作成") %>
+<div class="sidebar-fixed container-scroller" style="background-color: rgb(44, 44, 44);">
+  <%= render 'shared/sidebar' %>
+  <div class="container-fluid page-body-wrapper">
+    <!-- partial:partials/_navbar.html -->
+    <%= render 'shared/topbar' %>
+    <!-- partial -->
+    <div class="main-panel">
+      <div class="content-wrapper">
+        <div class="page-header">
+          <h2 class="page-title" style="color: black;"> 支払い情報 </h2>
+          <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+              <li class="breadcrumb-item"><a href="#">イベントページ</a></li>
+              <li class="breadcrumb-item active" aria-current="page" style="color: black;">イベント一覧</li>
+              <li class="breadcrumb-item active" aria-current="page" style="color: black;">詳細情報</li>
+              <li class="breadcrumb-item active" aria-current="page" style="color: black;">支払い情報変更</li>
+            </ol>
+          </nav>
+        </div>
+
+        <div class="col-md-12 grid-margin stretch-card">
+          <div class="card">
+            <div class="card-body" style="background-color: rgb(255, 255, 255); color: #000;">
+              <h4 class="card-title"><%= @user.name %>さんから借りた</h4>
+              <%= form_with model: @transaction, url: user_transactions_path(user_id: @user.id), class: 'forms-sample', local: true do |f| %>
+                <%= render 'shared/error_messages', model: f.object %>
+                <%= f.hidden_field :debtor_id, value: current_user.id %>
+                <%= f.hidden_field :creditor_id, value: @user.id %>
+
+                <div class="form-group row">
+                  <%= f.label :deadline, "支払い期限", class: "col-sm-3 col-form-label" %>
+                  <div class="col-sm-9">
+                    <%= f.date_field :deadline, class: "form-control", style: "color: white;" %>
+                  </div>
+                </div>
+
+                <div class="form-group row">
+                  <%= f.label :debt, "借りた額", class: "col-sm-3 col-form-label" %>
+                  <div class="col-sm-9">
+                    <%= f.number_field :debt, class: "form-control", style: "color: white;" %>
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <%= f.label :payment, "返した額", class: "col-sm-3 col-form-label" %>
+                  <div class="col-sm-9">
+                    <%= f.number_field :payment, class: "form-control", style: "color: white;" %>
+                  </div>
+                </div>
+
+                <div class="row">
+                  <%= button_tag type: 'submit', class: "btn btn-primary btn-icon-text col-md-3", style: "margin-right: 30px;margin-left: 30px;" do %>
+                    <i class="mdi mdi-file-check btn-icon-prepend"></i> 作成
+                  <% end %>
+                </div>
+              <% end %>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- content-wrapper ends -->
+      <%= render 'shared/footer' %>
+    </div>
+    <!-- main-panel ends -->
+  </div>
+  <!-- page-body-wrapper ends -->
+</div>
+<style>
+  .field_with_errors {
+    display: contents;
+    /* input {
+        @extend .is-invalid;
+      } */
+    }
+</style>
+

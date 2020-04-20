@@ -18,7 +18,7 @@ class NewTransactionsJob < ApplicationJob
             TransactionNotificationMailer.new_event_transaction(user: member, current_user: current_user, event: event).deliver_later
           else
             message = "#{current_user&.name}(#{current_user&.id})さんが#{member&.name}(#{member&.id})の支払い情報(#{event&.name}(#{event&.id}))作成に失敗"
-            ErrorSlackNotification.self.general_error_notify(title: '支払い作成のエラー', message: message)
+            ErrorSlackNotification.general_error_notify(title: '支払い作成のエラー', message: message)
           end
         end
       rescue => e
