@@ -8,6 +8,7 @@
               <th>名前</th>
               <th>性別</th>
               <th>ステータス</th>
+              <th>支払い</th>
               <% is_executive = current_user.executive?(group) %>
               <% if is_executive %>
                 <th>退会</th>
@@ -25,6 +26,12 @@
                       <label class="badge badge-info">幹事</label>
                     <% else %>
                       <label class="badge badge-danger">メンバー</label>
+                    <% end %>
+                  </td>
+                  <td>
+                    <% unless me?(member) %>
+                      <%= link_to '貸した', lend_user_transactions_path(user_id: member.id), class: "btn btn-outline-primary" %>
+                      <%= link_to '借りた', borrow_user_transactions_path(user_id: member.id), class: "btn btn-outline-primary" %>
                     <% end %>
                   </td>
                   <% if is_executive %>

@@ -30,6 +30,7 @@ class Events::TransactionsController < TransactionsController
         end
         flash_and_redirect(key: :success, message: message, redirect_url: new_event_transaction_url(event_id: @event.id))
       else
+        @transaction = Event::Transaction.new
         @executives = User.executives(@group)
         flash_and_render(key: :danger, message: 'メンバーがいないため作成できませんでした。', action: 'new')
       end
