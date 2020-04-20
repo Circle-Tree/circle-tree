@@ -14,6 +14,7 @@ class UsersController < ApplicationController
     @members3 = Kaminari.paginate_array(User.members_by_grade(group: @group, grade: User.grades[:grade3])).page(params[:page]).per(10)
     @members4 = Kaminari.paginate_array(User.members_by_grade(group: @group, grade: User.grades[:grade4])).page(params[:page]).per(10)
     @members5 = Kaminari.paginate_array(User.members_by_grade(group: @group, grade: User.grades[:grade5])).page(params[:page]).per(10)
+    @members6 = Kaminari.paginate_array(User.members_by_grade(group: @group, grade: User.grades[:grade6])).page(params[:page]).per(10)
     @others = Kaminari.paginate_array(User.members_by_grade(group: @group, grade: User.grades[:other])).page(params[:page]).per(10)
   end
 
