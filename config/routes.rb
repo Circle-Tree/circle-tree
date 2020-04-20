@@ -47,8 +47,17 @@ Rails.application.routes.draw do
     resources :orders, only: %i[index]
   end
 
+  resource :users, only: [] do
+    resources :transactions, only: %i[edit update], controller: 'users/transactions', param: :url_token
+  end
   resources :users, only: [] do
-    resources :transactions, only: [:index]
+    resources :transactions, only: %i[index]
+    resources :transactions, only: %i[create], controller: 'users/transactions', param: :url_token do
+      collection do
+        get :lend
+        get :borrow
+      end
+    end
     resources :events, only: [] do
       collection do
         get 'list'
