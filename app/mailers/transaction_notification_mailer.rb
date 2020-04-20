@@ -26,4 +26,26 @@ class TransactionNotificationMailer < ApplicationMailer
       format.text
     end
   end
+
+  def update_lending_transaction(user:, current_user:)
+    @user = user
+    @current_user = current_user
+    mail(
+      subject: '新規支払い情報の作成',
+      to: @user.email
+    ) do |format|
+      format.text
+    end
+  end
+
+  def update_borrowing_transaction(user:, current_user:)
+    @user = user
+    @current_user = current_user
+    mail(
+      subject: '新規支払い情報の作成',
+      to: @user.email
+    ) do |format|
+      format.text
+    end
+  end
 end
