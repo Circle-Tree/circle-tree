@@ -14,6 +14,7 @@ class NewTransactionsJob < ApplicationJob
         else
           new_transaction = event.transactions.build(params)
           new_transaction.debtor_id = member.id
+          new_transaction.url_token = SecureRandom.hex(10)
           if new_transaction.save
             TransactionNotificationMailer.new_event_transaction(user: member, current_user: current_user, event: event).deliver_later
           else

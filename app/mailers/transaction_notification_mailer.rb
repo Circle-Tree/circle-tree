@@ -27,11 +27,33 @@ class TransactionNotificationMailer < ApplicationMailer
     end
   end
 
+  def new_lending_transaction(user:, current_user:)
+    @user = user
+    @current_user = current_user
+    mail(
+      subject: '新規支払い情報の作成のお知らせ',
+      to: @user.email
+    ) do |format|
+      format.text
+    end
+  end
+
+  def new_borrowing_transaction(user:, current_user:)
+    @user = user
+    @current_user = current_user
+    mail(
+      subject: '新規支払い情報の作成のお知らせ',
+      to: @user.email
+    ) do |format|
+      format.text
+    end
+  end
+
   def update_lending_transaction(user:, current_user:)
     @user = user
     @current_user = current_user
     mail(
-      subject: '新規支払い情報の作成',
+      subject: '支払い情報の変更のお知らせ',
       to: @user.email
     ) do |format|
       format.text
@@ -42,7 +64,7 @@ class TransactionNotificationMailer < ApplicationMailer
     @user = user
     @current_user = current_user
     mail(
-      subject: '新規支払い情報の作成',
+      subject: '支払い情報の変更のお知らせ',
       to: @user.email
     ) do |format|
       format.text

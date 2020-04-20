@@ -16,6 +16,7 @@ class Users::TransactionsController < TransactionsController
   def create
     @user = User.find(params[:user_id])
     @transaction = Individual::Transaction.new(user_transaction_params)
+    @transaction.url_token = SecureRandom.hex(10)
     if @transaction.save
       if @transaction.lending?(user: current_user)
         TransactionNotificationMailer.new_lending_transaction(user: @user, current_user: current_user).deliver_later
