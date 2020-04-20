@@ -5,8 +5,9 @@ class TransactionsController < ApplicationController
   before_action :confirm_definitive_registration
   before_action :other_user_cannot_access, only: %i[index]
   def index
+    user = current_user
     @today = Time.current.midnight
-    transactions = Transaction.transactions_for_attending_event_by_user(current_user)
+    transactions = Transaction.transactions_for_attending_event_by_user(user)
     @transactions = transactions.includes(:creditor).order(deadline: :asc).page(params[:page]).per(5)
     @total_payment = transactions.sum { |transaction| transaction[:payment] }
     uncompleted_transactions = Transaction.uncompleted_transactions_by_user(transactions)
@@ -15,6 +16,8 @@ class TransactionsController < ApplicationController
     non_overdue_transactions = uncompleted_transactions - overdue_transactions
     @total_non_overdue_debt = non_overdue_transactions.sum { |transaction| transaction[:debt] } - non_overdue_transactions.sum { |transaction| transaction[:payment] }
     @urgent_transactions = Transaction.urgent_transactions_by_user(non_overdue_transactions: non_overdue_transactions, max: 2, today: @today)
+
+    @individual_transactions = Individual::Transaction.includes(:debtor, :creditor).where('debtor_id = ? OR creditor_id = ?', user.id, user.id).order(deadline: 'ASC').page(params[:page]).per(5)
   end
 
   # def new
