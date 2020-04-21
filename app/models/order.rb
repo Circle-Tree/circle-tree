@@ -3,7 +3,7 @@ class Order < ApplicationRecord
   belongs_to :product
   belongs_to :user
 
-  scope :recently_created, -> { where(created_at: 1.minutes.ago..Time.current) }
+  scope :recently_created, -> { where(created_at: 3.minutes.ago..Time.current) }
 
   def set_paid
     self.status = Order.statuses[:paid]

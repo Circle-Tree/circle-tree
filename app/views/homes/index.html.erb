@@ -1,5 +1,29 @@
 <div class="sidebar-fixed container-scroller" style="background-color: rgb(44, 44, 44);">
-  <%= render 'shared/sidebar' %>
+  <nav class="sidebar sidebar-offcanvas" id="sidebar" >
+    <%= render 'shared/logo'%>
+    <ul class="nav">
+      <%= render 'shared/sidebar/profile' %>
+      <li class="nav-item menu-items active">
+        <%= link_to root_path, class: "nav-link" do %>
+          <span class="menu-icon">
+            <i class="mdi mdi-home" style="color: blue;"></i>
+          </span>
+          <span class="menu-title">ホーム</span>
+        <% end %>
+      </li>
+      <%= render 'shared/sidebar/my_page' %>
+      <% if current_user_group.present? %>
+        <%= render 'shared/sidebar/circle_page' %>
+        <%= render 'shared/sidebar/event' %>
+        <%= render 'shared/sidebar/circle_setting' %>
+      <% else %>
+        <%= render 'shared/sidebar/new_circle' %>
+      <% end %>
+      <%= render 'shared/sidebar/faq' %>
+      <%= render 'shared/sidebar/customize' %>
+      <%= render 'shared/sidebar/logout' %>
+    </ul>
+  </nav>
   <div class="container-fluid page-body-wrapper">
     <!-- partial:partials/_navbar.html -->
     <%= render 'shared/topbar' %>
