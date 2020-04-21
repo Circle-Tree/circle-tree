@@ -1,6 +1,39 @@
 <% provide(:title, "ークルプロフィール") %>
 <div class="sidebar-fixed container-scroller" style="background-color: rgb(44, 44, 44);">
-  <%= render 'shared/sidebar' %>
+  <nav class="sidebar sidebar-offcanvas" id="sidebar" >
+    <%= render 'shared/logo'%>
+    <ul class="nav">
+      <%= render 'shared/sidebar/profile' %>
+      <%= render 'shared/sidebar/home' %>
+      <%= render 'shared/sidebar/my_page' %>
+      <% if current_user_group.present? %>
+        <li class="nav-item menu-items active">
+          <a class="nav-link" data-toggle="collapse" href="#page-layouts" aria-expanded="false" aria-controls="page-layouts">
+            <span class="menu-icon">
+              <i class="mdi mdi-account-multiple"></i>
+            </span>
+            <span class="menu-title">サークルページ</span>
+            <i class="menu-arrow"></i>
+          </a>
+          <div class="collapse show" id="page-layouts">
+            <ul class="nav flex-column sub-menu">
+              <li class="nav-item"> <%= link_to 'サークルプロフィール', group_path(id: current_user_group.id), class: "nav-link active" %></li>
+              <li class="nav-item"> <a class="nav-link" href="#">サークルカレンダー(未)</a></li>
+              <li class="nav-item"> <a class="nav-link" href="#">統計情報(未)</a><%#= link_to '統計情報(未)', statistics_group_path(id: current_user_group.id), class: "nav-link" %></li>
+              <li class="nav-item"> <a class="nav-link" href="#">デポジット(未)</a><%#= link_to 'デポジット(未)', deposit_group_path(id: current_user_group.id), class: "nav-link" %></li>
+            </ul>
+          </div>
+        </li>
+        <%= render 'shared/sidebar/event' %>
+        <%= render 'shared/sidebar/circle_setting' %>
+      <% else %>
+        <%= render 'shared/sidebar/new_circle' %>
+      <% end %>
+      <%= render 'shared/sidebar/faq' %>
+      <%= render 'shared/sidebar/customize' %>
+      <%= render 'shared/sidebar/logout' %>
+    </ul>
+  </nav>
   <!-- partial -->
   <div class="container-fluid page-body-wrapper">
     <!-- partial:partials/_navbar.html -->
