@@ -1,6 +1,30 @@
 <% provide(:title, "STEP1 グループ作成") %>
 <div class="sidebar-fixed container-scroller" style="background-color: rgb(44, 44, 44);">
-  <%= render 'shared/sidebar' %>
+  <nav class="sidebar sidebar-offcanvas" id="sidebar" >
+    <%= render 'shared/logo'%>
+    <ul class="nav">
+      <%= render 'shared/sidebar/profile' %>
+      <%= render 'shared/sidebar/home' %>
+      <%= render 'shared/sidebar/my_page' %>
+      <% if current_user_group.present? %>
+        <%= render 'shared/sidebar/circle_page' %>
+        <%= render 'shared/sidebar/event' %>
+        <%= render 'shared/sidebar/circle_setting' %>
+      <% else %>
+        <li class="nav-item menu-items active">
+          <%= link_to step1_orders_path, class: "nav-link" do %>
+            <span class="menu-icon">
+              <i class="  mdi mdi-account-card-details" style="color:rgb(74, 234, 255);"></i>
+            </span>
+            <span class="menu-title">サークル作成</span>
+          <% end %>
+        </li>
+      <% end %>
+      <%= render 'shared/sidebar/faq' %>
+      <%= render 'shared/sidebar/customize' %>
+      <%= render 'shared/sidebar/logout' %>
+    </ul>
+  </nav>
   <div class="container-fluid page-body-wrapper">
     <!-- partial:partials/_navbar.html -->
     <%= render 'shared/topbar' %>

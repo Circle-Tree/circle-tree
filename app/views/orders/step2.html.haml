@@ -1,6 +1,24 @@
 - provide(:title, "支払い")
 .sidebar-fixed.container-scroller{style: "background-color: rgb(44, 44, 44);"}
-  = render 'shared/sidebar'
+  %nav#sidebar.sidebar.sidebar-offcanvas
+    = render 'shared/logo'
+    %ul.nav
+      = render 'shared/sidebar/profile'
+      = render 'shared/sidebar/home'
+      = render 'shared/sidebar/my_page'
+      - if current_user_group.present?
+        = render 'shared/sidebar/circle_page'
+        = render 'shared/sidebar/event'
+        = render 'shared/sidebar/circle_setting'
+      - else
+        %li.nav-item.menu-items.active
+          = link_to step1_orders_path, class: "nav-link" do
+            %span.menu-icon
+              %i.mdi.mdi-account-card-details{style: "color:rgb(74, 234, 255);"}
+            %span.menu-title サークル作成
+      = render 'shared/sidebar/faq'
+      = render 'shared/sidebar/customize'
+      = render 'shared/sidebar/logout'
   / partial
   .container-fluid.page-body-wrapper
     = render 'shared/topbar'
