@@ -1,5 +1,36 @@
 <div class="sidebar-fixed container-scroller" style="background-color: rgb(44, 44, 44);">
-  <%= render 'shared/sidebar' %>
+  <nav class="sidebar sidebar-offcanvas" id="sidebar" >
+    <%= render 'shared/logo'%>
+    <ul class="nav">
+      <%= render 'shared/sidebar/profile' %>
+      <%= render 'shared/sidebar/home' %>
+      <%= render 'shared/sidebar/my_page' %>
+      <% if current_user_group.present? %>
+        <%= render 'shared/sidebar/circle_page' %>
+        <li class="nav-item menu-items active">
+          <a class="nav-link" data-toggle="collapse" href="#sidebar-layouts" aria-expanded="false" aria-controls="sidebar-layouts">
+            <span class="menu-icon">
+              <i class="mdi mdi-message-text-outline"></i>
+            </span>
+            <span class="menu-title">イベント</span>
+            <i class="menu-arrow"></i>
+          </a>
+          <div class="collapse show" id="sidebar-layouts">
+            <ul class="nav flex-column sub-menu">
+              <li class="nav-item"> <%= link_to 'イベント作成', new_group_event_path(group_id: current_user_group.id), class: "nav-link active" %></li>
+              <li class="nav-item"> <%= link_to 'イベント一覧', group_events_path(group_id: current_user_group.id), class: "nav-link" %></li>
+            </ul>
+          </div>
+        </li>
+        <%= render 'shared/sidebar/circle_setting' %>
+      <% else %>
+        <%= render 'shared/sidebar/new_circle' %>
+      <% end %>
+      <%= render 'shared/sidebar/faq' %>
+      <%= render 'shared/sidebar/customize' %>
+      <%= render 'shared/sidebar/logout' %>
+    </ul>
+  </nav>
   <div class="container-fluid page-body-wrapper">
     <!-- partial:partials/_navbar.html -->
     <%= render 'shared/topbar' %>

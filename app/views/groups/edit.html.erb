@@ -1,7 +1,40 @@
 <% provide(:title, "サークル情報") %>
 
 <div class="sidebar-fixed container-scroller" style="background-color: rgb(44, 44, 44);">
-  <%= render 'shared/sidebar' %>
+  <nav class="sidebar sidebar-offcanvas" id="sidebar" >
+    <%= render 'shared/logo'%>
+    <ul class="nav">
+      <%= render 'shared/sidebar/profile' %>
+      <%= render 'shared/sidebar/home' %>
+      <%= render 'shared/sidebar/my_page' %>
+      <% if current_user_group.present? %>
+        <%= render 'shared/sidebar/circle_page' %>
+        <%= render 'shared/sidebar/event' %>
+        <li class="nav-item menu-items active">
+          <a class="nav-link" data-toggle="collapse" href="#ui-advanced" aria-expanded="false" aria-controls="ui-advanced">
+            <span class="menu-icon">
+              <i class="mdi mdi-settings" style="color: blueviolet;"></i>
+            </span>
+            <span class="menu-title">サークル設定</span>
+            <i class="menu-arrow"></i>
+          </a>
+          <div class="collapse show" id="ui-advanced">
+            <ul class="nav flex-column sub-menu">
+              <li class="nav-item"> <%= link_to 'メンバー情報', group_users_path(group_id: current_user_group.id), class: "nav-link" %></li>
+              <li class="nav-item"> <%= link_to 'メンバー設定', change_group_path(id: current_user_group.id), class: "nav-link" %></li>
+              <li class="nav-item"> <%= link_to 'サークル情報', edit_group_path(id: current_user_group.id), class: "nav-link active" %></li>
+              <li class="nav-item"> <a class="nav-link" href="#">支払い情報(未)</a></li>
+            </ul>
+          </div>
+        </li>
+      <% else %>
+        <%= render 'shared/sidebar/new_circle' %>
+      <% end %>
+      <%= render 'shared/sidebar/faq' %>
+      <%= render 'shared/sidebar/customize' %>
+      <%= render 'shared/sidebar/logout' %>
+    </ul>
+  </nav>
   <!-- partial -->
   <div class="container-fluid page-body-wrapper">
     <!-- partial:partials/_navbar.html -->
