@@ -11501,7 +11501,7 @@ input[type="button"].btn-block {
   text-decoration: none; }
 
 .breadcrumb-item.active {
-  color: #495057; }
+  color: #000000; }
 
 .pagination, .jsgrid .jsgrid-pager {
   display: flex;
@@ -15648,7 +15648,7 @@ code {
     margin-bottom: 0; }
 
 .page-title {
-  color: #ffffff;
+  color: #000000;
   font-size: 1.125rem;
   margin-bottom: 0; }
   .page-title .page-title-icon {
@@ -23113,3 +23113,12 @@ div.tagsinput {
   flex-grow: 1; }
 
 /*# sourceMappingURL=../maps/modern-vertical/style.css.map */
+
+@media screen and (min-width: 650px){
+  .br-pc { display:block; }
+  .br-sp { display:none; }
+}
+@media screen and (max-width: 650px){
+  .br-pc { display:none; }
+  .br-sp { display:block; }
+}

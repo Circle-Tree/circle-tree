@@ -1,16 +1,32 @@
-<h2>Resend confirmation instructions</h2>
+<div class="container-scroller">
+  <div class="container-fluid page-body-wrapper full-page-wrapper">
+    <div class="row w-100" style="margin-left: 0;">
+      <div class="content-wrapper full-page-wrapper d-flex align-items-center"  style="background-image: url(/images/background14.jpg); background-repeat: no-repeat; background-size: cover;">
+        <div class="card col-lg-4 mx-auto" style="background-color: black;">
+          <div class="card-body px-5 py-5">
+            <h3 class="card-title text-left mb-3" style="color: white;">本登録用メールを再送信</h3>
+            <%= form_for(resource, as: resource_name, url: confirmation_path(resource_name), html: { method: :post }) do |f| %>
+              <%= render "devise/shared/error_messages", resource: resource %>
 
-<%= form_for(resource, as: resource_name, url: confirmation_path(resource_name), html: { method: :post }) do |f| %>
-  <%= render "devise/shared/error_messages", resource: resource %>
+              <div class="form-group">
+                <%= f.label :email, '登録メールアドレス' %>
+                <%= f.email_field :email, autofocus: true, autocomplete: "email", value: (resource.pending_reconfirmation? ? resource.unconfirmed_email : resource.email), class: "form-control p_input", style: "color: white;" %>
+              </div>
 
-  <div class="field">
-    <%= f.label :email %><br />
-    <%= f.email_field :email, autofocus: true, autocomplete: "email", value: (resource.pending_reconfirmation? ? resource.unconfirmed_email : resource.email) %>
+              <div class="text-center">
+                <%= f.submit "送信", class: "btn btn-primary btn-block enter-btn", style: "margin-bottom: 20px;" %>
+              </div>
+
+              <p class="sign-up text-center">まだ登録が済んでいない?<%= link_to " 新規登録", new_registration_path(resource_name) %></p>
+              <p class="sign-up text-center">既に登録済み？<%= link_to " ログイン", new_session_path(resource_name) %></p>
+              <p class="terms">By creating an account you are accepting our<a href="#"> Terms & Conditions</a></p>
+            <% end %>
+          </div>
+        </div>
+      </div>
+      <!-- content-wrapper ends -->
+    </div>
+    <!-- row ends -->
   </div>
-
-  <div class="actions">
-    <%= f.submit "Resend confirmation instructions" %>
-  </div>
-<% end %>
-
-<%= render "devise/shared/links" %>
+  <!-- page-body-wrapper ends -->
+</div>
