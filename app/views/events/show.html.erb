@@ -1,5 +1,4 @@
-<% provide(:title, "#{@event.name}ページ") %>
-
+<% provide(:title, "イベント管理") %>
 <div class="sidebar-fixed container-scroller" style="background-color: rgb(44, 44, 44);">
   <%= render 'shared/sidebar' %>
   <div class="container-fluid page-body-wrapper">
@@ -9,18 +8,12 @@
     <div class="main-panel">
       <div class="content-wrapper">
         <div class="page-header">
-          <h3 class="page-title"> <%= @event.name %> </h3>
-          <nav aria-label="breadcrumb">
-            <ol class="breadcrumb">
-              <li class="breadcrumb-item active" aria-current="page"><%= link_to 'イベント一覧', group_events_path(group_id: @group.id) %></li>
-              <li class="breadcrumb-item active" aria-current="page"><%= @event.name %></li>
-            </ol>
-          </nav>
+          <h3 class="page-title"> イベント管理 </h3>
         </div>
         <%= render 'shared/flash' %>
         <div class="card">
           <div class="card-body" style="background-color: rgb(255, 255, 255); color: #000;">
-            <h4 class="card-title" >イベント管理</h4>
+            <h3 class="card-title" ><%= @event.name %></h3>
             <%= link_to '支払い情報一括作成/更新', new_event_transaction_path(event_id: @event.id), class: "btn btn-outline-primary" %>
             <ul class="nav nav-tabs" role="tablist">
               <li class="nav-item">
@@ -41,28 +34,28 @@
               <div class="tab-pane fade show active" id="home-1" role="tabpanel" aria-labelledby="home-tab">
                 <h3>出席</h3>
                 <section>
-                  <%= render 'events/show/attending_members' %>
+                  <%= render 'events/show/attending_members', answers: @attending_answers %>
                 </section>
               </div>
 
               <div class="tab-pane fade" id="profile-1" role="tabpanel" aria-labelledby="profile-tab">
                 <h3>欠席</h3>
                 <section>
-                  <%= render 'events/show/absent_members' %>
+                  <%= render 'events/show/absent_members', answers: @absent_answers %>
                 </section>
               </div>
 
               <div class="tab-pane fade" id="contact-1" role="tabpanel" aria-labelledby="contact-tab">
-                <h3>未納</h3>
+                <h3>未払い</h3>
                 <section>
-                  <%= render 'events/show/uncompleted_members' %>
+                  <%= render 'events/show/uncompleted_members', transactions: @uncompleted_transactions %>
                 </section>
               </div>
 
               <div class="tab-pane fade" id="contact-2" role="tabpanel" aria-labelledby="contact2-tab">
                 <h3>未回答</h3>
                 <section>
-                  <%= render 'events/show/unanswered_members' %>
+                  <%= render 'events/show/unanswered_members', answers: @unanswered_answers %>
                 </section>
               </div>
             </div>

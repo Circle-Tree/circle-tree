@@ -1,3 +1,4 @@
+<% provide(:title, "イベント作成") %>
 <div class="sidebar-fixed container-scroller" style="background-color: rgb(44, 44, 44);">
   <nav class="sidebar sidebar-offcanvas" id="sidebar" >
     <%= render 'shared/logo'%>
@@ -39,18 +40,11 @@
       <div class="content-wrapper">
         <div class="page-header">
           <h3 class="page-title"> イベント作成 </h3>
-          <nav aria-label="breadcrumb">
-            <ol class="breadcrumb">
-              <li class="breadcrumb-item"><a href="#">サークルページ</a></li>
-              <li class="breadcrumb-item active" aria-current="page">イベント作成</li>
-            </ol>
-          </nav>
         </div>
         <div class="row">
           <div class="col-12 grid-margin">
             <div class="card">
               <div class="card-body" style="color: black;">
-                <h4 class="card-title">イベント作成</h4>
                 <%= form_with model: @event, url: group_events_path(group_id: current_user_group.id), local: true, id: :exampleform do |f| %>
 
                   <%= f.hidden_field :group_id, value: @group.id %>

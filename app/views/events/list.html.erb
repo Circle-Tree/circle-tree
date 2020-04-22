@@ -1,4 +1,4 @@
-<% provide(:title, "Myイベント一覧") %>
+<% provide(:title, "Myイベント") %>
 <div class="sidebar-fixed container-scroller" style="background-color: rgb(44, 44, 44);">
   <nav class="sidebar sidebar-offcanvas" id="sidebar" >
     <%= render 'shared/logo'%>
@@ -18,8 +18,8 @@
             <% if current_user.definitive_registration %>
               <li class="nav-item"> <a class="nav-link" href="#">お知らせ(未)</a></li>
               <li class="nav-item"> <a class="nav-link" href="#">Myカレンダー(未)</a></li>
-              <li class="nav-item"> <%= link_to 'My収支情報', user_transactions_path(user_id: current_user.id), class: "nav-link" %></li>
-              <li class="nav-item"> <%= link_to 'Myイベント一覧', list_user_events_path(user_id: current_user.id), class: "nav-link active" %></li>
+              <li class="nav-item"> <%= link_to 'My収支', user_transactions_path(user_id: current_user.id), class: "nav-link" %></li>
+              <li class="nav-item"> <%= link_to 'Myイベント', list_user_events_path(user_id: current_user.id), class: "nav-link active" %></li>
             <% end %>
             <li class="nav-item"> <%= link_to 'プロフィール変更', users_edit_profile_path, class: "nav-link" %></li>
           </ul>
@@ -45,13 +45,7 @@
       <div class="content-wrapper" style="color: black;">
         <%= render 'shared/flash' %>
         <div class="page-header">
-          <h3 class="page-title"> Myイベント一覧 </h3>
-          <nav aria-label="breadcrumb">
-            <ol class="breadcrumb">
-              <li class="breadcrumb-item"><a href="#">マイページ</a></li>
-              <li class="breadcrumb-item active" aria-current="page">Myイベント一覧</li>
-            </ol>
-          </nav>
+          <h3 class="page-title"> Myイベント </h3>
         </div>
         <div class="card">
           <div class="card-body">
@@ -77,7 +71,7 @@
                         <% transaction = Event::Transaction.find_by(event_id: event.id, debtor_id: current_user.id) %>
                         <% answer = Answer.find_by(event_id: event.id, user_id: current_user.id) %>
                         <tr>
-                          <td><%= link_to event.name.truncate(22) , details_group_event_path(group_id: event.group_id, id: event.id) %></td>
+                          <td><%= link_to event.name.truncate(22) , details_group_event_path(group_id: event.group_id, id: event.id), style: 'color: black;' %></td>
                           <td>
                             <%= readable_event_date(event) %>
                           </td>

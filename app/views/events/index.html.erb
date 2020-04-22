@@ -40,11 +40,6 @@
       <div class="content-wrapper">
         <div class="page-header">
           <h3 class="page-title"> イベント一覧 </h3>
-          <nav aria-label="breadcrumb">
-            <ol class="breadcrumb">
-              <li class="breadcrumb-item active" aria-current="page">イベント一覧</li>
-            </ol>
-          </nav>
         </div>
         <%= render 'shared/flash' %>
         <div class="card">
@@ -63,13 +58,14 @@
                         <th>予定合計額</th>
                         <th>集金割合</th>
                         <th>出金状況</th>
+                        <th>イベント管理</th>
                         <th>イベント編集</th>
                       </tr>
                     </thead>
                     <tbody>
                       <% @events.each do |event| %>
                         <tr>
-                          <td><%=link_to event.name, group_event_path(group_id: event.group_id, id: event.id) %></td>
+                          <td><%= link_to event.name.truncate(22) , details_group_event_path(group_id: event.group_id, id: event.id), style: 'color: black;' %></td>
                           <td>
                             <%= readable_event_date(event) %>
                           </td>
@@ -103,6 +99,9 @@
                           <td></td>
                           <td></td>
                           <% end %>
+                          <td>
+                            <%=link_to '管理する', group_event_path(group_id: event.group_id, id: event.id), class: "btn btn-outline-primary" %>
+                          </td>
                           <td>
                             <%= link_to '編集する', edit_group_event_path(group_id: event.group_id, id: event.id), class: "btn btn-outline-primary" %>
                           </td>

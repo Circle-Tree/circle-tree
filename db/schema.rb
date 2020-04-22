@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_04_15_090535) do
+ActiveRecord::Schema.define(version: 2020_04_22_060158) do
 
   create_table "answers", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.integer "status", default: 10, null: false, comment: "回答のステータス"
@@ -18,6 +18,7 @@ ActiveRecord::Schema.define(version: 2020_04_15_090535) do
     t.bigint "event_id", null: false, comment: "イベントID"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "reason", default: 0, null: false
     t.index ["event_id"], name: "fk_rails_a4147b4302"
     t.index ["user_id", "event_id"], name: "index_answers_on_user_id_and_event_id", unique: true
   end
@@ -89,6 +90,7 @@ ActiveRecord::Schema.define(version: 2020_04_15_090535) do
     t.bigint "group_id"
     t.string "type"
     t.string "url_token", null: false
+    t.string "memo", comment: "支払い/貸し借りのメモ"
     t.index ["creditor_id"], name: "index_transactions_on_creditor_id"
     t.index ["debtor_id"], name: "index_transactions_on_debtor_id"
     t.index ["event_id"], name: "index_transactions_on_event_id"

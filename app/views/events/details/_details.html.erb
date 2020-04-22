@@ -1,16 +1,6 @@
 <div class="row">
   <div class="col-md-6">
     <div class="form-group row">
-      <label class="col-sm-3 col-form-label">イベント名</label>
-      <div class="col-sm-9">
-        <div type="text" class="form-control"><%= event.name %></div>
-      </div>
-    </div>
-  </div>
-</div>
-<div class="row">
-  <div class="col-md-6">
-    <div class="form-group row">
       <label class="col-sm-3 col-form-label">開始日</label>
       <div class="col-sm-9">
         <div class="form-control"><%= l event.start_date, format: :long %></div>
@@ -61,14 +51,14 @@
 </div>
 
 <div class="row">
-  <% if @event.answer_deadline > today %>
+  <% if event.answer_deadline > today %>
     <%= button_tag type: 'submit', class: "btn btn-primary btn-icon-text col-md-3", style: "margin-right: 30px;margin-left: 30px;" do %>
       <i class="mdi mdi-file-check btn-icon-prepend"></i> 保存
     <% end %>
   <% end %>
   <% if current_user.executive?(group) %>
     <%= link_to edit_group_event_path(group_id: group.id, id: event.id), class: "btn btn-dark btn-icon-text col-md-3", style: "margin-right: 30px;margin-left: 30px;" do %>
-      編集 <i class="mdi mdi-file-check btn-icon-append"></i>
+      イベント編集 <i class="mdi mdi-file-check btn-icon-append"></i>
     <% end %>
     <%= link_to group_event_path(group_id: group.id, id: event.id), class: "btn btn-dark btn-icon-text col-md-3", style: "margin-right: 30px;margin-left: 30px;" do %>
       イベント管理 <i class="mdi mdi-file-check btn-icon-append"></i>

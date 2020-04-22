@@ -52,4 +52,14 @@ ja:
         event: イベント
         creditor: 貸手
         type: タイプ
+  enums:
+    answer:
+      reason:
+        nothing: 未回答
+        job: バイト
+        friend: 友達
+        family: 家族
+        money: お財布
+        unfavorable: 好ましくないイベント
+        other: その他
 

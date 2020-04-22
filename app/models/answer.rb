@@ -9,9 +9,16 @@ class Answer < ApplicationRecord
     absent: 30 # 欠席
   }
   validates :status, presence: true
-  validates :user_id, presence: true
-  validates :event_id, presence: true
   validates_uniqueness_of :event_id, scope: :user_id
+  enum reason: {
+    nothing: 0,
+    job: 1,
+    friend: 2,
+    family: 3,
+    money: 4,
+    unfavorable: 5,
+    other: 6
+  }
   scope :my_attending_answers, -> (user){ where(user_id: user.id, status: Answer.statuses[:attending]) }
 
   def self.divide_answers_in_three(event)
