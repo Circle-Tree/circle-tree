@@ -23113,3 +23113,12 @@ div.tagsinput {
   flex-grow: 1; }
 
 /*# sourceMappingURL=../maps/modern-vertical/style.css.map */
+
+@media screen and (min-width: 650px){
+  .br-pc { display:block; }
+  .br-sp { display:none; }
+}
+@media screen and (max-width: 650px){
+  .br-pc { display:none; }
+  .br-sp { display:block; }
+}
