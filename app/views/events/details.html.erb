@@ -20,12 +20,12 @@
 
         <div class="card" style="margin-bottom: 20px;">
           <div class="card-body" style="color: black;">
-            <h4 class="card-title">出席回答</h4>
+            <h3 class="card-title"><%= @event.name %></h3>
             <% today = Time.current.midnight %>
             <% if @event.answer_deadline > today %>
               <% if @answer.present? %>
                 <%= form_with model: @answer, url: event_answer_path(id: @answer.id, event_id: @event.id), local: true do |f| %>
-                  <%= render 'events/details/answer', f: f %>
+                  <%= render 'events/details/answer', f: f, event: @event, answer: @answer, today: today %>
                   <%= render 'events/details/details', f: f, group: @group, event: @event, today: today %>
                 <% end %>
               <% else %>
