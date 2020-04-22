@@ -3,32 +3,36 @@
     <div class="row">
       <div class="col-12">
         <div class="table-responsive">
-          <table id="order-listing" class="table">
-            <thead>
-              <tr>
-                <th>名前</th>
-                <th>回答日</th>
-                <th>学年</th>
-                <th>欠席理由</th>
-              </tr>
-            </thead>
-            <tbody>
-              <% @absent_answers.each do |answer| %>
-                <% user = answer.user %>
+          <% if answers.any? %>
+            <table id="order-listing" class="table">
+              <thead>
                 <tr>
-                  <td><%= user.name %></td>
-                  <td><%= l answer.updated_at, format: :short %></td>
-                  <td><%= user.to_readable_grade %></td>
-                  <td>
-                    <% unless answer.nothing? %>
-                      <%= t("enums.answer.reason.#{answer.reason}") %>
-                    <% end %>
-                  </td>
+                  <th>名前</th>
+                  <th>回答日</th>
+                  <th>学年</th>
+                  <th>欠席理由</th>
                 </tr>
-              <% end %>
-            </tbody>
-          </table>
-          <%= paginate @absent_answers %>
+              </thead>
+              <tbody>
+                <% answers.each do |answer| %>
+                  <% user = answer.user %>
+                  <tr>
+                    <td><%= user.name %></td>
+                    <td><%= l answer.updated_at, format: :short %></td>
+                    <td><%= user.to_readable_grade %></td>
+                    <td>
+                      <% unless answer.nothing? %>
+                        <%= t("enums.answer.reason.#{answer.reason}") %>
+                      <% end %>
+                    </td>
+                  </tr>
+                <% end %>
+              </tbody>
+            </table>
+            <%= paginate answers %>
+          <% else %>
+            欠席者はいません
+          <% end %>
         </div>
       </div>
     </div>

@@ -1,7 +1,7 @@
 <div class="col-md-8 grid-margin stretch-card">
   <div class="card">
     <div class="card-body" >
-      <h4 class="card-title"><%= link_to 'My収支情報', user_transactions_path(user_id: current_user.id) %></h4>
+      <h4 class="card-title"><%= link_to 'My収支', user_transactions_path(user_id: current_user.id), style: 'color: black;' %></h4>
       <% values = { total_payment: @total_payment, total_overdue_debt: @total_overdue_debt,
                     total_non_overdue_debt: @total_non_overdue_debt, urgent_transactions: @urgent_transactions } %>
       <%= render 'shared/balance_chart', values %>

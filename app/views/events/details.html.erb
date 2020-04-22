@@ -1,4 +1,4 @@
-<% provide(:title, "#{@event.name}の詳細") %>
+<% provide(:title, "#{@event.name}") %>
 <div class="sidebar-fixed container-scroller" style="background-color: rgb(44, 44, 44);">
   <%= render 'shared/sidebar' %>
   <div class="container-fluid page-body-wrapper">
@@ -9,18 +9,12 @@
       <div class="content-wrapper">
         <div class="page-header">
           <h3 class="page-title"> <%= @event.name %> </h3>
-          <nav aria-label="breadcrumb">
-            <ol class="breadcrumb">
-              <li class="breadcrumb-item"><a href="#">イベントページ</a></li>
-              <li class="breadcrumb-item active" aria-current="page">出席回答</li>
-            </ol>
-          </nav>
         </div>
         <%= render 'shared/flash' %>
 
         <div class="card" style="margin-bottom: 20px;">
           <div class="card-body" style="color: black;">
-            <h3 class="card-title"><%= @event.name %></h3>
+            <h3 class="card-title">詳細/回答</h3>
             <% today = Time.current.midnight %>
             <% if @event.answer_deadline > today %>
               <% if @answer.present? %>
@@ -47,7 +41,7 @@
 
         <div class="card">
           <div class="card-body" style="color: black;" >
-            <h4 class="card-title">出席</h4>
+            <h3 class="card-title">出席者</h3>
             <div class="row">
               <div class="col-12">
                 <div class="table-responsive">

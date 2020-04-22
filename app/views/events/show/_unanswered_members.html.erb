@@ -3,37 +3,41 @@
     <div class="row">
       <div class="col-12">
         <div class="table-responsive">
-          <table id="order-listing" class="table">
-            <thead>
-              <tr>
-                <th>名前</th>
-                <th>学年</th>
-                <th>支払うべき額</th>
-                <th>回答催促？(未実装)</th>
-                <%# <th>編集</th> %>
-              </tr>
-            </thead>
-            <tbody>
-              <% @unanswered_answers.each do |answer| %>
-                <% user = answer.user %>
-                <% transaction = Event::Transaction.find_by(event_id: @event.id, debtor_id: user.id) %>
+          <% if answers.any? %>
+            <table id="order-listing" class="table">
+              <thead>
                 <tr>
-                  <td><%= user.name %></td>
-                  <td><%= user.to_readable_grade %></td>
-                  <td>
-                    <% if transaction %>
-                      <%= number_to_currency(transaction.debt) %>
-                    <% end %>
-                  </td>
-                  <td><button class="btn btn-outline-primary">催促</button></td>
-                  <%# <td> %>
-                    <%#= link_to '変更する', edit_event_transaction_path(event_id: transaction.event_id, url_token: transaction.url_token), class: "btn btn-outline-primary" %>
-                  <%# </td> %>
+                  <th>名前</th>
+                  <th>学年</th>
+                  <th>支払うべき額</th>
+                  <%# <th>回答催促？(未実装)</th> %>
+                  <%# <th>編集</th> %>
                 </tr>
-              <% end %>
-            </tbody>
-          </table>
-          <%= paginate @unanswered_answers %>
+              </thead>
+              <tbody>
+                <% answers.each do |answer| %>
+                  <% user = answer.user %>
+                  <% transaction = Event::Transaction.find_by(event_id: @event.id, debtor_id: user.id) %>
+                  <tr>
+                    <td><%= user.name %></td>
+                    <td><%= user.to_readable_grade %></td>
+                    <td>
+                      <% if transaction %>
+                        <%= number_to_currency(transaction.debt) %>
+                      <% end %>
+                    </td>
+                    <%# <td><button class="btn btn-outline-primary">催促</button></td> %>
+                    <%# <td> %>
+                      <%#= link_to '変更する', edit_event_transaction_path(event_id: transaction.event_id, url_token: transaction.url_token), class: "btn btn-outline-primary" %>
+                    <%# </td> %>
+                  </tr>
+                <% end %>
+              </tbody>
+            </table>
+            <%= paginate answers %>
+          <% else %>
+            未回答者はいません
+          <% end %>
         </div>
       </div>
     </div>

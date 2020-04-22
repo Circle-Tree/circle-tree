@@ -1,4 +1,4 @@
-<% provide(:title, "メンバー情報") %>
+<% provide(:title, "メンバー一覧") %>
 <div class="sidebar-fixed container-scroller" style="background-color: rgb(44, 44, 44);">
   <nav class="sidebar sidebar-offcanvas" id="sidebar" >
     <%= render 'shared/logo'%>
@@ -14,14 +14,14 @@
             <span class="menu-icon">
               <i class="mdi mdi-settings" style="color: blueviolet;"></i>
             </span>
-            <span class="menu-title">サークル設定</span>
+            <span class="menu-title">サークル情報</span>
             <i class="menu-arrow"></i>
           </a>
           <div class="collapse show" id="ui-advanced">
             <ul class="nav flex-column sub-menu">
-              <li class="nav-item"> <%= link_to 'メンバー情報', group_users_path(group_id: current_user_group.id), class: "nav-link active" %></li>
+              <li class="nav-item"> <%= link_to 'メンバー一覧', group_users_path(group_id: current_user_group.id), class: "nav-link active" %></li>
               <li class="nav-item"> <%= link_to 'メンバー設定', change_group_path(id: current_user_group.id), class: "nav-link" %></li>
-              <li class="nav-item"> <%= link_to 'サークル情報', edit_group_path(id: current_user_group.id), class: "nav-link" %></li>
+              <li class="nav-item"> <%= link_to 'サークル設定', edit_group_path(id: current_user_group.id), class: "nav-link" %></li>
               <li class="nav-item"> <a class="nav-link" href="#">支払い情報(未)</a></li>
             </ul>
           </div>
@@ -43,17 +43,10 @@
       <div class="content-wrapper">
         <div class="page-header">
           <h3 class="page-title"> メンバー一覧 </h3>
-          <nav aria-label="breadcrumb">
-            <ol class="breadcrumb">
-              <li class="breadcrumb-item"><a href="#">サークルページ</a></li>
-              <li class="breadcrumb-item active" aria-current="page">メンバー一覧</li>
-            </ol>
-          </nav>
         </div>
         <%= render 'shared/flash' %>
         <div class="card">
           <div class="card-body" style="background-color: rgb(255, 255, 255); color: #000;">
-            <h4 class="card-title">メンバー設定</h4>
             <ul class="nav nav-tabs" role="tablist">
               <li class="nav-item">
                 <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home-1" role="tab" aria-controls="home" aria-selected="true">1年生</a>
