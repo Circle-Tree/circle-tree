@@ -56,11 +56,11 @@ class AnswersController < ApplicationController
   private
 
     def create_answer_params
-      params.require(:answer).permit(:status, :user_id, :event_id)
+      params.require(:answer).permit(:status, :reason, :user_id, :event_id)
     end
 
     def update_answer_params
-      params.require(:answer).permit(:status)
+      params.require(:answer).permit(:status, :reason)
     end
 
     def other_user_cannot_access

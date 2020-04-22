@@ -1,8 +1,8 @@
 <div class="row">
   <div class="col-md-12">
     <div class="form-group row">
-      <div class="col-md-5 grid-margin stretch-card pricing-card ">
-        <label class="col-sm-4 col-form-label">回答状況</label>
+      <label class="col-sm-3 col-form-label">回答</label>
+      <div class="col-md-3 grid-margin stretch-card pricing-card ">
         <div class="card border-success border pricing-card-body">
           <div class="text-center pricing-card-head">
             <div class="col-sm-5" style="display: inline-block;">
@@ -16,7 +16,7 @@
           </div>
         </div>
       </div>
-      <div class="col-md-5 grid-margin stretch-card pricing-card offset-md-2">
+      <div class="col-md-3 grid-margin stretch-card pricing-card offset-md-1">
         <div class="card border border-danger pricing-card-body" >
           <div class="text-center pricing-card-head" >
             <div class="col-sm-5" style="display: inline-block;">
@@ -33,3 +33,15 @@
     </div>
   </div>
 </div>
+<% if answer&.status == 'absent' %>
+  <div class="row">
+    <div class="col-md-6">
+      <div class="form-group row">
+        <%= f.label :reason, '欠席理由（任意）', class: "col-sm-3 col-form-label", style: 'color: red;' %>
+        <div class="col-sm-9">
+          <%= f.select :reason, Answer.reasons.keys.map { |k| [t("enums.answer.reason.#{k}"), k] }, {}, { class: "form-control", style: "color: white;" } %>
+        </div>
+      </div>
+    </div>
+  </div>
+<% end %>
