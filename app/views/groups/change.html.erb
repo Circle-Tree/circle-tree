@@ -1,4 +1,4 @@
-
+<% provide(:title, "メンバー設定") %>
 <div class="sidebar-fixed container-scroller" style="background-color: rgb(44, 44, 44);">
   <nav class="sidebar sidebar-offcanvas" id="sidebar" >
     <%= render 'shared/logo'%>
@@ -14,14 +14,14 @@
             <span class="menu-icon">
               <i class="mdi mdi-settings" style="color: blueviolet;"></i>
             </span>
-            <span class="menu-title">サークル設定</span>
+            <span class="menu-title">サークル情報</span>
             <i class="menu-arrow"></i>
           </a>
           <div class="collapse show" id="ui-advanced">
             <ul class="nav flex-column sub-menu">
-              <li class="nav-item"> <%= link_to 'メンバー情報', group_users_path(group_id: current_user_group.id), class: "nav-link" %></li>
+              <li class="nav-item"> <%= link_to 'メンバー一覧', group_users_path(group_id: current_user_group.id), class: "nav-link" %></li>
               <li class="nav-item"> <%= link_to 'メンバー設定', change_group_path(id: current_user_group.id), class: "nav-link active" %></li>
-              <li class="nav-item"> <%= link_to 'サークル情報', edit_group_path(id: current_user_group.id), class: "nav-link" %></li>
+              <li class="nav-item"> <%= link_to 'サークル設定', edit_group_path(id: current_user_group.id), class: "nav-link" %></li>
               <li class="nav-item"> <a class="nav-link" href="#">支払い情報(未)</a></li>
             </ul>
           </div>
@@ -42,19 +42,12 @@
       <div class="content-wrapper">
         <%= render 'shared/flash' %>
         <div class="page-header">
-          <h3 class="page-title"> サークル情報 </h3>
-          <nav aria-label="breadcrumb">
-            <ol class="breadcrumb">
-              <li class="breadcrumb-item"><a href="#">サークルページ</a></li>
-              <li class="breadcrumb-item active" aria-current="page">サークル情報</li>
-            </ol>
-          </nav>
+          <h3 class="page-title"> メンバー設定 </h3>
         </div>
         <div class="row">
           <div class="col-md-12 grid-margin stretch-card">
             <div class="card">
               <div class="card-body" style="background-color: rgb(255, 255, 255); color: #000;">
-                <h4 class="card-title" >メンバー設定</h4>
                 <ul class="nav nav-tabs" role="tablist">
                   <li class="nav-item">
                     <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home-1" role="tab" aria-controls="home" aria-selected="true">メンバー追加</a>
@@ -73,33 +66,32 @@
 
                 <div class="tab-content">
                   <div class="tab-pane fade show active" id="home-1" role="tabpanel" aria-labelledby="home-tab">
-                    <h3>メンバー設定</h3>
                     <section>
                       <div class="form-group">
                         <%= form_with url: invite_group_users_path, local: true do |f| %>
-                        <label style="display: block;">メンバー招待</label>
+                        <h4 style="display: block; font">①メンバー招待</h4>
                           <%= f.email_field :email, autofocus: true, autocomplete: "email", placeholder: '招待先アドレス', class: "form-control col-md-10",
                                                     :'aria-describedby' => "emailHelp", style: "color: white; display:inline-block ;" %>
                           <%= button_tag type: "submit", class: "btn btn-danger btn-icon-text" do %>
-                            <i class="mdi mdi-email" style="display: inline-block;"></i> 送信
+                            <i class="mdi mdi-email" style="display: inline-block;"></i> 招待
                           <% end %>
                           <small id="emailHelp" class="form-text text-muted">登録したいアドレスに招待メールを送ります。</small>
                         <% end %>
                       </div>
                       <div class="form-group">
                         <%= form_with url: batch_group_users_path(group_id: @group.id), local: true, multipart: true do %>
-                          <label>一括登録</label>
+                          <h4>②一括登録</h4>
                           <%= password_field_tag :password, nil, placeholder: "登録用初期パスワード", class: "form-control", style: "color: white;" %>
+                          <%= file_field_tag :file, style: "margin-top: 10px;" %><br>
                           <%= link_to csv_template_path(format: :csv), class: "btn btn-success btn-icon-text", style: "margin-top: 10px;" do %>
-                            <i class="mdi mdi-debug-step-into"></i> csvダウンロード
+                            <i class="mdi mdi-debug-step-into"></i> CSVテンプレートダウンロード
                           <% end %>
                           <%# <button type="button" class="btn btn-success btn-icon-text">
                             <i class="mdi mdi-debug-step-into"></i> csvダウンロード
                           </button> %>
                           <%= button_tag type: "submit", class: "btn btn-danger btn-icon-text", style: "margin-top: 10px;" do %>
-                            <i class="mdi mdi-email"></i> 送信
+                            <i class="mdi mdi-email"></i> 登録
                           <% end %>
-                          <%= file_field_tag :file, style: "margin-top: 10px;" %>
                           <small id="emailHelp" class="form-text text-muted">csvファイルに必要事項を記入し提出してください。</small>
                         <% end %>
                       </div>

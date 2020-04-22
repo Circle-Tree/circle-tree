@@ -58,7 +58,7 @@
   <% end %>
   <% if current_user.executive?(group) %>
     <%= link_to edit_group_event_path(group_id: group.id, id: event.id), class: "btn btn-dark btn-icon-text col-md-3", style: "margin-right: 30px;margin-left: 30px;" do %>
-      編集 <i class="mdi mdi-file-check btn-icon-append"></i>
+      イベント編集 <i class="mdi mdi-file-check btn-icon-append"></i>
     <% end %>
     <%= link_to group_event_path(group_id: group.id, id: event.id), class: "btn btn-dark btn-icon-text col-md-3", style: "margin-right: 30px;margin-left: 30px;" do %>
       イベント管理 <i class="mdi mdi-file-check btn-icon-append"></i>

@@ -3,32 +3,36 @@
     <div class="row">
       <div class="col-12">
         <div class="table-responsive">
-          <table id="order-listing" class="table">
-            <thead>
-              <tr>
-                <th>名前</th>
-                <th>学年</th>
-                <th>出金額</th>
-                <th>提出額</th>
-                <th>出金状況</th>
-                <th>編集</th>
-              </tr>
-            </thead>
-            <tbody>
-            <% @uncompleted_transactions.each do |transaction| %>
-              <% user = transaction.debtor %>
-              <tr>
-                <td><%= user.name %></td>
-                <td><%= user.to_readable_grade %></td>
-                <%= render 'events/show/transaction', transaction: transaction %>
-                <td>
-                  <%= link_to '変更する', edit_event_transaction_path(event_id: transaction.event_id, url_token: transaction.url_token), class: "btn btn-outline-primary" %>
-                </td>
-              </tr>
-            <% end %>
-            </tbody>
-          </table>
-          <%= paginate @uncompleted_transactions %>
+          <% if transactions.any? %>
+            <table id="order-listing" class="table">
+              <thead>
+                <tr>
+                  <th>名前</th>
+                  <th>学年</th>
+                  <th>出金額</th>
+                  <th>提出額</th>
+                  <th>出金状況</th>
+                  <th>編集</th>
+                </tr>
+              </thead>
+              <tbody>
+              <% transactions.each do |transaction| %>
+                <% user = transaction.debtor %>
+                <tr>
+                  <td><%= user.name %></td>
+                  <td><%= user.to_readable_grade %></td>
+                  <%= render 'events/show/transaction', transaction: transaction %>
+                  <td>
+                    <%= link_to '変更する', edit_event_transaction_path(event_id: transaction.event_id, url_token: transaction.url_token), class: "btn btn-outline-primary" %>
+                  </td>
+                </tr>
+              <% end %>
+              </tbody>
+            </table>
+            <%= paginate transactions %>
+          <% else %>
+            未払いの人はいません
+          <% end %>
         </div>
       </div>
     </div>

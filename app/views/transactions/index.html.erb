@@ -1,4 +1,4 @@
-<% provide(:title, "My収支情報ページ") %>
+<% provide(:title, "My収支") %>
 <div class="sidebar-fixed container-scroller" style="background-color: rgb(44, 44, 44);">
   <nav class="sidebar sidebar-offcanvas" id="sidebar" >
     <%= render 'shared/logo'%>
@@ -18,8 +18,8 @@
             <% if current_user.definitive_registration %>
               <li class="nav-item"> <a class="nav-link" href="#">お知らせ(未)</a></li>
               <li class="nav-item"> <a class="nav-link" href="#">Myカレンダー(未)</a></li>
-              <li class="nav-item"> <%= link_to 'My収支情報', user_transactions_path(user_id: current_user.id), class: "nav-link active" %></li>
-              <li class="nav-item"> <%= link_to 'Myイベント一覧', list_user_events_path(user_id: current_user.id), class: "nav-link" %></li>
+              <li class="nav-item"> <%= link_to 'My収支', user_transactions_path(user_id: current_user.id), class: "nav-link active" %></li>
+              <li class="nav-item"> <%= link_to 'Myイベント', list_user_events_path(user_id: current_user.id), class: "nav-link" %></li>
             <% end %>
             <li class="nav-item"> <%= link_to 'プロフィール変更', users_edit_profile_path, class: "nav-link" %></li>
           </ul>
@@ -44,6 +44,9 @@
     <div class="main-panel">
       <div class="content-wrapper">
         <%= render 'shared/ad' %>
+        <div class="page-header">
+          <h3 class="page-title"> My収支 </h3>
+        </div>
         <%= render 'shared/flash' %>
 
         <div class="row">
@@ -81,17 +84,14 @@
                             <% deadline = transaction.deadline %>
                             <% debt = transaction.debt %>
                             <% payment = transaction.payment %>
+                            <% event = Event.find(transaction.event_id) %>
                             <tr>
                               <td>
-                                <% if event = transaction.event %>
-                                  <%= link_to event.name.truncate(20), details_group_event_path(group_id: event.group_id, id: event.id) %>
-                                <% else %>
-                                  <%= transaction.creditor.name %>
-                                <% end %>
+                                <%= link_to event.name.truncate(20), details_group_event_path(group_id: event.group_id, id: event.id), style: 'color: black;' %>
                               </td>
                               <td><%= l deadline, format: :short %></td>
-                              <td>￥<%= transaction.debt %></td>
-                              <td>￥<%= transaction.payment %></td>
+                              <td><%= number_to_currency(transaction.debt) %></td>
+                              <td><%= number_to_currency(transaction.payment) %></td>
                               <td><%= transaction.creditor.name %></td>
                               <% if debt == payment %>
                                 <td>
@@ -161,6 +161,9 @@
                                   <label class="btn btn-outline-danger">借りた</label>
                                 <% end %>
                               </td>
+                              <td><%= l deadline, format: :short %></td>
+                              <td><%= number_to_currency(transaction.debt) %></td>
+                              <td><%= number_to_currency(transaction.payment) %></td>
                               <td>
                                 <% if is_lending %>
                                   <%= transaction.debtor.name %>

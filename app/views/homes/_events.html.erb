@@ -2,7 +2,7 @@
   <div class="card">
     <div class="card-body" style="color: black;">
       <div class="d-flex flex-row justify-content-between">
-        <h4 class="card-title mb-1">イベント一覧</h4>
+        <h4 class="card-title mb-1"><%= link_to 'イベント一覧', list_user_events_path(user_id: current_user.id), style: 'color: black;' %></h4>
         <p class="text-muted mb-1">あなたのサークルのイベント</p>
       </div>
       <div class="row">
