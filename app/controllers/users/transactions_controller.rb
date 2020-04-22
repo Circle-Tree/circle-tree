@@ -64,10 +64,10 @@ class Users::TransactionsController < TransactionsController
   private
 
     def user_transaction_params
-      params.require(:individual_transaction).permit(:deadline, :debt, :payment, :debtor_id, :creditor_id)
+      params.require(:individual_transaction).permit(:deadline, :debt, :payment, :memo, :debtor_id, :creditor_id)
     end
 
     def update_user_transaction_params
-      params.require(:individual_transaction).permit(:deadline, :debt, :payment)
+      params.require(:individual_transaction).permit(:deadline, :debt, :payment, :memo)
     end
 end
