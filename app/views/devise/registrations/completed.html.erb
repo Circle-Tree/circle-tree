@@ -1,0 +1,37 @@
+<div class="container-scroller">
+  <div class="container-fluid page-body-wrapper full-page-wrapper">
+    <div class="row w-100" style="margin-left: 0;">
+      <div class="content-wrapper full-page-wrapper d-flex align-items-center" style="background-image: url(/images/background14.jpg); background-repeat: no-repeat; background-size: cover;">
+        <div class="card col-lg-8 mx-auto" style="background-color: black;">
+          <div class="card-body px-4 py-5">
+            <h3 class="card-title text-left mb-3" style="color: white;">仮登録完了</h3>
+            <form>
+              <div class="row grid-margin">
+                <div class="col-lg-12">
+                  <div class="card">
+                    <div class="card-body" style="text-align:left; color: #000;">
+                      <h3>仮登録<br class="br-sp">ありがとう<br class="br-sp">ございます。</h3>
+                      <p>サークル総合支援サービス<br class="br-sp">Circle-treeへの仮登録が<br class="br-sp">完了しました。</p>
+
+                      <p style="margin-bottom: 0;">ご登録いただいた<br class="br-sp">メールアドレスに<br class="br-sp">仮登録完了メールを<br class="br-sp">送信致します。</p>
+
+                      <p>お送りしたメールから<br class="br-sp">本登録手続きを<br class="br-sp">完了させるよう<br class="br-sp">お願い致します。</p>
+
+                      <p style="margin-bottom: 0;">メールが届かない場合は<br class="br-sp"><%= link_to "こちらから", new_confirmation_path(resource_name) %></p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <p class="sign-up text-center"><%= link_to "ログインする", new_session_path(resource_name) %></p>
+              <p class="terms">By creating an account you are accepting our<a href="#"> Terms & Conditions</a></p>
+            </form>
+          </div>
+        </div>
+      </div>
+      <!-- content-wrapper ends -->
+    </div>
+    <!-- row ends -->
+  </div>
+  <!-- page-body-wrapper ends -->
+</div>
