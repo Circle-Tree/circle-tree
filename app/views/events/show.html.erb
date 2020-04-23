@@ -58,6 +58,14 @@
                   <%= render 'events/show/unanswered_members', answers: @unanswered_answers %>
                 </section>
               </div>
+              <div class="row">
+                <%= link_to edit_group_event_path(group_id: @group.id, id: @event.id), class: "btn btn-danger btn-icon-text col-md-3", style: "margin-right: 30px;margin-left: 30px;" do %>
+                  <i class="mdi mdi-file-check btn-icon-append"></i> イベント編集
+                <% end %>
+                <%= link_to details_group_event_path(group_id: @group.id, id: @event.id), class: "btn btn-success btn-icon-text col-md-3", style: "margin-right: 30px;margin-left: 30px;" do %>
+                  <i class="mdi mdi-file-check btn-icon-append"></i> イベント回答
+                <% end %>
+              </div>
             </div>
           </div>
         </div>
