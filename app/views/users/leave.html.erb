@@ -1,4 +1,4 @@
-<% provide(:title, "サークル入会") %>
+<% provide(:title, "サークル退会") %>
 <div class="sidebar-fixed container-scroller" style="background-color: rgb(44, 44, 44);">
   <nav class="sidebar sidebar-offcanvas" id="sidebar" >
     <%= render 'shared/logo'%>
@@ -55,31 +55,38 @@
               <div class="card-body" style="background-color: rgb(255, 255, 255); color: #000;">
                 <ul class="nav nav-tabs" role="tablist">
                   <li class="nav-item">
-                    <%= link_to 'サークル入会', join_users_path, class: "nav-link active" %>
+                    <%= link_to 'サークル入会', join_users_path, class: "nav-link" %>
                     <%# <a class="nav-link" id="circle-tab" data-toggle="tab" href="#circle-1" role="tab" aria-controls="circle" aria-selected="false">サークル加入</a> %>
                   </li>
                   <li class="nav-item">
-                    <%= link_to 'サークル退会', leave_users_path, class: "nav-link" %>
+                    <%= link_to 'サークル退会', leave_users_path, class: "nav-link active" %>
                     <%# <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home-1" role="tab" aria-controls="home" aria-selected="true">プロフィール設定</a> %>
                   </li>
                 </ul>
                 <div class="tab-content">
                   <div class="tab-pane fade show active" id="home-1" role="tabpanel" aria-labelledby="home-tab">
-                    <h3>サークル入会</h3>
+                    <h3>サークル退会</h3>
                     <section>
-                      <%= form_with model: @group_user, url: join_group_users_path, class: "forms-sample", local: true do %>
-                        <div class="form-group row">
-                          <label class="col-sm-3 col-form-label">サークルID</label>
-                          <div class="col-sm-9">
-                            <%= hidden_field_tag :user_id, current_user.id %>
-                            <%= text_field_tag :group_number, '', class: "form-control", style: "color: white;", placeholder: "参加したいサークルのIDを入力してください" %>
-                            <small class="form-text text-muted">サークルIDがわからない場合は幹事の方に確認してください。</small>
-                            <%= button_tag type: "submit", class: "btn btn-primary mr-2", style: "margin-top: 15px;" do %>
-                              入会する
-                            <% end %>
-                          </div>
-                        </div>
-                      <% end %>
+                      <section>
+                        <% if @my_groups.any? %>
+                          <%= form_with model: @group_user, url: leave_group_users_path, method: :delete, class: "forms-sample", local: true do |f| %>
+                            <div class="form-group row">
+                              <label for="exampleInputEmail2" class="col-sm-3 col-form-label">サークル名</label>
+                              <div class="col-sm-9">
+                                <%= f.hidden_field :user_id, value: current_user.id %>
+                                <%= f.select :group_id, @my_groups.map { |group| [group.name, group.id] }, { include_blank: '選択してください' }, { class: "form-control", style: "color: white;" } %>
+                                <small class="form-text text-muted">退会するサークルを選んでください。</small>
+                                <%= button_tag type: "submit", class: "btn btn-danger mr-2", style: "margin-top: 15px;" do %>
+                                  退会する
+                                <% end %>
+                              </div>
+                            </div>
+                          <% end %>
+                        <% else %>
+                          退会できるサークルがありません。
+                          <small class="form-text text-muted">幹事であるサークルを退会する場合は幹事を辞退してから退会してください。</small>
+                        <% end %>
+                      </section>
                     </section>
                   </div>
                 </div>

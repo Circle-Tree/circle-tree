@@ -19,6 +19,12 @@ class UsersController < ApplicationController
   end
 
   def join
+    @group_user = GroupUser.new
+  end
+
+  def leave
+    @group_user = GroupUser.new
+    @my_groups = Group.my_general_groups(current_user)
   end
 
   def share
