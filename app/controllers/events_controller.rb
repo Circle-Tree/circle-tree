@@ -1,12 +1,12 @@
 # frozen_string_literal: true
 
 class EventsController < ApplicationController
-  before_action :authenticate_user!
-  before_action :confirm_definitive_registration
-  before_action :set_group, except: %i[list]
-  before_action :cannot_access_to_other_groups, except: %i[list]
+  before_action :authenticate_user!, only: %i[index list show new create edit update destroy]
+  before_action :confirm_definitive_registration, only: %i[index list show new create edit update destroy]
+  before_action :set_group, only: %i[index show details new create edit update destroy]
+  before_action :cannot_access_to_other_groups, only: %i[index show details new create edit update destroy]
   before_action :other_user_cannot_access, only: %i[list]
-  before_action :only_executives_can_access, except: %i[list details]
+  before_action :only_executives_can_access, only: %i[index show new create edit update destroy]
 
   def index
     @events = Event.where(group_id: current_user_group.id).order(start_date: :asc).page(params[:page]).per(10)
@@ -39,9 +39,13 @@ class EventsController < ApplicationController
   end
 
   def details
-    @event = @group.events.find(params[:id])
-    @answer = @event.answers.find_by(user_id: current_user.id)
-    @attending_answers = @event.answers.where(status: 'attending').includes(:user)
+    if current_user.present?
+      @event = @group.events.find(params[:id])
+      @answer = @event.answers.find_by(user_id: current_user.id)
+      @attending_answers = @event.answers.where(status: 'attending').includes(:user)
+    else
+      @event = @group.events.find(params[:id])
+    end
   end
 
   def new
@@ -93,5 +97,11 @@ class EventsController < ApplicationController
     def event_params
       params.require(:event).permit(:name, :start_date, :end_date, :answer_deadline,
                                     :description, :comment, :user_id, :group_id)
+    end
+
+    def cannot_access_to_other_groups
+      return if current_user.blank?
+
+      super
     end
 end
