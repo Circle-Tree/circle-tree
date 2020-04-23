@@ -86,6 +86,7 @@ Rails.application.routes.draw do
     collection do
       post :invite
       post :join
+      delete :leave
     end
   end
 
