@@ -52,6 +52,10 @@ Rails.application.routes.draw do
     resources :transactions, only: %i[edit update], controller: 'users/transactions', param: :url_token
   end
   resources :users, only: [] do
+    collection do
+      get :join
+      get :leave
+    end
     resources :transactions, only: %i[index]
     resources :transactions, only: %i[create], controller: 'users/transactions', param: :url_token do
       collection do
@@ -81,6 +85,7 @@ Rails.application.routes.draw do
   resources :group_users, only: :destroy do
     collection do
       post :invite
+      post :join
     end
   end
 
