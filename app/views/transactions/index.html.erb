@@ -20,6 +20,7 @@
               <li class="nav-item"> <a class="nav-link" href="#">Myカレンダー(未)</a></li>
               <li class="nav-item"> <%= link_to 'My収支', user_transactions_path(user_id: current_user.id), class: "nav-link active" %></li>
               <li class="nav-item"> <%= link_to 'Myイベント', list_user_events_path(user_id: current_user.id), class: "nav-link" %></li>
+              <li class="nav-item"> <%= link_to 'Myサークル設定', join_users_path, class: "nav-link" %></li>
             <% end %>
             <li class="nav-item"> <%= link_to 'プロフィール変更', users_edit_profile_path, class: "nav-link" %></li>
           </ul>
@@ -138,9 +139,9 @@
                           <tr>
                             <th>貸し借り</th>
                             <th>支払い相手</th>
-                            <th>期限</th>
                             <th>金額</th>
                             <th>支払った金額</th>
+                            <th>期限</th>
                             <th>メモ</th>
                             <th>支払い状況</th>
                             <th>変更</th>
@@ -161,9 +162,6 @@
                                   <label class="btn btn-outline-danger">借りた</label>
                                 <% end %>
                               </td>
-                              <td><%= l deadline, format: :short %></td>
-                              <td><%= number_to_currency(transaction.debt) %></td>
-                              <td><%= number_to_currency(transaction.payment) %></td>
                               <td>
                                 <% if is_lending %>
                                   <%= transaction.debtor.name %>
@@ -171,9 +169,9 @@
                                   <%= transaction.creditor.name %>
                                 <% end %>
                               </td>
+                              <td><%= number_to_currency(transaction.debt) %></td>
+                              <td><%= number_to_currency(transaction.payment) %></td>
                               <td><%= l deadline, format: :short %></td>
-                              <td><%= number_to_currency(debt) %></td>
-                              <td><%= number_to_currency(payment) %></td>
                               <td><%= transaction.memo %></td>
                               <% if debt == payment %>
                                 <td>

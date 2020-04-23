@@ -8,14 +8,35 @@ class Users::RegistrationsController < Devise::RegistrationsController
   prepend_before_action :authenticate_scope!, only: [:edit_profile, :edit_password, :update_profile, :update_password, :destroy]
 
   # GET /resource/sign_up
-  # def new
-  #   super
-  # end
+  def new
+    @group = Group.find_by(group_number: params[:original_group_id])
+    super
+  end
 
   # POST /resource
-  # def create
-  #   super
-  # end
+  def create
+    build_resource(sign_up_params)
+
+    resource.save
+    yield resource if block_given?
+    if resource.persisted?
+      if resource.active_for_authentication?
+        set_flash_message! :notice, :signed_up
+        join_circle
+        sign_up(resource_name, resource)
+        respond_with resource, location: after_sign_up_path_for(resource)
+      else
+        set_flash_message! :notice, :"signed_up_but_#{resource.inactive_message}"
+        join_circle
+        expire_data_after_sign_in!
+        respond_with resource, location: after_inactive_sign_up_path_for(resource)
+      end
+    else
+      clean_up_passwords resource
+      set_minimum_password_length
+      respond_with resource
+    end
+  end
 
   # GET /resource/edit
   def edit_profile
@@ -90,7 +111,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
   #   super
   # end
 
-  # protected
+  protected
 
   # If you have extra params to permit, append them to the sanitizer.
   def configure_sign_up_params
@@ -114,5 +135,11 @@ class Users::RegistrationsController < Devise::RegistrationsController
   def after_inactive_sign_up_path_for(resource)
     users_completed_path
     # new_user_session_path
+  end
+
+  def join_circle
+    GroupUser.create!(user_id: resource.id, group_id: params[:group_id].to_i, role: GroupUser.roles[:general]) if params[:group_id]
+  rescue => e
+    ErrorUtility.log_and_notify(e)
   end
 end

@@ -1,4 +1,4 @@
-<% provide(:title, "パスワード変更") %>
+<% provide(:title, "サークル退会") %>
 <div class="sidebar-fixed container-scroller" style="background-color: rgb(44, 44, 44);">
   <nav class="sidebar sidebar-offcanvas" id="sidebar" >
     <%= render 'shared/logo'%>
@@ -20,9 +20,9 @@
               <li class="nav-item"> <a class="nav-link" href="#">Myカレンダー(未)</a></li>
               <li class="nav-item"> <%= link_to 'My収支', user_transactions_path(user_id: current_user.id), class: "nav-link" %></li>
               <li class="nav-item"> <%= link_to 'Myイベント', list_user_events_path(user_id: current_user.id), class: "nav-link" %></li>
-              <li class="nav-item"> <%= link_to 'Myサークル設定', join_users_path, class: "nav-link" %></li>
+              <li class="nav-item"> <%= link_to 'Myサークル設定', join_users_path, class: "nav-link active" %></li>
             <% end %>
-            <li class="nav-item"> <%= link_to 'プロフィール変更', users_edit_profile_path, class: "nav-link active" %></li>
+            <li class="nav-item"> <%= link_to 'プロフィール変更', users_edit_profile_path, class: "nav-link" %></li>
           </ul>
         </div>
       </li>
@@ -46,7 +46,7 @@
     <div class="main-panel">
       <div class="content-wrapper">
         <div class="page-header">
-          <h3 class="page-title"> プロフィール変更 </h3>
+          <h3 class="page-title"> Myサークル設定 </h3>
         </div>
         <%= render 'shared/flash' %>
         <div class="row">
@@ -55,44 +55,38 @@
               <div class="card-body" style="background-color: rgb(255, 255, 255); color: #000;">
                 <ul class="nav nav-tabs" role="tablist">
                   <li class="nav-item">
-                    <%= link_to 'プロフィール設定', users_edit_profile_path, class: "nav-link" %>
-                    <%# <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home-1" role="tab" aria-controls="home" aria-selected="true">プロフィール設定</a> %>
+                    <%= link_to 'サークル入会', join_users_path, class: "nav-link" %>
+                    <%# <a class="nav-link" id="circle-tab" data-toggle="tab" href="#circle-1" role="tab" aria-controls="circle" aria-selected="false">サークル加入</a> %>
                   </li>
                   <li class="nav-item">
-                    <%= link_to 'パスワード設定', users_edit_password_path, class: "nav-link active" %>
-                    <%# <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile-1" role="tab" aria-controls="profile" aria-selected="false">パスワード設定</a> %>
+                    <%= link_to 'サークル退会', leave_users_path, class: "nav-link active" %>
+                    <%# <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home-1" role="tab" aria-controls="home" aria-selected="true">プロフィール設定</a> %>
                   </li>
                 </ul>
                 <div class="tab-content">
                   <div class="tab-pane fade show active" id="home-1" role="tabpanel" aria-labelledby="home-tab">
-                    <h3>パスワード設定</h3>
+                    <h3>サークル退会</h3>
                     <section>
-                      <%= form_for(resource, as: resource_name, url: users_update_password_path(resource_name), html: { method: :put }) do |f| %>
-                        <%= render "devise/shared/error_messages", resource: resource %>
-                        <% if resource.pending_reconfirmation? %>
-                          <div>現在<<%= resource.unconfirmed_email %>>の確認待ちです。</div>
+                      <section>
+                        <% if @my_groups.any? %>
+                          <%= form_with model: @group_user, url: leave_group_users_path, method: :delete, class: "forms-sample", local: true do |f| %>
+                            <div class="form-group row">
+                              <label for="exampleInputEmail2" class="col-sm-3 col-form-label">サークル名</label>
+                              <div class="col-sm-9">
+                                <%= f.hidden_field :user_id, value: current_user.id %>
+                                <%= f.select :group_id, @my_groups.map { |group| [group.name, group.id] }, { include_blank: '選択してください' }, { class: "form-control", style: "color: white;" } %>
+                                <small class="form-text text-muted">退会するサークルを選んでください。</small>
+                                <%= button_tag type: "submit", class: "btn btn-danger mr-2", style: "margin-top: 15px;" do %>
+                                  退会する
+                                <% end %>
+                              </div>
+                            </div>
+                          <% end %>
+                        <% else %>
+                          退会できるサークルがありません。
+                          <small class="form-text text-muted">幹事であるサークルを退会する場合は幹事を辞退してから退会してください。</small>
                         <% end %>
-                        <div class="form-group row">
-                          <%= f.label :password, '新しいパスワード', class: "col-sm-3 col-form-label" %>
-                          <div class="col-sm-9">
-                            <%= f.password_field :password, class: "form-control", style: "color: white;" %>
-                          </div>
-                        </div>
-                        <div class="form-group row">
-                          <%= f.label :password_confirmation, '新しいパスワード(確認)', class: "col-sm-3 col-form-label" %>
-                          <div class="col-sm-9">
-                            <%= f.password_field :password_confirmation, class: "form-control", style: "color: white;" %>
-                          </div>
-                        </div>
-                        <div class="form-group row">
-                          <%= f.label :current_password, '現在のパスワード', class: "col-sm-3 col-form-label" %>
-                          <div class="col-sm-9">
-                            <%= f.password_field :current_password, class: "form-control", style: "color: white;" %>
-                            <small class="form-text text-muted">内容の変更にはパスワードが必要です。</small>
-                          </div>
-                        </div>
-                        <%= f.submit '変更', class: "btn btn-primary mr-2" %>
-                      <% end %>
+                      </section>
                     </section>
                   </div>
                 </div>

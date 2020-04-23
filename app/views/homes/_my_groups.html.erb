@@ -17,16 +17,16 @@
                   </div>
                   <ul>
                     <li class="text-muted"><%= link_to 'メンバー', group_users_path(group_id: group.id) %></li>
-                    <%# <li class="text-muted">= link_to 'イベント', group.group_number</li> %>
                   </ul>
                 </div>
               </div>
             </div>
           <% end %>
         <% else %>
-          <h6 class="preview-subject">グループに参加しよう！</h6>
+          <h6 class="preview-subject">サークルに参加しよう！</h6>
         <% end %>
       </div>
     </div>
+    <%= link_to 'サークルに参加する！', join_users_path, class: 'btn btn-success', style: "bottom:0px; margin-left:25px; margin-top:10px;margin-right:25px; margin-bottom:20px;" %>
   </div>
 </div>
