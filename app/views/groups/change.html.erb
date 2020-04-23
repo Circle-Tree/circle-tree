@@ -95,6 +95,18 @@
                           <small id="emailHelp" class="form-text text-muted">csvファイルに必要事項を記入し提出してください。</small>
                         <% end %>
                       </div>
+                      <div class="form-group">
+                        <h4 class="card-title" style="margin-top: 25px; margin-bottom: 5px;">③ユーザー登録URLをメンバーに共有</h4>
+                        <div class="row">
+                          <textarea id="copyTarget" class="card card-inverse-primary col-md-9" rows="1" readonly style="overflow: hidden;">
+                            <%= url_with_params(new_user_registration_url, params = { original_group_id: @group.group_number }) %>
+                          </textarea>
+                          <div class="col-md-3">
+                            <button type="button" class="btn btn-inverse-primary btn-clipboard" onclick="copyToClipboard()">コピー</button>
+                          </div>
+                        </div>
+                        <small class="form-text text-muted">このURLからユーザー登録を行うとこのサークルに参加することができます。</small>
+                      </div>
                     </section>
                   </div>
                   <%= render 'groups/inheritance', { group: @group } %>
@@ -109,14 +121,11 @@
                       <% end %>
                     </section>
                   </div>
-
-
                 </div>
               </div>
             </div>
           </div>
         </div>
-
       </div>
       <!-- content-wrapper ends -->
       <!-- content-wrapper ends -->
@@ -247,4 +256,19 @@
       });
     }
   })(jQuery);
+</script>
+<script>
+  function copyToClipboard() {
+    // コピー対象をJavaScript上で変数として定義する
+    let copyTarget = $('#copyTarget')
+
+    // コピー対象のテキストを選択する
+    copyTarget.select();
+
+    // 選択しているテキストをクリップボードにコピーする
+    document.execCommand('copy');
+
+    // コピーをお知らせする
+    alert("コピーしました");
+  }
 </script>
