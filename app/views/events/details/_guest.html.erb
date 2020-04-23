@@ -1,0 +1,47 @@
+<div class="sidebar-fixed container-scroller" style="background-color: rgb(44, 44, 44);">
+  <nav class="sidebar sidebar-offcanvas" id="sidebar" >
+    <%= render 'shared/logo'%>
+    <ul class="nav">
+      <%= render 'shared/sidebar/profile' %>
+    </ul>
+  </nav>
+  <!-- partial -->
+  <div class="container-fluid page-body-wrapper">
+    <!-- partial:partials/_navbar.html -->
+    <%= render 'shared/topbar' %>
+    <!-- partial -->
+    <div class="main-panel">
+      <div class="content-wrapper">
+        <div class="page-header">
+          <h3 class="page-title"> <%= @event.name %> </h3>
+        </div>
+
+        <div class="card" style="margin-bottom: 20px;">
+          <div class="card-body" style="color: black;">
+            <h4 class="card-title"> 詳細 </h4>
+            <form class="form-sample">
+              <div class="row">
+                <div class="col-md-12">
+                  <div class="form-group row">
+                    <label class="col-sm-3 col-form-label">回答</label>
+                    <div class="col-sm-9">
+                      <%= link_to new_user_session_path, class: "btn btn-primary btn-icon-text col-md-9", style: "margin-right: 30px;margin-left: 30px;" do %>
+                        <i class="mdi mdi-file-check btn-icon-prepend"></i> ログインしてから回答する！
+                      <% end %>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <% today = Time.current.midnight %>
+              <%= render 'events/details/details', group: @group, event: @event, today: today %>
+            </form>
+          </div>
+        </div>
+      </div>
+      <%= render 'shared/footer' %>
+    </div>
+    <!-- main-panel ends -->
+  </div>
+  <!-- page-body-wrapper ends -->
+</div>
