@@ -18,6 +18,9 @@ class UsersController < ApplicationController
     @others = Kaminari.paginate_array(User.members_by_grade(group: @group, grade: User.grades[:other])).page(params[:page]).per(10)
   end
 
+  def join
+  end
+
   def share
     group = Group.find(params[:group_id])
     users = []

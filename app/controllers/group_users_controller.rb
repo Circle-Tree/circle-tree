@@ -23,6 +23,20 @@ class GroupUsersController < ApplicationController
     end
   end
 
+  def join
+    group = Group.find_by(group_number: params[:group_number])
+    if group.present?
+      relationship = GroupUser.new(user_id: params[:user_id].to_i, group_id: group.id, role: GroupUser.roles[:general])
+      if relationship.save
+        flash_and_redirect(key: :success, message: "#{group.name}に参加しました。", redirect_url: root_url)
+      else
+        flash_and_render(key: :danger, message: "すでに#{group.name}に参加しています。", action: 'users/join')
+      end
+    else
+      flash_and_render(key: :danger, message: 'サークルIDに間違いがあります。', action: 'users/join')
+    end
+  end
+
   def destroy
     relationship = GroupUser.find(params[:id])
     if relationship.destroy
