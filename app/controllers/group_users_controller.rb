@@ -23,6 +23,46 @@ class GroupUsersController < ApplicationController
     end
   end
 
+  def join
+    group = Group.find_by(group_number: params[:group_number])
+    if group.present?
+      relationship = GroupUser.new(user_id: params[:user_id].to_i, group_id: group.id, role: GroupUser.roles[:general])
+      if relationship.save
+        flash_and_redirect(key: :success, message: "#{group.name}に参加しました。", redirect_url: root_url)
+      else
+        flash_and_render(key: :danger, message: "すでに#{group.name}に参加しています。", action: 'users/join')
+      end
+    else
+      flash_and_render(key: :danger, message: 'サークルIDに間違いがあります。', action: 'users/join')
+    end
+  end
+
+  def leave
+    relationship = GroupUser.find_by(group_user_params)
+    if relationship.present?
+      group = relationship.group
+      if group.my_own_group?(current_user)
+        @group_user = GroupUser.new
+        @my_groups = Group.my_general_groups(current_user)
+        flash_and_render(
+          key: :danger,
+          message: '幹事であるグループからは退会できません。幹事を辞退してからもう一度行ってください。',
+          action: 'users/leave'
+        )
+      elsif relationship.destroy
+        flash_and_redirect(key: :success, message: "#{group.name}から退会しました。", redirect_url: root_url)
+      else
+        @group_user = GroupUser.new
+        @my_groups = Group.my_general_groups(current_user)
+        flash_and_render(key: :danger, message: "#{group.name}から退会できませんでした。", action: 'users/leave')
+      end
+    else
+      @group_user = GroupUser.new
+      @my_groups = Group.my_general_groups(current_user)
+      flash_and_render(key: :danger, message: 'グループを選択してください。', action: 'users/leave')
+    end
+  end
+
   def destroy
     relationship = GroupUser.find(params[:id])
     if relationship.destroy
@@ -31,5 +71,9 @@ class GroupUsersController < ApplicationController
     else
       flash_and_render(key: :danger, message: 'エラーにより削除できませんでした', action: 'users/index')
     end
+  end
+
+  def group_user_params
+    params.require(:group_user).permit(:group_id, :user_id)
   end
 end

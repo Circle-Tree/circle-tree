@@ -20,6 +20,7 @@
               <li class="nav-item"> <a class="nav-link" href="#">Myカレンダー(未)</a></li>
               <li class="nav-item"> <%= link_to 'My収支', user_transactions_path(user_id: current_user.id), class: "nav-link active" %></li>
               <li class="nav-item"> <%= link_to 'Myイベント', list_user_events_path(user_id: current_user.id), class: "nav-link" %></li>
+              <li class="nav-item"> <%= link_to 'Myサークル設定', join_users_path, class: "nav-link" %></li>
             <% end %>
             <li class="nav-item"> <%= link_to 'プロフィール変更', users_edit_profile_path, class: "nav-link" %></li>
           </ul>

@@ -42,6 +42,10 @@ class Group < ApplicationRecord
     relationship.present? ? Group.find(relationship.group_id) : nil
   end
 
+  def self.my_general_groups(user)
+    Group.joins(:group_users).where(group_users: { user_id: user.id, role: GroupUser.roles[:general] })
+  end
+
   def my_own_group?(user)
     self == Group.my_own_group(user)
   end

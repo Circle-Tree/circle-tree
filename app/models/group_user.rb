@@ -7,9 +7,7 @@ class GroupUser < ApplicationRecord
     general: 10,  # 一般人
     executive: 90 # 幹部
   }
-  validates :group_id, presence: true
   validates :group_id, uniqueness:{ scope: [:user_id] }
-  validates :user_id, presence: true
   validates :role, presence: true
 
   def self.new_group(group, user)
