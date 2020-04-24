@@ -15,11 +15,11 @@
           <div class="card-body" style="color: black;">
             <h3 class="card-title"> 詳細/回答 </h3>
             <% today = Time.current.midnight %>
-            <% if @event.answer_deadline > today %>
+            <% if @event.answer_deadline > today && @is_my_group %>
               <% if @answer.present? %>
                 <%= form_with model: @answer, url: event_answer_path(id: @answer.id, event_id: @event.id), local: true do |f| %>
                   <%= render 'events/details/answer', f: f, event: @event, answer: @answer, today: today %>
-                  <%= render 'events/details/details', f: f, group: @group, event: @event, today: today %>
+                  <%= render 'events/details/details', f: f, group: @group, event: @event, today: today, is_my_group: @is_my_group %>
                 <% end %>
               <% else %>
                 <% @answer = Answer.new %>
@@ -27,49 +27,51 @@
                   <%= f.hidden_field :user_id, value: current_user.id %>
                   <%= f.hidden_field :event_id, value: @event.id %>
                   <%= render 'events/details/answer', f: f %>
-                  <%= render 'events/details/details', f: f, group: @group, event: @event, today: today %>
+                  <%= render 'events/details/details', f: f, group: @group, event: @event, today: today, is_my_group: @is_my_group %>
                 <% end %>
               <% end %>
             <% else %>
               <%= render 'events/details/answer_status', answer: @answer %>
-              <%= render 'events/details/details', group: @group, event: @event, today: today %>
+              <%= render 'events/details/details', group: @group, event: @event, today: today, is_my_group: @is_my_group %>
             <% end %>
 
           </div>
         </div>
 
-        <div class="card">
-          <div class="card-body" style="color: black;" >
-            <h3 class="card-title">出席者</h3>
-            <div class="row">
-              <div class="col-12">
-                <div class="table-responsive">
-                  <table id="order-listing" class="table">
-                    <thead>
-                      <tr>
-                        <th>名前</th>
-                        <th>回答日</th>
-                        <th>学年</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr>
-                        <% @attending_answers.each do |answer| %>
-                          <% user = answer.user %>
-                          <% transaction = Event::Transaction.find_by(event_id: @event.id, debtor_id: user.id) %>
-                          <tr>
-                            <td><%= user.name %></td>
-                            <td><%= l answer.updated_at, format: :short %></td>
-                            <td><%= user.to_readable_grade %></td>
-                          </tr>
-                        <% end %>
-                    </tbody>
-                  </table>
+        <% if @is_my_group %>
+          <div class="card">
+            <div class="card-body" style="color: black;" >
+              <h3 class="card-title">出席者</h3>
+              <div class="row">
+                <div class="col-12">
+                  <div class="table-responsive">
+                    <table id="order-listing" class="table">
+                      <thead>
+                        <tr>
+                          <th>名前</th>
+                          <th>回答日</th>
+                          <th>学年</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <% @attending_answers.each do |answer| %>
+                            <% user = answer.user %>
+                            <% transaction = Event::Transaction.find_by(event_id: @event.id, debtor_id: user.id) %>
+                            <tr>
+                              <td><%= user.name %></td>
+                              <td><%= l answer.updated_at, format: :short %></td>
+                              <td><%= user.to_readable_grade %></td>
+                            </tr>
+                          <% end %>
+                      </tbody>
+                    </table>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
-        </div>
+        <% end %>
       </div>
       <!-- content-wrapper ends -->
       <%= render 'shared/footer' %>
