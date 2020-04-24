@@ -16,13 +16,13 @@ class Events::TransactionsController < TransactionsController
     transaction = @event.transactions.build(create_transaction_params)
     transaction.debtor_id = 1
     if transaction.valid?
-      transaction = nil
+      transaction.debtor_id = nil
       grade = params[:grade]
+      change_fee(event: @event, grade: grade, transaction: transaction)
       members = User.members_by_grade(group: @group, grade: grade)
+      number = User.grades[grade.to_sym]
       if members.any?
-        NewTransactionsJob.perform_later(members: members, event: @event, params: create_transaction_params,
-                                        current_user: current_user)
-        number = User.grades[grade.to_sym]
+        NewTransactionsJob.perform_later(members: members, event: @event, params: create_transaction_params, current_user: current_user)
         if number.zero?
           message = '出席するその他の人たちに通知しました。'
         else
@@ -30,9 +30,7 @@ class Events::TransactionsController < TransactionsController
         end
         flash_and_redirect(key: :success, message: message, redirect_url: new_event_transaction_url(event_id: @event.id))
       else
-        @transaction = Event::Transaction.new
-        @executives = User.executives(@group)
-        flash_and_render(key: :danger, message: 'メンバーがいないため作成できませんでした。', action: 'new')
+        flash_and_redirect(key: :success, message: "#{number}年生の支払い情報を保存しました。", redirect_url: new_event_transaction_url(event_id: @event.id))
       end
     else
       @transaction = transaction
@@ -81,5 +79,14 @@ class Events::TransactionsController < TransactionsController
 
       # flash[:danger] = '幹事しかアクセスできません'
       raise Forbidden
+    end
+
+    def change_fee(event:, grade:, transaction:)
+      fee = event.fees.find_by(grade: grade)
+      if fee.blank?
+        event.fees.create(amount: transaction.debt, grade: grade)
+      else
+        fee.update(amount: transaction.debt)
+      end
     end
 end

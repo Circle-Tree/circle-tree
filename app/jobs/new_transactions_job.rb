@@ -9,7 +9,8 @@ class NewTransactionsJob < ApplicationJob
       next if edit_transaction&.completed?
 
       begin
-        if edit_transaction&.update(params)
+        edit_transaction&.attributes = params
+        if edit_transaction&.save(context: :new_transaction_job)
           TransactionNotificationMailer.edit_event_transaction(user: member, current_user: current_user, event: event).deliver_later
         else
           new_transaction = event.transactions.build(params)
