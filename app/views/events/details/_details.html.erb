@@ -17,42 +17,44 @@
   </div>
 </div>
 
-<div class="row">
-  <div class="col-md-6">
-    <div class="form-group row">
-      <label class="col-sm-3 col-form-label">回答締め切り</label>
-      <div class="col-sm-9">
-        <div class="form-control"><%= l event.answer_deadline, format: :long %></div>
-      </div>
-    </div>
-  </div>
-</div>
-
-<div class="row">
-  <div class="col-md-6">
-    <div class="form-group row">
-      <label class="col-sm-3 col-form-label">一言</label>
-      <div class="col-sm-9">
-        <div class="form-control" style="color: white;"><%= event.comment %></div>
-      </div>
-    </div>
-  </div>
-</div>
-
-<div class="row" >
-  <div class="col-md-12">
-    <div class="form-group row">
-      <label class="col-sm-3  col-form-label">イベント詳細</label>
-      <div class="col-sm-12">
-        <div type="text" class="form-control" style="height: 100px;"><%= event.description %></div>
-      </div>
-    </div>
-  </div>
-</div>
-
-<% if current_user.present? %>
+<% if is_my_group %>
   <div class="row">
-    <% if event.answer_deadline > today %>
+    <div class="col-md-6">
+      <div class="form-group row">
+        <label class="col-sm-3 col-form-label">回答締め切り</label>
+        <div class="col-sm-9">
+          <div class="form-control"><%= l event.answer_deadline, format: :long %></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-6">
+      <div class="form-group row">
+        <label class="col-sm-3 col-form-label">一言</label>
+        <div class="col-sm-9">
+          <div class="form-control" style="color: white;"><%= event.comment %></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row" >
+    <div class="col-md-12">
+      <div class="form-group row">
+        <label class="col-sm-3  col-form-label">イベント詳細</label>
+        <div class="col-sm-12">
+          <div type="text" class="form-control" style="height: 100px;"><%= event.description %></div>
+        </div>
+      </div>
+    </div>
+  </div>
+<% end %>
+
+<% if user_signed_in? %>
+  <div class="row">
+    <% if event.answer_deadline > today && is_my_group %>
       <%= button_tag type: 'submit', class: "btn btn-primary btn-icon-text col-md-3", style: "margin-right: 30px;margin-left: 30px;" do %>
         <i class="mdi mdi-file-check btn-icon-prepend"></i> 保存
       <% end %>

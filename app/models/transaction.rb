@@ -44,13 +44,10 @@ class Transaction < ApplicationRecord
 
   def self.transactions_for_attending_event_by_user(user)
     # Transaction.includes(event: :answers).where(debtor_id: user.id, event: { answers: { status: 'attending' } }).distinct
-    answers = Answer.my_attending_answers(user).includes(event: :group)
+    answers = Answer.my_attending_answers(user).includes(:event)
     event_ids = []
     answers.each do |answer|
-      event = answer.event
-      next unless event.group.my_group?(user)
-
-      event_ids << event.id
+      event_ids << answer.event.id
     end
     Event::Transaction.where(event_id: event_ids).where(debtor_id: user.id)
   end

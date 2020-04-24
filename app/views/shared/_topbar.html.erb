@@ -17,7 +17,7 @@
       </li>
     </ul>
     <ul class="navbar-nav navbar-nav-right">
-      <% if current_user.present? %>
+      <% if user_signed_in? %>
         <% if current_user_group %>
           <li class="nav-item dropdown d-none d-lg-block">
             <%= link_to '+ イベント新規作成', new_group_event_path(group_id: current_user_group.id), class: "nav-link btn btn-success create-new-button" %>
