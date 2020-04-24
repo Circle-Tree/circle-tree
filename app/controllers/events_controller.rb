@@ -40,7 +40,7 @@ class EventsController < ApplicationController
 
   def details
     @event = @group.events.find(params[:id])
-    if current_user.present?
+    if user_signed_in?
       @answer = @event.answers.find_by(user_id: current_user.id)
       @attending_answers = @event.answers.where(status: 'attending').includes(:user)
       @is_my_group = @group.my_group?(current_user)
