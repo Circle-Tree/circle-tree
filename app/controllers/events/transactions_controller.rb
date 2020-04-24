@@ -77,17 +77,9 @@ class Events::TransactionsController < TransactionsController
 
     # 幹事のみアクセス可能
     def only_executives_can_access
-      return unless GroupUser.general_relationship(group: @group, user: current_user)
+      return if current_user_group == @group
 
-      flash[:danger] = '幹事しかアクセスできません'
-      raise Forbidden
-    end
-
-    # 所属していないグループにはアクセスできない
-    def cannot_access_to_other_groups
-      return if @group.my_group?(current_user)
-
-      flash[:danger] = '所属していないグループにはアクセスできません'
+      # flash[:danger] = '幹事しかアクセスできません'
       raise Forbidden
     end
 end

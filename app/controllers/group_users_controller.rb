@@ -1,10 +1,10 @@
 class GroupUsersController < ApplicationController
   before_action :authenticate_user!
   before_action :confirm_definitive_registration
-  before_action :only_executives_can_access
+  before_action :set_group, only: %i[invite]
+  before_action :only_executives_can_access, only: %i[invite]
 
   def invite
-    @group = current_user_group
     @executives = User.executives(@group)
     email = params[:email].try(:downcase)
     return flash_and_render(key: :danger, message: 'メールアドレスを入力してください。', action: 'groups/change') if email.blank?

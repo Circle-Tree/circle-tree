@@ -4,6 +4,7 @@ class TransactionsController < ApplicationController
   before_action :authenticate_user!
   before_action :confirm_definitive_registration
   before_action :other_user_cannot_access, only: %i[index]
+  before_action :only_executives_can_access, only: %i[change]
   def index
     user = current_user
     @today = Time.current.midnight
@@ -74,5 +75,14 @@ class TransactionsController < ApplicationController
   # "Transaction::Event".underscore => "transaction/event"
   # "transaction/event".gsub('/', '_') => "transaction_event" 第1引数にマッチしたものを第2引数に置き換える
   # .to_sym => 文字列をシンボルに変換する
+
+  # 幹事のみアクセス可能
+  def only_executives_can_access
+    transaction = Event::Transaction.find_by(url_token: params[:url_token])
+    return if current_user_group == transaction.event.group
+
+    # flash[:danger] = '幹事しかアクセスできません'
+    raise Forbidden
+  end
 
 end

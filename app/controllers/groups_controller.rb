@@ -4,8 +4,8 @@ class GroupsController < ApplicationController
   before_action :authenticate_user!
   before_action :confirm_definitive_registration
   before_action :set_group
-  before_action :cannot_access_to_other_groups, except: %i[show]
-  before_action :only_executives_can_access, except: %i[show]
+  before_action :cannot_access_to_other_groups, only: %i[edit update change inheritable_search inherit assignable_search assign resign deposit statistics]
+  before_action :only_executives_can_access, only: %i[edit update change inheritable_search inherit assignable_search assign resign deposit statistics]
   before_action :cannot_resign, only: :resign
 
   def show
@@ -127,5 +127,13 @@ class GroupsController < ApplicationController
       if User.executives(@group).count == 1
         flash_and_redirect(key: :danger, message: '幹事が一人しかいないため辞退できません', redirect_url: root_url)
       end
+    end
+
+    # 幹事のみアクセス可能
+    def only_executives_can_access
+      return if current_user_group == Group.find(params[:id])
+
+      # flash[:danger] = '幹事しかアクセスできません'
+      raise Forbidden
     end
 end

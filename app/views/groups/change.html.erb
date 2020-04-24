@@ -68,7 +68,7 @@
                   <div class="tab-pane fade show active" id="home-1" role="tabpanel" aria-labelledby="home-tab">
                     <section>
                       <div class="form-group">
-                        <%= form_with url: invite_group_users_path, local: true do |f| %>
+                        <%= form_with url: invite_group_group_users_path(group_id: @group), local: true do |f| %>
                         <h4 style="display: block; font">①メンバー招待</h4>
                           <%= f.email_field :email, autofocus: true, autocomplete: "email", placeholder: '招待先アドレス', class: "form-control col-md-10",
                                                     :'aria-describedby' => "emailHelp", style: "color: white; display:inline-block ;" %>

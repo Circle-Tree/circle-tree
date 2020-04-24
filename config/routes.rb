@@ -45,6 +45,11 @@ Rails.application.routes.draw do
         get :details
       end
     end
+    resources :group_users, only: :destroy do
+      collection do
+        post :invite
+      end
+    end
     resources :orders, only: %i[index]
   end
 
@@ -75,7 +80,7 @@ Rails.application.routes.draw do
     resources :answers, only: %i[create edit update]
   end
 
-  resources :transactions, only: %i[edit update], param: :url_token do
+  resources :transactions, only: [], param: :url_token do
     member do
       get :receipt, to: 'receipt_pdfs#show'
       patch :change
@@ -84,7 +89,6 @@ Rails.application.routes.draw do
 
   resources :group_users, only: :destroy do
     collection do
-      post :invite
       post :join
       delete :leave
     end
