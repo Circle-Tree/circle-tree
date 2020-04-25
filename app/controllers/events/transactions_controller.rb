@@ -91,7 +91,11 @@ class Events::TransactionsController < TransactionsController
           creditor_id: transaction.creditor_id
         )
       else
-        fee.update(amount: transaction.debt)
+        fee.update(
+          amount: transaction.debt,
+          deadline: transaction.deadline,
+          creditor_id: transaction.creditor_id
+        )
       end
     end
 end
