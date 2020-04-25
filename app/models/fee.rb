@@ -13,5 +13,11 @@ class Fee < ApplicationRecord
     grade6: 6
   }
   validates :grade, presence: true
-  validates :deadline, presence: true
+  validate :deadline_not_before_today
+
+  private
+
+    def deadline_not_before_today
+      errors.add(:deadline, 'は今日以降のものを選択してください') if deadline.nil? || deadline < Date.today.to_datetime
+    end
 end
