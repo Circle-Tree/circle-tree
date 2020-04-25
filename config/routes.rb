@@ -76,7 +76,7 @@ Rails.application.routes.draw do
   end
 
   resources :events, only: [] do
-    resources :transactions, only: %i[new create edit update], controller: 'events/transactions', param: :url_token # new, createいらない
+    resources :transactions, only: %i[edit update], controller: 'events/transactions', param: :url_token
     resources :fees, only: %i[new create update] do
       collection do
         post :batch
