@@ -84,7 +84,12 @@ class Events::TransactionsController < TransactionsController
     def change_fee(event:, grade:, transaction:)
       fee = event.fees.find_by(grade: grade)
       if fee.blank?
-        event.fees.create(amount: transaction.debt, grade: grade)
+        event.fees.create(
+          amount: transaction.debt,
+          grade: grade,
+          deadline: transaction.deadline,
+          creditor_id: transaction.creditor_id
+        )
       else
         fee.update(amount: transaction.debt)
       end
