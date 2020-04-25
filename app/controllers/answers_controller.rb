@@ -16,7 +16,7 @@ class AnswersController < ApplicationController
     elsif @answer.save
       user = User.find(@answer.user_id)
       fee = Fee.find_by(event_id: @event.id, grade: User.find(user.id).grade)
-      transaction = Event::Transaction.find_by(event_id: event.id, debtor_id: user.id)
+      transaction = Event::Transaction.find_by(event_id: @event.id, debtor_id: user.id)
       if fee && @answer.reload.attending? && transaction.blank?
         Event::Transaction.create(
           deadline: fee.deadline,
@@ -71,6 +71,20 @@ class AnswersController < ApplicationController
 
   def update
     if @answer.update(update_answer_params)
+      user = User.find(@answer.user_id)
+      fee = Fee.find_by(event_id: @event.id, grade: user.grade)
+      transaction = Event::Transaction.find_by(event_id: @event.id, debtor_id: user.id)
+      if @answer.reload.attending? && fee && transaction.blank?
+        Event::Transaction.create(
+          deadline: fee.deadline,
+          debt: fee.amount,
+          payment: 0,
+          debtor_id: @answer.user_id,
+          creditor_id: fee.creditor_id,
+          event_id: @event.id,
+          url_token: SecureRandom.hex(10)
+        )
+      end
       flash_and_redirect(key: :success, message: '回答を変更しました', redirect_url: details_group_event_url(group_id: @event.group_id, id: @event.id))
     else
       @group = @event.group
