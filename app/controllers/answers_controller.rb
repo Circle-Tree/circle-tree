@@ -14,7 +14,18 @@ class AnswersController < ApplicationController
       @attending_answers = @event.answers.where(status: 'attending')
       flash_and_render(key: :danger, message: '回答を選択してください。', action: 'events/details')
     elsif @answer.save
-      # Transaction作成？
+      fee = Fee.find_by(event_id: @event.id, grade: User.find(@answer.user_id).grade)
+      if fee && @answer.reload.attending?
+        Event::Transaction.create(
+          deadline: fee.deadline,
+          debt: fee.amount,
+          payment: 0,
+          debtor_id: @answer.user_id,
+          creditor_id: fee.creditor_id,
+          event_id: @event.id,
+          url_token: SecureRandom.hex(10)
+        )
+      end
       flash_and_redirect(key: :success, message: '回答を送信しました。', redirect_url: details_group_event_url(group_id: @event.group_id, id: @event.id))
     else
       @answer = nil
