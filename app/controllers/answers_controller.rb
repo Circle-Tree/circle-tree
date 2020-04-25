@@ -14,8 +14,10 @@ class AnswersController < ApplicationController
       @attending_answers = @event.answers.where(status: 'attending')
       flash_and_render(key: :danger, message: '回答を選択してください。', action: 'events/details')
     elsif @answer.save
-      fee = Fee.find_by(event_id: @event.id, grade: User.find(@answer.user_id).grade)
-      if fee && @answer.reload.attending?
+      user = User.find(@answer.user_id)
+      fee = Fee.find_by(event_id: @event.id, grade: User.find(user.id).grade)
+      transaction = Event::Transaction.find_by(event_id: event.id, debtor_id: user.id)
+      if fee && @answer.reload.attending? && transaction.blank?
         Event::Transaction.create(
           deadline: fee.deadline,
           debt: fee.amount,
@@ -39,13 +41,27 @@ class AnswersController < ApplicationController
   def change
     if params[:answer_id]
       answer = current_user.answers.find(params[:answer_id])
+      event = answer&.event
       if answer&.update(status: params[:status])
+        user = User.find(answer.user_id)
+        fee = Fee.find_by(event_id: event.id, grade: user.grade)
+        transaction = Event::Transaction.find_by(event_id: event.id, debtor_id: user.id)
+        if answer.reload.attending? && fee && transaction.blank?
+          Event::Transaction.create(
+            deadline: fee.deadline,
+            debt: fee.amount,
+            payment: 0,
+            debtor_id: answer.user_id,
+            creditor_id: fee.creditor_id,
+            event_id: event.id,
+            url_token: SecureRandom.hex(10)
+          )
+        end
         flash.now[:success] = '回答を変更しました'
       else
         ErrorSlackNotification.general_error_notify(title: '回答の変更に失敗', message: "#{current_user&.name}(ID: #{current_user&.id})さんがイベント(#{answer&.event&.id})の回答(#{answer&.id})に失敗")
         render json: { error: '404 error' }, status: 404
       end
-      event = answer.event
       render partial: 'events/list/answer_select', locals: { answer: answer, event: event }
     else
       ErrorSlackNotification.general_error_notify(title: '回答の変更に失敗', message: "#{current_user&.name}(ID: #{current_user&.id})さんがイベント回答変更に失敗")
