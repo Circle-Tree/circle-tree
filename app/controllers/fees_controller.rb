@@ -75,7 +75,7 @@ class FeesController < ApplicationController
       Fee.grades.count.times do |i|
         fee = event.fees.find_by(grade: i)
         if fee.blank?
-          event.create(
+          event.fees.create(
             amount: batch_fee.amount,
             deadline: batch_fee.deadline,
             creditor_id: batch_fee.creditor_id,
