@@ -12,6 +12,7 @@ class User < ApplicationRecord
   has_many :answers, dependent: :destroy
   has_many :events, through: :answers # :nullifyの方がよいか？
   has_many :transactions, dependent: :destroy # :nullifyの方がよいか？
+  has_many :fees
   validates :name, presence: true, length: { maximum: 100 }
   validates :definitive_registration, inclusion: { in: [true, false] }
   validates :furigana, presence: true, on: %i[create]

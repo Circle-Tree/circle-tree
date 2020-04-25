@@ -26,7 +26,7 @@
                 <%= form_with model: @answer, url: event_answers_path(event_id: @event.id), local: true do |f| %>
                   <%= f.hidden_field :user_id, value: current_user.id %>
                   <%= f.hidden_field :event_id, value: @event.id %>
-                  <%= render 'events/details/answer', f: f %>
+                  <%= render 'events/details/answer', f: f, answer: @answer %>
                   <%= render 'events/details/details', f: f, group: @group, event: @event, today: today, is_my_group: @is_my_group %>
                 <% end %>
               <% end %>

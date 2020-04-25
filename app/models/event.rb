@@ -6,6 +6,7 @@ class Event < ApplicationRecord
   has_many :transactions, dependent: :destroy
   has_many :answers, dependent: :destroy
   has_many :users, through: :answers
+  has_many :fees, dependent: :destroy
   validates :name, presence: true, length: { maximum: 128 }
   validate  :start_date_not_before_today
   validate  :end_date_not_before_start_date
