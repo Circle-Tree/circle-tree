@@ -1,7 +1,7 @@
 class NewTransactionsJob < ApplicationJob
   queue_as :default
 
-  def perform(members:, event:, fee:, current_user:)
+  def perform(members:, event:, params:, current_user:)
     members.each do |member|
       next unless member.attending?(event)
 
@@ -9,22 +9,13 @@ class NewTransactionsJob < ApplicationJob
       next if edit_transaction&.completed?
 
       begin
-        edit_transaction&.attributes = {
-          deadline: fee.deadline,
-          debt: fee.amount,
-          creditor_id: fee.creditor_id
-        }
+        edit_transaction&.attributes = params
         if edit_transaction&.save(context: :new_transaction_job)
           TransactionNotificationMailer.edit_event_transaction(user: member, current_user: current_user, event: event).deliver_later
         else
-          new_transaction = event.transactions.build(
-            deadline: fee.deadline,
-            debt: fee.amount,
-            payment: 0,
-            creditor_id: fee.creditor_id,
-            debtor_id: member.id,
-            url_token: SecureRandom.hex(10)
-          )
+          new_transaction = event.transactions.build(params)
+          new_transaction.debtor_id = member.id
+          new_transaction.url_token = SecureRandom.hex(10)
           if new_transaction.save
             TransactionNotificationMailer.new_event_transaction(user: member, current_user: current_user, event: event).deliver_later
           else

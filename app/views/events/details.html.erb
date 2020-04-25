@@ -1,5 +1,5 @@
 <% provide(:title, "#{@event.name}") %>
-<% if current_user.present? %>
+<% if user_signed_in? %>
   <%= render 'events/details/authorized_user' %>
 <% else %>
   <%= render 'events/details/guest' %>

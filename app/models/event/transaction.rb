@@ -3,6 +3,7 @@
 class Event::Transaction < Transaction
   belongs_to :event
   validates :event_id, uniqueness: { scope: [:debtor_id] }
+  validate :payment_is_equal_or_smaller_than_debt, unless: -> { validation_context == :new_transaction_job }
 
   def self.paid_total_amount(user)
     where(debtor_id: user.id).joins(event: :answers).distinct.where(event: { answers: { status: Answer.statuses[:attending] } }).sum('payment')

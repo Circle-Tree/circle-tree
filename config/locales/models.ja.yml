@@ -6,6 +6,7 @@ ja:
       event: イベント
       answer: 回答
       transaction: 収支 # 変更可能性あり
+      fee: 代金
     attributes:
       user:
         email: メールアドレス
@@ -43,6 +44,10 @@ ja:
         comment: 一言
         user: 作成者
         group: グループ
+      fee:
+        amount: 料金
+        grade: 学年
+        event: イベント
       transaction:
         deadline: 支払い期限
         debt: 支払うべき金額

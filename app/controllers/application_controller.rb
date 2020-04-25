@@ -16,9 +16,9 @@ class ApplicationController < ActionController::Base
 
     # 幹事のみアクセス可能
     def only_executives_can_access
-      return if current_user_group
+      return if current_user_group == @group
 
-      flash[:danger] = '幹事しかアクセスできません'
+      # flash[:danger] = '幹事しかアクセスできません'
       raise Forbidden
     end
 
@@ -26,7 +26,7 @@ class ApplicationController < ActionController::Base
     def cannot_access_to_other_groups
       return if @group.my_group?(current_user)
 
-      flash[:danger] = '所属していないグループにはアクセスできません'
+      # flash[:danger] = '所属していないグループにはアクセスできません'
       raise Forbidden
     end
 

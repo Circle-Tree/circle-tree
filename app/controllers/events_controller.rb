@@ -4,7 +4,7 @@ class EventsController < ApplicationController
   before_action :authenticate_user!, only: %i[index list show new create edit update destroy]
   before_action :confirm_definitive_registration, only: %i[index list show new create edit update destroy]
   before_action :set_group, only: %i[index show details new create edit update destroy]
-  before_action :cannot_access_to_other_groups, only: %i[index show details new create edit update destroy]
+  before_action :cannot_access_to_other_groups, only: %i[index show new create edit update destroy]
   before_action :other_user_cannot_access, only: %i[list]
   before_action :only_executives_can_access, only: %i[index show new create edit update destroy]
 
@@ -39,12 +39,11 @@ class EventsController < ApplicationController
   end
 
   def details
-    if current_user.present?
-      @event = @group.events.find(params[:id])
+    @event = @group.events.find(params[:id])
+    if user_signed_in?
       @answer = @event.answers.find_by(user_id: current_user.id)
       @attending_answers = @event.answers.where(status: 'attending').includes(:user)
-    else
-      @event = @group.events.find(params[:id])
+      @is_my_group = @group.my_group?(current_user)
     end
   end
 

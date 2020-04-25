@@ -3,7 +3,7 @@
     <div class="profile-pic">
       <div class="profile-name">
         <h5 class="mb-0 font-weight-normal">
-          <% if current_user.present? %>
+          <% if user_signed_in? %>
             <%= current_user.name %>さん
           <% else %>
             ゲストさん

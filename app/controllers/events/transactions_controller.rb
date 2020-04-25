@@ -7,40 +7,6 @@ class Events::TransactionsController < TransactionsController
   before_action :cannot_access_to_other_groups
   before_action :only_executives_can_access
 
-  def new
-    @transaction = Event::Transaction.new
-    @executives = User.executives(@group)
-  end
-
-  def create
-    transaction = @event.transactions.build(create_transaction_params)
-    transaction.debtor_id = 1
-    if transaction.valid?
-      transaction = nil
-      grade = params[:grade]
-      members = User.members_by_grade(group: @group, grade: grade)
-      if members.any?
-        NewTransactionsJob.perform_later(members: members, event: @event, params: create_transaction_params,
-                                        current_user: current_user)
-        number = User.grades[grade.to_sym]
-        if number.zero?
-          message = '出席するその他の人たちに通知しました。'
-        else
-          message = "出席する#{number}年生に通知しました。"
-        end
-        flash_and_redirect(key: :success, message: message, redirect_url: new_event_transaction_url(event_id: @event.id))
-      else
-        @transaction = Event::Transaction.new
-        @executives = User.executives(@group)
-        flash_and_render(key: :danger, message: 'メンバーがいないため作成できませんでした。', action: 'new')
-      end
-    else
-      @transaction = transaction
-      @executives = User.executives(@group)
-      render 'new'
-    end
-  end
-
   def edit
     @transaction = Event::Transaction.find_by(url_token: params[:url_token])
     @user = @transaction.debtor
@@ -62,10 +28,6 @@ class Events::TransactionsController < TransactionsController
 
   private
 
-    def create_transaction_params
-      params.require(:event_transaction).permit(:deadline, :debt, :creditor_id, :grade)
-    end
-
     def update_transaction_params
       params.require(:event_transaction).permit(:deadline, :debt, :payment, :creditor_id)
     end
@@ -77,17 +39,9 @@ class Events::TransactionsController < TransactionsController
 
     # 幹事のみアクセス可能
     def only_executives_can_access
-      return unless GroupUser.general_relationship(group: @group, user: current_user)
+      return if current_user_group == @group
 
-      flash[:danger] = '幹事しかアクセスできません'
-      raise Forbidden
-    end
-
-    # 所属していないグループにはアクセスできない
-    def cannot_access_to_other_groups
-      return if @group.my_group?(current_user)
-
-      flash[:danger] = '所属していないグループにはアクセスできません'
+      # flash[:danger] = '幹事しかアクセスできません'
       raise Forbidden
     end
 end

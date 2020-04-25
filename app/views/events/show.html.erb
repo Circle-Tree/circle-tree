@@ -14,7 +14,7 @@
         <div class="card">
           <div class="card-body" style="background-color: rgb(255, 255, 255); color: #000;">
             <h3 class="card-title" ><%= @event.name %></h3>
-            <%= link_to '支払い情報一括作成/更新', new_event_transaction_path(event_id: @event.id), class: "btn btn-outline-primary" %>
+            <%= link_to '支払い情報一括作成/更新', new_event_fee_path(event_id: @event.id), class: "btn btn-outline-primary" %>
             <ul class="nav nav-tabs" role="tablist">
               <li class="nav-item">
                 <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home-1" role="tab" aria-controls="home" aria-selected="true">出席(<%= @counts[:attending_count] %>人)</a>
