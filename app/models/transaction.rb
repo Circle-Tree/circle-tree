@@ -70,8 +70,8 @@ class Transaction < ApplicationRecord
 
   def self.urgent_transactions_by_user(non_overdue_transactions:, max:, today:)
     urgent_transactions = []
+    count = 0
     non_overdue_transactions.each do |transaction|
-      count = 0
       if transaction.deadline < today.since(7.days)
         urgent_transactions << transaction
         count += 1
