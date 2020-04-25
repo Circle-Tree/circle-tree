@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_04_24_064649) do
+ActiveRecord::Schema.define(version: 2020_04_25_034123) do
 
   create_table "answers", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.integer "status", default: 10, null: false, comment: "回答のステータス"
@@ -44,6 +44,9 @@ ActiveRecord::Schema.define(version: 2020_04_24_064649) do
     t.bigint "event_id", null: false, comment: "イベント"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.datetime "deadline", null: false, comment: "回答締切"
+    t.bigint "creditor_id", comment: "貸した人"
+    t.index ["creditor_id"], name: "index_fees_on_creditor_id"
     t.index ["event_id"], name: "index_fees_on_event_id"
     t.index ["grade", "event_id"], name: "index_fees_on_grade_and_event_id", unique: true
   end
@@ -135,6 +138,7 @@ ActiveRecord::Schema.define(version: 2020_04_24_064649) do
   add_foreign_key "events", "groups"
   add_foreign_key "events", "users"
   add_foreign_key "fees", "events"
+  add_foreign_key "fees", "users", column: "creditor_id"
   add_foreign_key "group_users", "groups"
   add_foreign_key "group_users", "users"
   add_foreign_key "transactions", "events"
