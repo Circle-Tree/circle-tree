@@ -70,13 +70,18 @@ Rails.application.routes.draw do
     end
     resources :events, only: [] do
       collection do
-        get 'list'
+        get :list
       end
     end
   end
 
   resources :events, only: [] do
-    resources :transactions, only: %i[new create edit update], controller: 'events/transactions', param: :url_token
+    resources :transactions, only: %i[new create edit update], controller: 'events/transactions', param: :url_token # new, createいらない
+    resources :fees, only: %i[new create update] do
+      collection do
+        post :batch
+      end
+    end
     resources :answers, only: %i[create edit update]
   end
 
