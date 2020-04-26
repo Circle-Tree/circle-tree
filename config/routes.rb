@@ -19,6 +19,7 @@ Rails.application.routes.draw do
 
   root 'homes#index'
   get 'homes/index'
+  get 'homes/faq'
   get 'users/csv_template', to: 'users#csv_template', as: 'csv_template'
   # get 'groups/:group_id/users/share', to: 'users#share', as: 'share'
   resources :groups, except: [:new, :create] do

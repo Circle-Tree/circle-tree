@@ -1,0 +1,381 @@
+<div class="sidebar-fixed container-scroller" style="background-color: rgb(44, 44, 44);">
+  <!-- partial:partials/_sidebar.html -->
+  <nav class="sidebar sidebar-offcanvas" id="sidebar" >
+    <%= render 'shared/logo'%>
+    <ul class="nav">
+      <%= render 'shared/sidebar/profile' %>
+      <%= render 'shared/sidebar/home' %>
+      <% if current_user_group.present? %>
+        <%= render 'shared/sidebar/circle_page' %>
+        <%= render 'shared/sidebar/event' %>
+        <%= render 'shared/sidebar/circle_setting' %>
+      <% else %>
+        <%= render 'shared/sidebar/new_circle' %>
+      <% end %>
+      <li class="nav-item menu-items active">
+        <%= link_to root_path, class: "nav-link" do %>
+          <span class="menu-icon">
+            <i class="mdi mdi-home" style="color: blue;"></i>
+          </span>
+          <span class="menu-title">ホーム</span>
+        <% end %>
+      </li>
+      <%= render 'shared/sidebar/customize' %>
+      <%= render 'shared/sidebar/logout' %>
+    </ul>
+  </nav>
+  <!-- partial -->
+  <div class="container-fluid page-body-wrapper">
+    <!-- partial:partials/_navbar.html -->
+    <%= render 'shared/topbar' %>
+    <!-- partial -->
+    <div class="main-panel">
+      <div class="content-wrapper">
+        <div class="page-header">
+          <h3 class="page-title"> FAQ </h3>
+        </div>
+        <div class="row" style="color: black;">
+          <div class="col-12">
+            <div class="row">
+              <div class="col-12 grid-margin">
+                <div class="card">
+                  <div class="faq-block card-body" style="background-color: rgb(255, 255, 255); ">
+                    <div class="container-fluid py-2" style="border-color: black;">
+                      <h5 class="mb-0">一般メンバー</h5>
+                    </div>
+                    <div id="accordion-1" class="accordion" >
+                      <div class="card" style="border-color: black;">
+                        <div class="card-header" id="headingOne">
+                          <h5 class="mb-0">
+                            <a data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne" style="color:#237ef5;"> 個人アカウントで<br class="br-sp">できることは何ですか？</a>
+                          </h5>
+                        </div>
+                        <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion-1" >
+                          <div class="card-body"> 主な機能はイベントの出席回答、<br class="br-sp">イベントへの支払い情報の一覧、<br class="br-sp">
+                            領収書の発行、My収支ページでのメンバー間の貸し借りの管理です。 </div>
+                        </div>
+                      </div>
+                      <div class="card" style="color: black; border-color: black;">
+                        <div class="card-header" id="headingTwo">
+                          <h5 class="mb-0">
+                            <a data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo" style="color:#237ef5;"> サークルに加入するには<br class="br-sp">どうすればいいですか？ </a>
+                          </h5>
+                        </div>
+                        <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordion-1">
+                          <div class="card-body"> サイドバーのMyサークル、<br class="br-sp">或いはホームページのサークルに<br class="br-sp">加入するボタンから
+                            <br class="br-sp">サークル加入ページに<br class="br-sp">移動できます。<br class="br-pc br-sp">加入したいサークルの<br class="br-sp">サークルIDを
+                            入力することで<br class="br-sp">サークルに加入できます。<br class="br-sp">
+                            <br class="br-pc">幹事さんであればサイドバーの<br class="br-sp">メンバー設定→メンバー管理から<br class="br-sp">
+                            サークルに加入させたい<br class="br-sp">メンバーのメールアドレスを<br class="br-pc"><br class="br-sp">入力することで
+                            サークルに<br class="br-sp">加入させられます。 </div>
+                        </div>
+                      </div>
+                      <div class="card"  style="color: black; border-color: black;">
+                        <div class="card-header" id="headingThree">
+                          <h5 class="mb-0">
+                            <a data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree" style="color:#237ef5;">お金を出したのですが<br class="br-sp">反映されていません。</a>
+                          </h5>
+                        </div>
+                        <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordion-1">
+                          <div class="card-body">幹事さんが出金登録をすると<br class="br-sp">反映されます。<br class="br-sp">しばらくお待ちください。</div>
+                        </div>
+                      </div>
+                      <div class="card"  style="color: black; border-color: black;">
+                        <div class="card-header" id="headingfour">
+                          <h5 class="mb-0">
+                            <a data-toggle="collapse" data-target="#collapsefour" aria-expanded="false" aria-controls="collapsefour" style="color:#237ef5;">サークルはどうやったら<br class="br-sp">作れますか？</a>
+                          </h5>
+                        </div>
+                        <div id="collapsefour" class="collapse" aria-labelledby="headingfour" data-parent="#accordion-1">
+                          <div class="card-body">サイドバーのサークル作成から<br class="br-sp">サークル作成ページに<br class="br-sp">移動できます。</div>
+                        </div>
+                      </div>
+                      <div class="card"  style="color: black; border-color: black;">
+                        <div class="card-header" id="headingfive">
+                          <h5 class="mb-0">
+                            <a data-toggle="collapse" data-target="#collapsefive" aria-expanded="false" aria-controls="collapsefive" style="color:#237ef5;">サークルに複数加入することは<br class="br-sp">できますか？</a>
+                          </h5>
+                        </div>
+                        <div id="collapsefive" class="collapse" aria-labelledby="headingfive" data-parent="#accordion-1">
+                          <div class="card-body">可能です。</div>
+                        </div>
+                      </div>
+                      <div class="card"  style="color: black; border-color: black;">
+                        <div class="card-header" id="headingsix">
+                          <h5 class="mb-0">
+                            <a data-toggle="collapse" data-target="#collapsesix" aria-expanded="false" aria-controls="collapsesix" style="color:#237ef5;">My収支の貸し借りはどのように<br class="br-sp">変更できますか？ </a>
+                          </h5>
+                        </div>
+                        <div id="collapsesix" class="collapse" aria-labelledby="headingsix" data-parent="#accordion-1">
+                          <div class="card-body">メンバー一覧から貸し借りを<br class="br-sp">作成したいメンバーを選択
+                            <br class="br-sp">→貸し借りを選ぶと期日と金額、<br class="br-sp">メモを残せます。
+                            <br class="br-pc"><br class="br-sp">作成した貸し借りの情報は<br class="br-sp">相手と自動で共有されます。
+                            <br class="br-sp">またMy収支ページからいつでも<br class="br-sp">確認、変更が可能です。</div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-12 grid-margin">
+                <div class="card">
+                  <div class="faq-block card-body" style="background-color: rgb(255, 255, 255); ">
+                    <div class="container-fluid py-2" style="border-color: black;">
+                      <h5 class="mb-0">幹事</h5>
+                    </div>
+                    <div id="accordion-2" class="accordion" >
+                      <div class="card" style="border-color: black;">
+                        <div class="card-header" id="headingOne-1">
+                          <h5 class="mb-0">
+                            <a data-toggle="collapse" data-target="#collapseOne-1" aria-expanded="true" aria-controls="collapseOne-1" style="color:#237ef5;">幹事アカウントと一般アカウントの<br class="br-sp">違いを教えてください。</a>
+                          </h5>
+                        </div>
+                        <div id="collapseOne-1" class="collapse show" aria-labelledby="headingOne-1" data-parent="#accordion-2" >
+                          <div class="card-body"> イベント作成及び管理、<br class="br-sp">統計情報、デポジットの閲覧、<br class="br-sp">メンバーの管理は
+                            幹事のみしかできません。<br class="br-pc">またイベントの詳細情報（出席率、集金状況及び未回答者）は幹事しか見ることができません。
+                        　</div>
+                        </div>
+                      </div>
+                      <div class="card" style="color: black; border-color: black;">
+                        <div class="card-header" id="headingTwo">
+                          <h5 class="mb-0">
+                            <a data-toggle="collapse" data-target="#collapseTwo-1" aria-expanded="false" aria-controls="collapseTwo" style="color:#237ef5;"> 幹事は何人までなることが<br class="br-sp">できますか？</a>
+                          </h5>
+                        </div>
+                        <div id="collapseTwo-1" class="collapse" aria-labelledby="headingTwo-1" data-parent="#accordion-2">
+                          <div class="card-body">8人まで可能です。</div>
+                        </div>
+                      </div>
+                      <div class="card"  style="color: black; border-color: black;">
+                        <div class="card-header" id="headingThree-1">
+                          <h5 class="mb-0">
+                            <a data-toggle="collapse" data-target="#collapseThree-1" aria-expanded="false" aria-controls="collapseThree-1" style="color:#237ef5;">複数サークルの幹事を<br class="br-sp">務めることはできますか？</a>
+                          </h5>
+                        </div>
+                        <div id="collapseThree-1" class="collapse" aria-labelledby="headingThree-1" data-parent="#accordion-2">
+                          <div class="card-body"> 申し訳ございません。<br class="br-sp">1アカウントが管理できる<br class="br-sp">サークルは1つまでです。
+                            <br class="br-pc"><br class="br-sp">複数のサークルの幹事さんの場合<br class="br-sp">お手数ですが
+                            再度別アカウント<br class="br-sp">をご登録の上作成ください。
+                          </div>
+                        </div>
+                      </div>
+                      <div class="card"  style="color: black; border-color: black;">
+                        <div class="card-header" id="headingfour-1">
+                          <h5 class="mb-0">
+                            <a data-toggle="collapse" data-target="#collapsefour-1" aria-expanded="false" aria-controls="collapsefour-1" style="color:#237ef5;">幹事の引継ぎは<br class="br-sp">どうすれば良いですか？ </a>
+                          </h5>
+                        </div>
+                        <div id="collapsefour-1" class="collapse" aria-labelledby="headingfour-1" data-parent="#accordion-2">
+                          <div class="card-body">サークル設定→メンバー設定から<br class="br-sp">引継ぎ、任命、辞退が可能です。<br class="br-sp">
+                            引継ぎはあなたは幹事を辞め指名<br class="br-sp">したメンバーは幹事になります。<br class="br-sp">
+                            <br class="br-pc">任命は新たに幹事さんを<br class="br-sp">指名できます。
+                            辞退はあなたは<br class="br-sp">幹事さんではなくなり<br class="br-sp">一般メンバーとなります。
+                            </div>
+                        </div>
+                      </div>
+
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div> <!-- sub col -->
+          <div class="col-12">
+            <div class="row">
+              <div class="col-12 grid-margin">
+                <div class="card">
+                  <div class="faq-block card-body" style="background-color: rgb(255, 255, 255); ">
+                    <div class="container-fluid py-2" style="border-color: black;">
+                      <h5 class="mb-0">サークル</h5>
+                    </div>
+                    <div id="accordion-3" class="accordion" >
+                      <div class="card" style="border-color: black;">
+                        <div class="card-header" id="headingOne-2">
+                          <h5 class="mb-0">
+                            <a data-toggle="collapse" data-target="#collapseOne-2" aria-expanded="true" aria-controls="collapseOne-2" style="color:#237ef5;">サークル名やグループIDは<br class="br-sp">変えられますか？</a>
+                          </h5>
+                        </div>
+                        <div id="collapseOne-2" class="collapse show" aria-labelledby="headingOne-2" data-parent="#accordion-3" >
+                          <div class="card-body">幹事さんによって変更できます。<br class="br-sp">
+                            サイドバーのサークル情報<br class="br-sp">→サークル設定から<br class="br-sp">変更できます。
+                          </div>
+                        </div>
+                      </div>
+                      <div class="card" style="color: black; border-color: black;">
+                        <div class="card-header" id="headingTwo-2">
+                          <h5 class="mb-0">
+                            <a data-toggle="collapse" data-target="#collapseTwo-2" aria-expanded="false" aria-controls="collapseTwo-2" style="color:#237ef5;"> メンバーの追加や削除は<br class="br-sp">できますか？ </a>
+                          </h5>
+                        </div>
+                        <div id="collapseTwo-2" class="collapse" aria-labelledby="headingTwo-2" data-parent="#accordion-3">
+                          <div class="card-body"> 幹事さんによって可能です。<br class="br-sp">
+                            サイドバーのサークル情報<br class="br-sp">→メンバー一覧から
+                            変更できます。
+                          </div>
+                        </div>
+                      </div>
+                      <div class="card"  style="color: black; border-color: black;">
+                        <div class="card-header" id="headingThree-2">
+                          <h5 class="mb-0">
+                            <a data-toggle="collapse" data-target="#collapseThree-2" aria-expanded="false" aria-controls="collapseThree-2" style="color:#237ef5;">一括登録の仕方がわかりません。 </a>
+                          </h5>
+                        </div>
+                        <div id="collapseThree-2" class="collapse" aria-labelledby="headingThree-2" data-parent="#accordion-3">
+                          <div class="card-body"> サイドバーのサークル情報<br class="br-sp">→メンバー設定からメンバー招待<br class="br-sp">ページに移動します。<br class="br-pc"><br class="br-sp">csvファイルをダウンロード<br class="br-sp">したのちに登録したいメンバーの<br class="br-sp">名前、メールアドレス、<br class="br-sp">学年、性別を入力しメンバーの<br class="br-sp">初期パスワードを設定、<br class="br-sp"><br class="br-pc">ファイルを提出して頂ければ<br class="br-sp">メンバーを作成、追加できます。
+                          </div>
+                        </div>
+                      </div>
+
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-12 grid-margin">
+                <div class="card">
+                  <div class="faq-block card-body" style="background-color: rgb(255, 255, 255); ">
+                    <div class="container-fluid py-2" style="border-color: black;">
+                      <h5 class="mb-0">イベント</h5>
+                    </div>
+                    <div id="accordion-4" class="accordion" >
+                      <div class="card" style="border-color: black;">
+                        <div class="card-header" id="headingOne-3">
+                          <h5 class="mb-0">
+                            <a data-toggle="collapse" data-target="#collapseOne-3" aria-expanded="true" aria-controls="collapseOne-3" style="color:#237ef5;"> イベントの回答は<br class="br-sp">どうすればできますか？</a>
+                          </h5>
+                        </div>
+                        <div id="collapseOne-3" class="collapse show" aria-labelledby="headingOne-3" data-parent="#accordion-4" >
+                          <div class="card-body"> ホームページのイベント一覧、<br class="br-sp">更新情報、
+                            Myイベント一覧から<br class="br-sp">回答したいイベントのページへ<br class="br-sp">
+                            移動してください。<br class="br-pc">出席欠席を<br class="br-sp">選択の上保存ボタンを押すことで<br class="br-sp">
+                            出欠を回答できます。
+                          </div>
+                        </div>
+                      </div>
+                      <div class="card" style="color: black; border-color: black;">
+                        <div class="card-header" id="headingTwo-3">
+                          <h5 class="mb-0">
+                            <a data-toggle="collapse" data-target="#collapseTwo-3" aria-expanded="false" aria-controls="collapseTwo-3" style="color:#237ef5;">イベントの削除はできますか？ </a>
+                          </h5>
+                        </div>
+                        <div id="collapseTwo-3" class="collapse" aria-labelledby="headingTwo-3" data-parent="#accordion-4">
+                          <div class="card-body"> 幹事さんのみ可能です。<br class="br-sp">サイドバーのイベント情報<br class="br-sp">→イベント一覧から
+                            削除したい<br class="br-sp">イベントのページへ移動します。<br class="br-pc"><br class="br-sp">
+                            イベント編集ボタンを<br class="br-sp">クリックし、削除ボタンを<br class="br-sp">押すことで削除が可能です。
+                          </div>
+                        </div>
+                      </div>
+                      <div class="card" style="color: black; border-color: black;">
+                        <div class="card-header" id="headingThree-3">
+                          <h5 class="mb-0">
+                            <a data-toggle="collapse" data-target="#collapseThree-3" aria-expanded="false" aria-controls="collapseThree-3" style="color:#237ef5;">イベントの催促は<br class="br-sp">誰に届くのですか？ </a>
+                          </h5>
+                        </div>
+                        <div id="collapseThree-3" class="collapse" aria-labelledby="headingThree-3" data-parent="#accordion-4">
+                          <div class="card-body"> イベント作成時は全メンバーに、<br class="br-sp">その後は
+                            未回答のメンバー、<br class="br-sp">及び未納のメンバーに届きます。
+                          </div>
+                        </div>
+                      </div>
+
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-12">
+            <div class="row">
+              <div class="col-12 grid-margin">
+                <div class="card">
+                  <div class="faq-block card-body" style="background-color: rgb(255, 255, 255); ">
+                    <div class="container-fluid py-2" style="border-color: black;">
+                      <h5 class="mb-0">設定</h5>
+                    </div>
+                    <div id="accordion-5" class="accordion" >
+                      <div class="card" style="border-color: black;">
+                        <div class="card-header" id="headingOne-4">
+                          <h5 class="mb-0">
+                            <a data-toggle="collapse" data-target="#collapseOne-4" aria-expanded="true" aria-controls="collapseOne-4" style="color:#237ef5;">サークルの退会はできますか？</a>
+                          </h5>
+                        </div>
+                        <div id="collapseOne-4" class="collapse show" aria-labelledby="headingOne-4" data-parent="#accordion-5" >
+                          <div class="card-body">サイドバーのマイページ<br class="br-sp">→Myサークル設定から
+                            <br class="br-sp">サークル入会、退会ができます。<br class="br-sp">
+                            幹事さんは退会する前に
+                            幹事を<br class="br-sp">辞退してから退会してください。
+                          </div>
+                        </div>
+                      </div>
+                      <div class="card" style="color: black; border-color: black;">
+                        <div class="card-header" id="headingTwo-4">
+                          <h5 class="mb-0">
+                            <a data-toggle="collapse" data-target="#collapseTwo-4" aria-expanded="false" aria-controls="collapseTwo-4" style="color:#237ef5;"> パスワードやプロフィールは<br class="br-sp">変更できますか？ </a>
+                          </h5>
+                        </div>
+                        <div id="collapseTwo-4" class="collapse" aria-labelledby="headingTwo-4" data-parent="#accordion-5">
+                          <div class="card-body">Myプロフィールでできます。<br class="br-sp">
+                            サイドバーのマイページ<br class="br-sp">→プロフィール設定から
+                            変更できます。
+                          </div>
+                        </div>
+                      </div>
+
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-12 grid-margin">
+                <div class="card">
+                  <div class="faq-block card-body" style="background-color: rgb(255, 255, 255); ">
+                    <div class="container-fluid py-2" style="border-color: black;">
+                      <h5 class="mb-0">その他</h5>
+                    </div>
+
+                    <div id="accordion-6" class="accordion" >
+
+                      <div class="card" style="color: black; border-color: black;">
+                        <div class="card-header" id="headingOne-5">
+                          <h5 class="mb-0">
+                            <a data-toggle="collapse" data-target="#collapseOne-5" aria-expanded="true" aria-controls="collapseOne-5" style="color:#237ef5;">パスワードを忘れた場合は<br class="br-sp">どうすれば良いですか？ </a>
+                          </h5>
+                        </div>
+                        <div id="collapseOne-5" class="collapse show" aria-labelledby="headingOne-5" data-parent="#accordion-6">
+                          <div class="card-body"> ログイン画面から<br class="br-sp">パスワードがわからない？を<br class="br-sp">クリックし
+                            パスワードの<br class="br-sp">変更ページへ移動してください。
+                            <br class="br-pc">登録事項を確認の上パスワード<br class="br-sp">再設定メールをお送り致します。 </div>
+                        </div>
+                      </div>
+                      <div class="card" style="border-color: black;">
+                        <div class="card-header" id="headingTwo-5">
+                          <h5 class="mb-0">
+                            <a data-toggle="collapse" data-target="#collapseTwo-5" aria-expanded="false" aria-controls="collapseTwo-5" style="color:#237ef5;">サービスからの退会はできますか？</a>
+                          </h5>
+                        </div>
+                        <div id="collapseTwo-5" class="collapse" aria-labelledby="headingTwo-5" data-parent="#accordion-6" >
+                          <div class="card-body"> <a href="withdrawal.html">本リンク</a>から可能です。
+                            <br class="br-sp">退会するとあらゆる情報が<br class="br-sp">削除されるので十分注意してください。
+                          </div>
+                        </div>
+                      </div>
+
+
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div><!-- parent row -->
+      </div>
+      <!-- content-wrapper ends -->
+      <!-- partial:../../partials/_footer.html -->
+      <%= render 'shared/footer' %>
+      <!-- partial -->
+    </div>
+    <!-- main-panel ends -->
+  </div>
+  <!-- page-body-wrapper ends -->
+</div>
