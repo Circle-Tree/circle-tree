@@ -1,0 +1,28 @@
+<header id="fh5co-header-section" role="header" class="" >
+  <div class="container">
+    <!-- <div id="fh5co-menu-logo"> -->
+      <!-- START #fh5co-logo -->
+      <h1 id="fh5co-logo" class="pull-left">
+        <%= link_to root_path do %>
+          <%= image_pack_tag("logo_G2.png", alt: "circle-tree") %>
+        <% end %>
+      </h1>
+      <!-- START #fh5co-menu-wrap -->
+      <nav id="fh5co-menu-wrap" role="navigation">
+        <ul class="sf-menu" id="fh5co-primary-menu">
+          <li><%= link_to 'ログイン', new_user_session_path %></li>
+          <li><%= link_to '新規登録', new_user_registration_path %></li>
+          <li>
+            <a href="#" class="fh5co-sub-ddown">サービス紹介</a>
+            <ul class="fh5co-sub-menu">
+              <li><%= link_to 'メイン機能', root_path %></li>
+              <li><%= link_to '利用規約', terms_of_service_path %></li>
+              <li><%= link_to 'プライバシーポリシー', privacy_policy_path %></li>
+            </ul>
+          </li>
+          <li><a href="#">お問い合わせ(未)</a></li>
+        </ul>
+      </nav>
+    <!-- </div> -->
+  </div>
+</header>

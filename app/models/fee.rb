@@ -2,7 +2,7 @@ class Fee < ApplicationRecord
   belongs_to :event
   belongs_to :creditor, class_name: 'User', foreign_key: 'creditor_id'
   validates :amount, presence: true
-  validates :amount, numericality: { only_integer: true, greater_than_or_equal_to: 0 }, allow_blank: true
+  validates :amount, numericality: { only_integer: true, greater_than_or_equal_to: 0, less_than: 100_000_000 }, allow_blank: true
   enum grade: {
     other: 0,
     grade1: 1,

@@ -59,7 +59,7 @@ class ApplicationController < ActionController::Base
       if current_user.admin?
         admin_homes_index_path
       else
-        root_path
+        home_path
       end
     end
 

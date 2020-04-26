@@ -49,73 +49,73 @@
           <div class="card-body" style="background-color: rgb(255, 255, 255); color: #000;">
             <ul class="nav nav-tabs" role="tablist">
               <li class="nav-item">
-                <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home-1" role="tab" aria-controls="home" aria-selected="true">1年生</a>
+                <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home-1" role="tab" aria-controls="home" aria-selected="true">1年生(<%= @members1.count %>)</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile-1" role="tab" aria-controls="profile" aria-selected="false">2年生</a>
+                <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile-1" role="tab" aria-controls="profile" aria-selected="false">2年生(<%= @members2.count %>)</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" id="contact-tab" data-toggle="tab" href="#contact-1" role="tab" aria-controls="contact" aria-selected="false">3年生</a>
+                <a class="nav-link" id="contact-tab" data-toggle="tab" href="#contact-1" role="tab" aria-controls="contact" aria-selected="false">3年生(<%= @members3.count %>)</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" id="contact2-tab" data-toggle="tab" href="#contact-2" role="tab" aria-controls="contact2" aria-selected="false">4年生</a>
+                <a class="nav-link" id="contact2-tab" data-toggle="tab" href="#contact-2" role="tab" aria-controls="contact2" aria-selected="false">4年生(<%= @members4.count %>)</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" id="contact2-tab" data-toggle="tab" href="#contact-3" role="tab" aria-controls="contact2" aria-selected="false">5年生</a>
+                <a class="nav-link" id="contact2-tab" data-toggle="tab" href="#contact-3" role="tab" aria-controls="contact2" aria-selected="false">5年生(<%= @members5.count %>)</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" id="contact2-tab" data-toggle="tab" href="#contact-4" role="tab" aria-controls="contact2" aria-selected="false">6年生</a>
+                <a class="nav-link" id="contact2-tab" data-toggle="tab" href="#contact-4" role="tab" aria-controls="contact2" aria-selected="false">6年生(<%= @members6.count %>)</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" id="contact2-tab" data-toggle="tab" href="#contact-5" role="tab" aria-controls="contact2" aria-selected="false">その他</a>
+                <a class="nav-link" id="contact2-tab" data-toggle="tab" href="#contact-5" role="tab" aria-controls="contact2" aria-selected="false">その他(<%= @others.count %>)</a>
               </li>
             </ul>
             <div class="tab-content">
               <div class="tab-pane fade show active" id="home-1" role="tabpanel" aria-labelledby="home-tab">
                 <h3>1年生</h3>
                 <section>
-                  <%= render 'members', group: @group, members: @members1 %>
+                  <%= render 'members', group: @group, members: @members1.page(params[:page]).per(10) %>
                 </section>
               </div>
               <div class="tab-pane fade" id="profile-1" role="tabpanel" aria-labelledby="profile-tab">
                 <h3>2年生</h3>
                 <section>
-                  <%= render 'members', group: @group, members: @members2 %>
+                  <%= render 'members', group: @group, members: @members2.page(params[:page]).per(10) %>
                 </section>
               </div>
 
               <div class="tab-pane fade" id="contact-1" role="tabpanel" aria-labelledby="contact-tab">
                 <h3>3年生</h3>
                 <section>
-                  <%= render 'members', group: @group, members: @members3 %>
+                  <%= render 'members', group: @group, members: @members3.page(params[:page]).per(10) %>
                 </section>
               </div>
 
               <div class="tab-pane fade" id="contact-2" role="tabpanel" aria-labelledby="contact2-tab">
                 <h3>4年生</h3>
                 <section>
-                  <%= render 'members', group: @group, members: @members4 %>
+                  <%= render 'members', group: @group, members: @members4.page(params[:page]).per(10) %>
                 </section>
               </div>
 
               <div class="tab-pane fade" id="contact-3" role="tabpanel" aria-labelledby="contact3-tab">
                 <h3>5年生</h3>
                 <section>
-                  <%= render 'members', group: @group, members: @members5 %>
+                  <%= render 'members', group: @group, members: @members5.page(params[:page]).per(10) %>
                 </section>
               </div>
 
               <div class="tab-pane fade" id="contact-4" role="tabpanel" aria-labelledby="contact4-tab">
                 <h3>6年生</h3>
                 <section>
-                  <%= render 'members', group: @group, members: @members6 %>
+                  <%= render 'members', group: @group, members: @members6.page(params[:page]).per(10) %>
                 </section>
               </div>
 
               <div class="tab-pane fade" id="contact-5" role="tabpanel" aria-labelledby="contact5-tab">
                 <h3>その他</h3>
                 <section>
-                  <%= render 'members', group: @group, members: @others %>
+                  <%= render 'members', group: @group, members: @others.page(params[:page]).per(10) %>
                 </section>
               </div>
             </div>

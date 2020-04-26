@@ -11,7 +11,7 @@ class Event < ApplicationRecord
   validate  :start_date_not_before_today
   validate  :end_date_not_before_start_date
   validate  :answer_deadline_not_before_today
-  validates :description, length: { maximum: 1024 }
+  validates :description, length: { maximum: 2048 }
   validates :comment, length: { maximum: 40 }
 
   def self.my_groups_events(user)

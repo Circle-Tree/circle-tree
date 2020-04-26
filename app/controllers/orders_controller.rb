@@ -37,7 +37,7 @@ class OrdersController < ApplicationController
           role: GroupUser.roles[:executive]
         )
         SubscriptionMailer.new_subscription(group: group, user: current_user, order: @order).deliver_later
-        flash_and_redirect(key: :success, message: "おめでとうございます！購読が開始され、あなたは#{group.name}の幹事となりました！", redirect_url: root_url) and return
+        flash_and_redirect(key: :success, message: "おめでとうございます！購読が開始され、あなたは#{group.name}の幹事となりました！", redirect_url: home_url) and return
       elsif @order.failed? && !@order.error_message.blank?
         # Render error only if order failed and there is an error_message
         return render html: @order.error_message
@@ -108,7 +108,7 @@ class OrdersController < ApplicationController
 
     def executives_cannot_access
       if current_user_group
-        flash_and_redirect(key: :danger, message: 'すでにグループの幹事である人は新しくグループを作成することができません', redirect_url: root_url)
+        flash_and_redirect(key: :danger, message: 'すでにグループの幹事である人は新しくグループを作成することができません', redirect_url: home_url)
       end
     end
 

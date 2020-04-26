@@ -6,9 +6,9 @@ class Transaction < ApplicationRecord
   belongs_to :debtor, class_name: 'User', foreign_key: 'debtor_id'
   validate  :deadline_before_today, on: %i[create]
   validates :debt, presence: true
-  validates :debt, numericality: { only_integer: true, greater_than_or_equal_to: 0 }, allow_blank: true
+  validates :debt, numericality: { only_integer: true, greater_than_or_equal_to: 0, less_than: 100_000_000 }, allow_blank: true
   validates :payment, presence: true
-  validates :payment, numericality: { only_integer: true, greater_than_or_equal_to: 0 }, allow_blank: true
+  validates :payment, numericality: { only_integer: true, greater_than_or_equal_to: 0, less_than: 100_000_000 }, allow_blank: true
   validate :payment_is_equal_or_smaller_than_debt
   validates :type, presence: true
   validates :url_token, presence: true, uniqueness: true

@@ -24,6 +24,6 @@ class ReceiptPdfsController < ApplicationController
 
     def show_only_completed_transaction
       @transaction = Transaction.find_by(url_token: params[:url_token])
-      flash_and_redirect(key: :danger, message: 'エラーが発生しました', redirect_url: root_url) unless @transaction.completed?
+      flash_and_redirect(key: :danger, message: 'エラーが発生しました', redirect_url: home_url) unless @transaction.completed?
     end
 end

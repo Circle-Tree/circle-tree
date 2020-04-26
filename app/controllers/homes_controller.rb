@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class HomesController < ApplicationController
-  before_action :authenticate_user!
+  before_action :authenticate_user!, only: %i[index faq]
   before_action :confirm_definitive_registration
   def index
     user = current_user
@@ -17,5 +17,11 @@ class HomesController < ApplicationController
     non_overdue_transactions = uncompleted_transactions - overdue_transactions
     @total_non_overdue_debt = non_overdue_transactions.sum { |transaction| transaction[:debt] } - non_overdue_transactions.sum { |transaction| transaction[:payment] }
     @urgent_transactions = Transaction.urgent_transactions_by_user(non_overdue_transactions: non_overdue_transactions, max: 2, today: today)
+  end
+
+  def faq
+  end
+
+  def landing
   end
 end
