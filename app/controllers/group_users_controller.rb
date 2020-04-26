@@ -28,7 +28,7 @@ class GroupUsersController < ApplicationController
     if group.present?
       relationship = GroupUser.new(user_id: params[:user_id].to_i, group_id: group.id, role: GroupUser.roles[:general])
       if relationship.save
-        flash_and_redirect(key: :success, message: "#{group.name}に参加しました。", redirect_url: root_url)
+        flash_and_redirect(key: :success, message: "#{group.name}に参加しました。", redirect_url: home_url)
       else
         flash_and_render(key: :danger, message: "すでに#{group.name}に参加しています。", action: 'users/join')
       end
@@ -50,7 +50,7 @@ class GroupUsersController < ApplicationController
           action: 'users/leave'
         )
       elsif relationship.destroy
-        flash_and_redirect(key: :success, message: "#{group.name}から退会しました。", redirect_url: root_url)
+        flash_and_redirect(key: :success, message: "#{group.name}から退会しました。", redirect_url: home_url)
       else
         @group_user = GroupUser.new
         @my_groups = Group.my_general_groups(current_user)

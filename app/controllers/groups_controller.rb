@@ -46,7 +46,7 @@ class GroupsController < ApplicationController
 
     if GroupUser.inherit(group: @group, current_user: current_user, new_executive: user)
       NotificationMailer.inherit(group: @group, user: user, current_user: current_user).deliver_later
-      flash_and_redirect(key: :success, message: "#{user.name}さんへ幹事を引継ぎました。", redirect_url: root_url)
+      flash_and_redirect(key: :success, message: "#{user.name}さんへ幹事を引継ぎました。", redirect_url: home_url)
     else
       ErrorSlackNotification.general_error_notify(title: '引継ぎ失敗', message: "グループID: #{@group&.id}, 引き継がれるユーザーID: #{user&.id}, 現在のユーザーID: #{current_user&.id}の引継ぎ失敗")
       flash_and_render(key: :danger, message: '引継ぎできませんでした。しばらくしてからもう一度やり直してください。', action: 'change')
@@ -77,7 +77,7 @@ class GroupsController < ApplicationController
   def resign
     executive_relationship = GroupUser.executive_relationship(group: @group, user: current_user)
     if executive_relationship.update_attribute(:role, GroupUser.roles[:general])
-      flash_and_redirect(key: :success, message: '辞退しました。', redirect_url: root_url)
+      flash_and_redirect(key: :success, message: '辞退しました。', redirect_url: home_url)
     else
       @executives = User.executives(@group)
       ErrorSlackNotification.general_error_notify(title: '辞退失敗', message: "グループID: #{@group&.id}, 辞退するユーザーID: #{current_user&.id}の辞退失敗")
@@ -125,7 +125,7 @@ class GroupsController < ApplicationController
 
     def cannot_resign
       if User.executives(@group).count == 1
-        flash_and_redirect(key: :danger, message: '幹事が一人しかいないため辞退できません', redirect_url: root_url)
+        flash_and_redirect(key: :danger, message: '幹事が一人しかいないため辞退できません', redirect_url: home_url)
       end
     end
 
