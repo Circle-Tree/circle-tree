@@ -20,6 +20,8 @@ Rails.application.routes.draw do
   root 'homes#landing'
   get 'home', to: 'homes#index', as: 'home'
   get 'faq', to: 'homes#faq', as: 'faq'
+  get 'terms_of_service', to: 'homes#terms_of_service', as: 'terms_of_service'
+  get 'privacy_policy', to: 'homes#privacy_policy', as: 'privacy_policy'
   get 'users/csv_template', to: 'users#csv_template', as: 'csv_template'
   # get 'groups/:group_id/users/share', to: 'users#share', as: 'share'
   resources :groups, except: [:new, :create] do
