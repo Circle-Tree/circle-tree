@@ -5,19 +5,23 @@
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
     <%#= stylesheet_pack_tag 'application', media: 'all' %>
-    <%= yield(:pack_tag) %>
     <!--[if lt IE 9]>
       <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/r29/html5.min.js">
       </script>
     <![endif]-->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <!--<meta http-equiv="X-UA-Compatible" content="IE=edge" /> Optimal Internet Explorer compatibility -->
-    <!-- <link rel="shortcut icon" href="../assets/images/favicon.png" /> -->
-    <%= stylesheet_pack_tag 'application', media: 'all' %>
-    <%= javascript_pack_tag 'application2' %>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <%= favicon_pack_tag 'circle-tree.png' %>
+    <% if controller.controller_name == 'homes' && controller.action_name != 'index' %>
+      <%= yield(:pack_tag) %>
+    <% else %>
+      <%= stylesheet_pack_tag 'application', media: 'all' %>
+      <%= javascript_pack_tag 'application2' %>
+    <% end %>
   </head>
 
   <body>
     <%= yield %>
   </body>
+</html>

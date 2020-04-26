@@ -1,0 +1,499 @@
+<% content_for :pack_tag do %>
+  <%= stylesheet_pack_tag 'landing', media: 'all' %>
+  <%= javascript_pack_tag 'landing' %>
+<% end %>
+<!-- START #fh5co-header -->
+<%= render 'homes/landing/header' %>
+
+<div id="fh5co-hero">
+  <div class="overlay"></div>
+  <a href="#fh5co-main" class="smoothscroll fh5co-arrow to-animate hero-animate-4"><i class="ti-angle-down"></i></a>
+  <!-- End fh5co-arrow -->
+  <div class="container">
+    <div class="col-md-8 col-md-offset-2">
+      <div class="fh5co-hero-wrap">
+        <div class="fh5co-hero-intro">
+          <h1 class="to-animate hero-animate-1">サークルには、<br class="br-sp">これだけ。</h1>
+          <h2 class="to-animate hero-animate-2"><a href="" target="_blank">慶應義塾大学生による</a><br class="br-sp">サークル総合支援サービス</h2>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="fh5co-main">
+
+  <div class="fh5co-cards">
+    <div class="container-fluid">
+      <div class="row animate-box">
+        <div class="col-md-12 heading text-center"><h1>4つの管理で<br class="br-sp">サークル運営が<br class="br-sp">驚くほどスムーズに！</h1></div>
+      </div>
+      <div class="row">
+        <div class="col-lg-3 col-md-6 col-sm-6 animate-box">
+          <a class="fh5co-card" href="#">
+            <%= image_pack_tag("member.jpg", alt: "member", class: "img-responsive") %>
+            <div class="fh5co-card-body">
+              <h2>メンバー管理</h2>
+              <p>メンバーは一括で登録。</p>
+              <p>	煩わしい登録作業は</p>
+              <p>必要ありません。</p>
+              <p>	1年生から6年生まで対応。</p>
+              <p>幹事さんや一般メンバー、<br class="br-sp">果てはOBまで
+                <br class="br-sp">分けて名簿を管理できます。
+              </p>
+            </div>
+          </a>
+        </div>
+        <div class="col-lg-3 col-md-6 col-sm-6 animate-box">
+          <a class="fh5co-card" href="#">
+            <%= image_pack_tag("event1.jpg", alt: "event1", class: "img-responsive") %>
+            <div class="fh5co-card-body">
+              <h2>イベント管理</h2>
+              <p>イベントを作るだけ。</p>
+              <p>回答やお金の催促?</p>
+              <p>領収書の作成?</p>
+              <p>	どれも一切不要。</p>
+              <p>	イベントにかかわる情報は一覧化され<br class="br-sp">
+                スマホ1つで　簡単に管理できます。</p>
+
+            </div>
+          </a>
+        </div>
+        <div class="col-lg-3 col-md-6 col-sm-6 animate-box">
+          <a class="fh5co-card" href="#">
+            <%= image_pack_tag("statistics.jpg", alt: "statistics", class: "img-responsive") %>
+            <div class="fh5co-card-body">
+              <h2>統計管理</h2>
+              <p>もっとメンバーに</p>
+              <p>楽しんでほしい…。</p>
+              <p>そんな幹事さんの悩み、</p>
+              <p>グラフで解決しましょう。</p>
+
+              <p>自動で全イベントの出席率,<br class="br-sp">個別の統計データを分析。
+
+                <br class="br-sp">データから一目瞭然。
+              </p>
+            </div>
+          </a>
+        </div>
+        <div class="col-lg-3 col-md-6 col-sm-6 animate-box">
+          <a class="fh5co-card" href="#">
+            <%= image_pack_tag("balance.jpg", alt: "balance", class: "img-responsive") %>
+            <div class="fh5co-card-body">
+              <h2>収支管理</h2>
+              <p>今月のサークル費はいくら?</p>
+              <p>	全メンバーは個別で</p>
+              <p>収支を自動で記録。</p>
+              <p>あの時支払ったお金も。</p>
+              <p>イベントに使用したお金が
+                <br class="br-sp">グラフで丸わかり。
+                <br class="br-sp">送金した情報の管理だって楽々。</p>
+
+
+            </div>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="container">
+    <div class="fh5co-spacer fh5co-spacer-sm"></div>
+    <div class="row">
+      <div class="col-md-12 animate-box">
+        <h1 class=" text-center">幹事さん、<br class="br-sp">楽しちゃいませんか?</h1>
+        <div class="fh5co-spacer fh5co-spacer-sm"></div>
+      </div>
+
+      <div class="col-md-12 animate-box">
+        <%= image_pack_tag("event2.jpg", alt: "event2", class: "fh5co-align-left img-responsive", style: "height: 240px;") %>
+        <p>新歓イベントや対外試合、練習日程、<br class="br-sp">週末の飲み会、合宿, etc…</p>
+        <p>サークルには楽しいイベントが<br class="br-sp">沢山あります。</p>
+        <p>ですがそんな中で苦労するのが幹事さん。<br class="br-sp"></p>
+        <p>部員の皆には楽しんでほしい。<br class="br-sp"></p>
+        <p>でも毎回の出欠の確認やお金集め、<br class="br-sp">未回答の人への催促や</p>
+        <p>領収書づくりなどやらなければ<br class="br-sp">ならないことが山ほど…。</p>
+
+        <%= image_pack_tag("time.jpg", alt: "time", class: "fh5co-align-right img-responsive", style: "height: 250px;") %>
+        <p>そんな部長さんや幹事さんの<br class="br-sp">助けになります。</p>
+        <p>ひとたびイベントを作れば<br class="br-sp">メンバーに自動で通知。</p>
+        <p>面倒な出欠確認や集金催促は<br class="br-sp">すべてCircle-treeが</p>
+        <p>代わりに自動で行います。<br class="br-sp">領収書だって発行。</p>
+        <p>お支払いが済めば幹事さんが何もせずとも<br class="br-sp">領収書が作成されます。</p>
+        <p></p>
+        <p></p>
+        <p></p>
+      </div>
+    </div>
+
+    <div class="row" id="fh5co-features">
+      <div class="col-md-4 col-sm-6 text-center fh5co-feature feature-box">
+        <div class="fh5co-feature-icon">
+          <i class="ti-user"></i>
+        </div>
+        <h3 class="heading">イベントの管理</h3>
+        <p style="margin-bottom: 0px;">一度イベントを作れば誰でも</p>
+        <p style="margin-bottom: 0px;">ダッシュボードで楽々管理。</p>
+        <p style="margin-bottom: 0px;">メンバーには自動で通知され</p>
+        <p style="margin-bottom: 0px;">回答してもらえます。</p>
+        <p style="margin-bottom: 0px;">誰が出席、欠席、未回答なのか、</p>
+        <p style="margin-bottom: 0px;">またお金の支払いの有無や</p>
+        <p style="margin-bottom: 0px;">イベントの出席率に至るまで</p>
+        <p style="margin-bottom: 0px;">一目で確認することができます。</p>
+
+      </div>
+      <div class="col-md-4 col-sm-6 text-center fh5co-feature feature-box">
+        <div class="fh5co-feature-icon">
+          <i class="ti-signal"></i>
+        </div>
+        <h3 class="heading">催促機能</h3>
+        <p style="margin-bottom: 0px;">一人一人に出席やお金の催促を</p>
+        <p style="margin-bottom: 0px;">するのは大変。その上お金の話を</p>
+        <p style="margin-bottom: 0px;">するのはなんだか気まずい…。</p>
+        <p style="margin-bottom: 0px;">そんな心配はもう不要です。</p>
+        <p style="margin-bottom: 0px;">未回答やお金を払っていない人に</p>
+
+        <p style="margin-bottom: 0px;">自動でメール、通知が届きます。</p>
+        <p style="margin-bottom: 0px;">幹事さんの手を煩わせることは</p>
+        <p style="margin-bottom: 0px;">一切ありません。</p>
+
+      </div>
+
+      <div class="clearfix visible-sm-block"></div>
+
+      <div class="col-md-4 col-sm-6 text-center fh5co-feature feature-box">
+        <div class="fh5co-feature-icon">
+          <i class="ti-thumb-up"></i>
+        </div>
+        <h3 class="heading">領収書の発行</h3>
+        <p style="margin-bottom: 0px;">領収書を鉛筆で書くの、</p>
+        <p style="margin-bottom: 0px;">もう終わりにしませんか？</p>
+        <p style="margin-bottom: 0px;">Circle-treeは領収書の</p>
+        <p style="margin-bottom: 0px;">発行機能も搭載しています。</p>
+        <p style="margin-bottom: 0px;">集金が完了した人には</p>
+        <p style="margin-bottom: 0px;">自動で領収書が発行、送信。</p>
+        <p style="margin-bottom: 0px;">幹事さんの面倒な作成作業は</p>
+        <p style="margin-bottom: 0px;">もう必要ありません。</p>
+
+      </div>
+
+      <div class="clearfix visible-md-block visible-lg-block"></div>
+
+      <div class="col-md-4 col-sm-6 text-center fh5co-feature feature-box">
+        <div class="fh5co-feature-icon">
+          <i class="ti-bar-chart"></i>
+        </div>
+        <h3 class="heading">一目で分かる統計分析</h3>
+        <p style="margin-bottom: 0px;">もっともっと楽しめるイベントを</p>
+        <p style="margin-bottom: 0px;">作ってみたいと思いませんか？</p>
+        <p style="margin-bottom: 0px;">Circle-treeはイベントごとの</p>
+        <p style="margin-bottom: 0px;">出席率を自動で分析します。</p>
+        <p style="margin-bottom: 0px;">	学年別、男女別、イベントごとの</p>
+        <p style="margin-bottom: 0px;">出席傾向やメンバーのお休みの</p>
+        <p style="margin-bottom: 0px;">理由が一目瞭然。データを使った</p>
+        <p style="margin-bottom: 0px;">楽しいイベントづくりに貢献。</p>
+
+      </div>
+
+      <div class="clearfix visible-sm-block"></div>
+
+      <div class="col-md-4 col-sm-6 text-center fh5co-feature feature-box">
+        <div class="fh5co-feature-icon">
+          <i class="ti-comments"></i>
+        </div>
+        <h3 class="heading">収支情報の管理</h3>
+        <p style="margin-bottom: 0px;">自分がどれだけサークルにお金を</p>
+        <p style="margin-bottom: 0px;">払っているかが丸わかり。</p>
+        <p style="margin-bottom: 0px;">支払わなければならないお金と</p>
+        <p style="margin-bottom: 0px;">サークルへの支払いの履歴が</p>
+        <p style="margin-bottom: 0px;">グラフ化、一目でわかります。</p>
+        <p style="margin-bottom: 0px;">サークル内でのお金のやり取りも</p>
+        <p style="margin-bottom: 0px;">書き込まれ貸し借りの</p>
+        <p style="margin-bottom: 0px;">トラブルも未然に防げます。</p>
+
+      </div>
+      <div class="col-md-4 col-sm-6 text-center fh5co-feature feature-box">
+        <div class="fh5co-feature-icon">
+          <i class="ti-money"></i>
+        </div>
+        <h3 class="heading">メンバー間の堅牢な送金</h3>
+        <p style="margin-bottom: 0px;">年会費や練習費用の徴収、</p>
+        <p style="margin-bottom: 0px;">その手渡し、大変じゃないですか?</p>
+        <p style="margin-bottom: 0px;">Circle-treeならメンバー間の</p>
+        <p style="margin-bottom: 0px;">送金機能を搭載。(Paypal利用)</p>
+        <p style="margin-bottom: 0px;">送金した後は支払い情報を入力。</p>
+        <p style="margin-bottom: 0px;">幹事さんは誰が支払ったかを</p>
+        <p style="margin-bottom: 0px;">いちいちチェックする必要は</p>
+        <p style="margin-bottom: 0px;">ありません。</p>
+
+      </div>
+    </div>
+    <!-- END row -->
+
+
+
+    <!--
+    ///////////////////////////////////
+    Portfolio
+    ///////////////////////////////////
+    -->
+
+
+  </div>
+  <!-- END container -->
+
+  <div class="animate-box fh5co-product-2">
+    <%#= image_pack_tag("deposit.jpg", alt: "deposit", class: "fh5co-half img") %>
+    <div class="fh5co-half img" style="background-image: url(images/deposit.jpg);"></div>
+    <div class="fh5co-half">
+      <h3>使えば使うほど、<br class="br-sp">ポイントが貯まる</h3>
+      <p>Circle-treeではサークル内に<br class="br-sp">ポイント通帳があります。</p>
+      <p>	イベント作成のたびに出席率に<br class="br-sp">応じてポイントが貯金。</p>
+      <p>参加すればするほど　<br class="br-sp">どんどんポイントが貯まる！</p>
+      <p>幹事さんはメンバー全員に呼び掛けて、<br class="br-sp">奮ってイベントに</p>
+      <p>参加しましょう。<br class="br-sp">運営からのプレゼントも奮発中！</p>
+      <p>	貯めたポイントでサークルの設備を<br class="br-sp">購入しましょう。</p>
+    </div>
+  </div>
+  <div class="fh5co-spacer fh5co-spacer-md"></div>
+  <!-- Responsive Tabs -->
+
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12 animate-box">
+        <h2 class="fh5co-uppercase-heading-sm text-center">作業の短縮時間</h2>
+        <div class="fh5co-spacer fh5co-spacer-sm"></div>
+      </div>
+      <div class="col-md-6 animate-box">
+        <div class="panel-group fh5co-accordion" id="accordion" role="tablist" aria-multiselectable="true">
+      <div class="panel panel-default ">
+        <div class="panel-heading" role="tab" id="headingOne" data-toggle="collapse" data-parent="#accordion" data-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
+          <h4 class="panel-title">
+            <a class="accordion-toggle">
+              出欠管理について
+            </a>
+          </h4>
+        </div>
+        <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
+          <div class="panel-body">
+            メンバーの回答状況を学年ごとに<br class="br-sp">分けて管理。<br class="br-pc">
+            あらゆるイベント情報は<br class="br-sp">一覧化され一目で<br class="br-pc">情報がわかります。
+            <br class="br-sp">幹事さんがするのは<br class="br-pc">出金の確認だけ。<br class="br-sp">
+            集めるお金も学年やメンバーに<br class="br-pc">分けて<br class="br-sp">自在に登録できます。
+          </div>
+        </div>
+      </div>
+      <div class="panel panel-default">
+        <div class="panel-heading collapsed" role="tab" id="headingTwo" data-toggle="collapse" data-parent="#accordion" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+          <h4 class="panel-title">
+            <a class="accordion-toggle">
+              催促機能について
+            </a>
+          </h4>
+        </div>
+        <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+          <div class="panel-body">
+            なんとなくお金の催促はやりづらい...。<br class="br-pc"><br class="br-sp">
+            もう悩む必要はありません。<br class="br-sp"><br class="br-pc">
+            circle-treeがお金を払ってない人や<br class="br-sp"><br class="br-pc">
+            回答していない人に自動で支払うまで<br class="br-sp"><br class="br-pc">
+            お知らせのメール、通知を送ります。<br class="br-sp"><br class="br-pc">
+            幹事さんにしてもらうこと?<br class="br-sp">
+            待つだけです。
+          </div>
+        </div>
+      </div>
+      <div class="panel panel-default">
+        <div class="panel-heading collapsed" role="tab" id="headingThree" data-toggle="collapse" data-parent="#accordion" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+          <h4 class="panel-title">
+            <a class="accordion-toggle">領収書発行について</a>
+          </h4>
+        </div>
+        <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
+          <div class="panel-body">
+            出金が済んだメンバーには自動で領収書が<br class="br-sp"><br class="br-pc">発行されます。
+            もう手書きで作る必要は<br class="br-sp"><br class="br-pc">ありません。
+            メンバーは過去のあらゆる<br class="br-sp">イベント<br class="br-pc">の収支情報を
+            確認して領収書を発行できます。
+          </div>
+        </div>
+      </div>
+    </div>
+    </div>
+    <div class="col-md-6 animate-box">
+      <h3 class="h4 fh5co-no-margin-bottom">出欠確認作業時間(約40%削減)</h3>
+      <div class="progress">
+        <div class="progress-bar progress-bar-default" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width: 40%">
+          <span class="sr-only">40% Complete (success)</span>
+        </div>
+      </div>
+      <h3 class="h4 fh5co-no-margin-bottom">出金状況確認時間(約22％削減)</h3>
+      <div class="progress">
+        <div class="progress-bar progress-bar-default" role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100" style="width: 20%">
+          <span class="sr-only">20% Complete</span>
+        </div>
+      </div>
+      <h3 class="h4 fh5co-no-margin-bottom">未回答者への催促時間(約84%削減)</h3>
+      <div class="progress">
+        <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="84" aria-valuemin="0" aria-valuemax="100" style="width: 84%">
+          <span class="sr-only">84% Complete (warning)</span>
+        </div>
+      </div>
+      <h3 class="h4 fh5co-no-margin-bottom">領収書発行時間(約98%削減)</h3>
+      <div class="progress">
+        <div class="progress-bar progress-bar-danger" role="progressbar" aria-valuenow="98" aria-valuemin="0" aria-valuemax="100" style="width: 98%">
+          <span class="sr-only">80% Complete (danger)</span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- END row -->
+
+    <div class="fh5co-spacer fh5co-spacer-md"></div>
+
+    <!--
+    ///////////////////////////////////
+    Responsive Tabs
+    ///////////////////////////////////
+    -->
+
+
+
+
+    <div class="fh5co-spacer fh5co-spacer-md"></div>
+
+
+    <!--
+    ///////////////////////////////////
+    Forms
+    ///////////////////////////////////
+    -->
+
+    <div class="row">
+      <div class="col-md-12 animate-box" style="text-align:center">
+        <h1 class="fh5co-uppercase-heading-sm text-center">まずは新規登録</h1>
+        <p class="to-animate hero-animate-3"><%= link_to '今すぐCircle-treeを体験する', new_user_registration_path, class: "btn btn-outline btn-lg col-md-6 col-md-offset-3" %></p>
+      </div>
+
+      <%# <div class="col-md-8 col-md-offset-2 animate-box">
+        <form action="#" method="post">
+          <div class="col-md-6">
+            <div class="form-group">
+              <label for="name" class="sr-only">名前</label>
+              <input placeholder="登録名" id="name" type="text" class="form-control input-lg">
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="form-group">
+              <label for="name" class="sr-only">フリガナ</label>
+              <input placeholder="フリガナ" id="name" type="text" class="form-control input-lg">
+            </div>
+          </div>
+          <div class="col-md-12">
+            <div class="form-group">
+              <label for="gender" class="sr-only">性別</label>
+              <select class="form-control input-lg" id="gender">
+                <option>--性別--</option>
+                <option>男性</option>
+                <option>女性</option>
+              </select>
+            </div>
+          </div>
+          <div class="col-md-12">
+            <div class="form-group">
+              <label for="gender" class="sr-only">学年</label>
+              <select class="form-control input-lg" id="gender">
+                <option>--学年--</option>
+                <option>1年生</option>
+                <option>2年生</option>
+                <option>3年生</option>
+                <option>4年生</option>
+                <option>5年生</option>
+                <option>6年生</option>
+                <option>その他</option>
+
+              </select>
+            </div>
+          </div>
+          <div class="col-md-12">
+            <div class="form-group">
+              <label for="Email" class="sr-only">メールアドレス</label>
+              <input placeholder="メールアドレス" id="Email" class="form-control input-lg" rows="3">
+            </div>
+          </div>
+          <div class="col-md-12">
+            <div class="form-group">
+              <label for="password" class="sr-only">パスワード</label>
+              <input placeholder="パスワード" id="Email" class="form-control input-lg" rows="3">
+            </div>
+          </div>
+          <div class="col-md-12">
+            <div class="form-group">
+              <label for="password" class="sr-only">パスワード確認</label>
+              <input placeholder="パスワード確認" id="password" class="form-control input-lg" rows="3">
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="form-group">
+              <input type="submit" class="btn btn-primary btn-lg " value="登録">
+
+              <input type="reset" class="btn btn-outline btn-lg " value="リセット">
+            </div>
+          </div>
+        </form>
+      </div> %>
+    </div>
+    <!-- END row -->
+
+    <div class="fh5co-spacer fh5co-spacer-sm"></div>
+
+    <div class="row">
+      <div class="col-md-12 animate-box">
+        <h2 class="fh5co-uppercase-heading-sm text-center">Circle-treeとは</h2>
+        <div class="fh5co-spacer fh5co-spacer-sm"></div>
+      </div>
+      <div class="col-md-12 animate-box">
+        <%= image_pack_tag("circle-tree.png", alt: "circle-tree", class: "fh5co-align-left img-responsive", style: "height: 250px;") %>
+        <p>慶應義塾大学生が運営している<br class="br-sp">学生支援サービスです。</p>
+        <p>設立は2019年11月。</p>
+        <p>100名を超えるサークルの、<br class="br-sp">部長が集まって大変さを分かち合い</p>
+
+        <p>改善案を出し合って少しでも多くの<br class="br-sp">幹事さんの助けになればと</p>
+        <p>作られたのがこのCircle-treeです。</p>
+        <p>部長さんや幹事さん、<br class="br-sp">お金の管理をする財務さんならではの<br class="br-sp">あるあるを共有して問題を<br class="br-sp">解決していくことを使命と</p>
+
+        <p>しております。イベント、合宿、練習や大会、<br class="br-sp">日常の活動とお仕事の多い幹事さんですが</p>
+
+        <p>このCircle-treeがあなたの助けになることを<br class="br-sp">心から願っております。</p>
+
+      </div>
+    </div>
+    <!-- END row -->
+    <div class="fh5co-spacer fh5co-spacer-md"></div>
+    <div class="row">
+      <div class="fh5co-spacer fh5co-spacer-lg"></div>
+      <!-- Start Slider Testimonial -->
+      <h2 class="fh5co-uppercase-heading-sm text-center animate-box">これまでの喜びの声</h2>
+      <div class="fh5co-spacer fh5co-spacer-xs"></div>
+      <div class="owl-carousel-fullwidth animate-box">
+        <div class="item">
+          <p class="text-center quote">&ldquo; &rdquo; <cite class="author">&mdash; W.Tさん　慶應義塾大学</cite></p>
+        </div>
+        <div class="item">
+          <p class="text-center quote">&ldquo; &rdquo;<cite class="author">&mdash; M.Kさん　東京大学</cite></p>
+        </div>
+        <div class="item">
+          <p class="text-center quote">&ldquo;&rdquo;<cite class="author">&mdash; S.Aさん　京都大学</cite></p>
+        </div>
+      </div>
+      <div class="fh5co-spacer fh5co-spacer-lg"></div>
+      <!-- End Slider Testimonial -->
+    </div>
+    <!-- END row -->
+  </div>
+  <!-- END container -->
+</div>
+<!-- END fhtco-main -->
+
+<%= render 'homes/landing/footer' %>
