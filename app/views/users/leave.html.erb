@@ -76,7 +76,7 @@
                                 <%= f.hidden_field :user_id, value: current_user.id %>
                                 <%= f.select :group_id, @my_groups.map { |group| [group.name, group.id] }, { include_blank: '選択してください' }, { class: "form-control", style: "color: white;" } %>
                                 <small class="form-text text-muted">退会するサークルを選んでください。</small>
-                                <%= button_tag type: "submit", class: "btn btn-danger mr-2", style: "margin-top: 15px;" do %>
+                                <%= button_tag type: "submit", class: "btn btn-danger mr-2", style: "margin-top: 15px;", data: { disable_with: '処理中' } do %>
                                   退会する
                                 <% end %>
                               </div>

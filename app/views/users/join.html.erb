@@ -74,7 +74,7 @@
                             <%= hidden_field_tag :user_id, current_user.id %>
                             <%= text_field_tag :group_number, '', class: "form-control", style: "color: white;", placeholder: "参加したいサークルのIDを入力してください" %>
                             <small class="form-text text-muted">サークルIDがわからない場合は幹事の方に確認してください。</small>
-                            <%= button_tag type: "submit", class: "btn btn-primary mr-2", style: "margin-top: 15px;" do %>
+                            <%= button_tag type: "submit", class: "btn btn-primary mr-2", style: "margin-top: 15px;", data: { disable_with: '処理中' } do %>
                               入会する
                             <% end %>
                           </div>

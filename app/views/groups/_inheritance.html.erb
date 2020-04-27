@@ -8,7 +8,7 @@
         <%# <button type="button" class="btn btn-success btn-icon-text" style="display: inline-block;">
           <i class="mdi mdi-email"></i> 検索
         </button> %>
-        <%= button_tag type: 'submit', class: "btn btn-danger btn-icon-text", style: "display: inline-block;" do %>
+        <%= button_tag type: 'submit', class: "btn btn-danger btn-icon-text", style: "display: inline-block;", data: { disable_with: '処理中' } do %>
           <i class="mdi mdi-email"></i> 引継ぐ
         <% end %>
         <small id="emailHelp" class="form-text text-muted">引き継ぎたいメンバーを選択します。</small>

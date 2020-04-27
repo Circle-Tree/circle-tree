@@ -50,6 +50,7 @@
               <div class="card-body" style="background-color: rgb(255, 255, 255); color: #000;">
                 <h4 class="card-title">サークル設定</h4>
                 <%= form_with model: @group, class: "forms-sample", local: true do |f| %>
+                  <%= render 'shared/error_messages', model: f.object %>
                   <div class="form-group row">
                     <%= f.label :name, "サークル名", for: "exampleInputUsername2", class: 'col-sm-3 col-form-label' %>
                     <div class="col-sm-9">
@@ -80,7 +81,7 @@
                       <%= f.text_field :group_number, id: "exampleInputConfirmPassword2", class: 'form-control', placeholder: "現在のサークルID", style: "color: white;" %>
                     </div>
                   </div>
-                  <%= button_tag '変更', type: 'submit', class: "btn btn-primary mr-2" %>
+                  <%= button_tag '変更', type: 'submit', class: "btn btn-primary mr-2", data: { disable_with: '処理中' } %>
                   <%# <button class="btn btn-dark">リセット</button> %>
                 <% end %>
               </div>
@@ -95,3 +96,11 @@
   </div>
   <!-- page-body-wrapper ends -->
 </div>
+<style>
+  .field_with_errors {
+    display: contents;
+    /* input {
+        @extend .is-invalid;
+      } */
+    }
+</style>

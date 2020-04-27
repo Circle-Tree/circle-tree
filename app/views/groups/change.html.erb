@@ -72,7 +72,7 @@
                         <h4 style="display: block; font">①メンバー招待</h4>
                           <%= f.email_field :email, autofocus: true, autocomplete: "email", placeholder: '招待先アドレス', class: "form-control col-md-10",
                                                     :'aria-describedby' => "emailHelp", style: "color: white; display:inline-block ;" %>
-                          <%= button_tag type: "submit", class: "btn btn-danger btn-icon-text" do %>
+                          <%= button_tag type: "submit", class: "btn btn-danger btn-icon-text", data: { disable_with: '処理中' } do %>
                             <i class="mdi mdi-email" style="display: inline-block;"></i> 招待
                           <% end %>
                           <small id="emailHelp" class="form-text text-muted">登録したいアドレスに招待メールを送ります。</small>
@@ -89,7 +89,7 @@
                           <%# <button type="button" class="btn btn-success btn-icon-text">
                             <i class="mdi mdi-debug-step-into"></i> csvダウンロード
                           </button> %>
-                          <%= button_tag type: "submit", class: "btn btn-danger btn-icon-text", style: "margin-top: 10px;" do %>
+                          <%= button_tag type: "submit", class: "btn btn-danger btn-icon-text", style: "margin-top: 10px;", data: { disable_with: '処理中' } do %>
                             <i class="mdi mdi-email"></i> 登録
                           <% end %>
                           <small id="emailHelp" class="form-text text-muted">csvファイルに必要事項を記入し提出してください。</small>

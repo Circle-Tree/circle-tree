@@ -6,7 +6,7 @@
         <div class="form-group">
           <label style="display: block;">任命先選択</label>
           <input type="form" id="assignable-search" class="form-control col-md-8" aria-describedby="emailHelp" placeholder="任命したい人の名前を入力してください" style="display: inline-block; color: white;">
-          <%= button_tag type: 'submit', class: "btn btn-danger btn-icon-text", style: "display: inline-block;" do %>
+          <%= button_tag type: 'submit', class: "btn btn-danger btn-icon-text", style: "display: inline-block;", data: { disable_with: '処理中' } do %>
             <i class="mdi mdi-email"></i> 任命する
           <% end %>
           <small id="emailHelp" class="form-text text-muted">引き継ぎたいメンバーを選択します。</small>
