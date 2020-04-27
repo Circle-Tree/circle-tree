@@ -10,8 +10,8 @@ class Group < ApplicationRecord
   # email
   before_save { self.email = email.downcase }
   VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i.freeze
-  validates :email, presence: true,
-                    format: { with: VALID_EMAIL_REGEX } # 一意である必要はない
+  validates :email, presence: true
+  validates :email, format: { with: VALID_EMAIL_REGEX }, allow_blank: true # 一意である必要はない
   # group_number
   VALID_GRPUP_NUMBER_REGEX = /\A(?=.*[a-zA-Z])(?=.*\d)[a-zA-Z\d]\w{6,25}\z/.freeze
   validates :group_number, presence: true
