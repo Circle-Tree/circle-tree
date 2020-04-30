@@ -65,6 +65,21 @@ class User < ApplicationRecord
     self.gender ? '女性' : '男性'
   end
 
+  # 論理削除用メソッド
+  def leave
+    update_attribute(:leave_at, Time.current)
+  end
+
+  # ユーザーのアカウントが有効であることを確認
+  def active_for_authentication?
+    super && !leave_at
+  end
+
+  # 削除したユーザーにカスタムメッセージを追加します
+  def inactive_message
+    !leave_at ? super : :deleted_account
+  end
+
   def self.import!(file:, group:, password:)
     added_users = []
     transaction do

@@ -24,12 +24,11 @@ Rails.application.routes.draw do
   get 'privacy_policy', to: 'homes#privacy_policy', as: 'privacy_policy'
   get 'users/csv_template', to: 'users#csv_template', as: 'csv_template'
   # get 'groups/:group_id/users/share', to: 'users#share', as: 'share'
-  resources :groups, except: [:new, :create] do
+  resources :groups, except: %i[new create] do
 
     member do
-      get :dashboard
-      get :deposit
-      get :statistics
+      # get :deposit
+      # get :statistics
       get :change
       get :inheritable_search
       post :inherit
@@ -37,7 +36,7 @@ Rails.application.routes.draw do
       post :assign
       get :resign
     end
-    resources :users, only: [:index, :new] do
+    resources :users, only: %i[index new] do
       collection do
         post :batch
         get  :share
@@ -63,6 +62,7 @@ Rails.application.routes.draw do
     collection do
       get :join
       get :leave
+      get :withdraw
     end
     resources :transactions, only: %i[index]
     resources :transactions, only: %i[create], controller: 'users/transactions', param: :url_token do
@@ -128,7 +128,7 @@ Rails.application.routes.draw do
 
   # Basic認証時のユーザー名とパスワードを設定する
   Sidekiq::Web.use(Rack::Auth::Basic) do |user, password|
-    [user, password] == [ENV['SIDEKIQ_USER'], ENV['SIDEKIQ_PASSWORD']] #環境変数にて設定
+    [user, password] == [ENV['SIDEKIQ_USER'], ENV['SIDEKIQ_PASSWORD']] # 環境変数にて設定
   end
 
   mount Sidekiq::Web => 'admin/sidekiq'
