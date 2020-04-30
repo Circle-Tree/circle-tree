@@ -1,6 +1,7 @@
-<%= @user.name %> さん
-
-<%= @current_user.name %>さんが「<%= @event.name %>」(<%= @group.name %>)の支払い情報を更新しました。
-
-確認はこちらから
-<%= home_url %>
+<%= @user.name %>さん
+<%= @group.name %>の<%= @event.name %>の支払い情報が変更されました！
+至急確認いただきます様よろしくお願い申し上げます。
+下記のリンクから確認が可能できます。
+<%= user_transactions_url(user_id: @user.id) %>
+本メールは送信専用アドレスとなっております。
+ご返信いただいてもお答えできかねますのでご了承願います。

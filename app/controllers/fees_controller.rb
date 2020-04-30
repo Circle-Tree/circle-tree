@@ -62,7 +62,7 @@ class FeesController < ApplicationController
       members = User.members_by_grade(group: group, grade: grade)
       NewTransactionsJob.perform_later(members: members, event: event, fee: fee, current_user: current_user) if members.any?
       number = User.grades[grade.to_sym]
-      flash_and_redirect(key: :success, message: "#{number}年生の支払い情報を保存しました。", redirect_url: new_event_fee_url(event_id: event.id))
+      flash_and_redirect(key: :success, message: flash_message(number), redirect_url: new_event_fee_url(event_id: event.id))
     end
 
     def batch_create_or_update_transaction(group:, event:, fee:)
@@ -92,7 +92,7 @@ class FeesController < ApplicationController
       event.fees.first
     end
 
-    # def flash_message(number)
-    #   number.zero? ? '出席するその他の人たちに通知しました。' : "出席する#{number}年生に通知しました。"
-    # end
+    def flash_message(number)
+      number.zero? ? '出席するその他の人たちに通知しました。' : "出席する#{number}年生に通知しました。"
+    end
 end

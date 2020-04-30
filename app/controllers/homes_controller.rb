@@ -24,4 +24,10 @@ class HomesController < ApplicationController
 
   def landing
   end
+
+  def privacy_policy
+  end
+
+  def terms_of_service
+  end
 end

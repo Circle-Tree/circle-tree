@@ -73,7 +73,7 @@ class UsersController < ApplicationController
         flash_and_redirect(key: :danger, message: 'データがありません', redirect_url: change_group_url(@group))
       else
         added_users.each do |user|
-          NotificationMailer.send_when_batch_registration(user, current_user).deliver_later(wait: 1.minute)
+          NotificationMailer.send_when_batch_registration(user: user, current_user: current_user, group: @group).deliver_later(wait: 1.minute)
         end
         flash_and_redirect(key: :success, message: "#{added_count}人のユーザーを追加し通知メールを送信しました。",
                            redirect_url: group_users_url(group_id: @group.id))

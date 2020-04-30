@@ -16,7 +16,7 @@ class Events::TransactionsController < TransactionsController
   def update
     @transaction = Event::Transaction.find_by(url_token: params[:url_token])
     if @transaction.update(update_transaction_params)
-      NotificationMailer.update_event_transaction(group: @group, transaction: @transaction, current_user: current_user).deliver_later
+      TransactionNotificationMailer.update_event_transaction(group: @group, transaction: @transaction, current_user: current_user).deliver_later
       flash[:success] = "#{@transaction.debtor.name}さんの支払い情報を更新しました"
       redirect_to group_event_url(group_id: @event.group_id, id: @event.id)
     else

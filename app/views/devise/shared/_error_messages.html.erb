@@ -1,9 +1,9 @@
 <% if resource.errors.any? %>
   <div id="error_explanation">
-    <p>入力内容に間違いがあります：</p>
+    <p style='color: red;'>入力内容に間違いがあります：</p>
     <ul>
       <% resource.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
+        <li style='color: red;'><%= message %></li>
       <% end %>
     </ul>
   </div>

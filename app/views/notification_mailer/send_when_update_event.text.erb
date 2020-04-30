@@ -1,6 +1,7 @@
-<%= @user.name %> さん
-
-<%= @current_user.name %>さんが「<%= @event.name %>」(<%= @group.name %>)の情報を更新しました。
-
-確認はこちらから
+<%= @user.name %>さん
+<%= @group.name %>で<%= @event.name %>の内容が変更されました！
+至急確認いただきます様よろしくお願い申し上げます。
+下記のリンクから確認が可能できます。
 <%= details_group_event_url(group_id: @group.id, id: @event.id) %>
+本メールは送信専用アドレスとなっております。
+ご返信いただいてもお答えできかねますのでご了承願います。

@@ -37,7 +37,7 @@
                   <td>
                     <% relationship = GroupUser.find_by(group_id: group.id, user_id: member.id) %>
                     <% if relationship.role == 'general' %>
-                      <%= link_to '退会', group_user_path(id: relationship.id), method: :delete, class: "btn btn-outline-primary", data: { confirm: '本当に退会させますか？' } %>
+                      <%= link_to '退会', group_user_path(id: relationship.id), method: :delete, class: "btn btn-outline-danger", data: { confirm: '本当に退会させますか？', disable_with: '処理中' } %>
                     <% end %>
                   </td>
                 <% end %>

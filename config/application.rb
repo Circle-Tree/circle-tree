@@ -17,6 +17,8 @@ module AppName
     config.active_job.queue_adapter = :sidekiq
     config.filter_parameters += [/password/]
     config.assets.enabled = false
+    # field_with_errorsを作らせない
+    config.action_view.field_error_proc = Proc.new { |html_tag, instance| html_tag }
 
     # Settings in config/environments/* take precedence over those specified here.
     # Application configuration can go into files in config/initializers

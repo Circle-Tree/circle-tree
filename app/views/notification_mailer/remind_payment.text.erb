@@ -1,6 +1,7 @@
-<%= @debtor.name %> さん
-
-<%= @event.name %>(<%= @group.name %>)の支払い期限が近づいています。
-期限は<%= @transaction.deadline.strftime("%Y/%m/%d") %>
-以下から確認できます。
-<%= group_event_url(group_id: @group.id, id: @event.id) %>
+<%= @debtor.name %>さん
+<%= @group.name %>の<%= @event.name %>について支払いがまだの様です。
+至急幹事さんに提出していただきます様よろしくお願い申し上げます。
+下記のリンクから確認が可能できます。
+<%= user_transactions_url(user_id: @debtor.id) %>
+本メールは送信専用アドレスとなっております。
+ご返信いただいてもお答えできかねますのでご了承願います。
