@@ -5,6 +5,7 @@
     <ul class="nav">
       <%= render 'shared/sidebar/profile' %>
       <%= render 'shared/sidebar/home' %>
+      <%= render 'shared/sidebar/my_page' %>
       <% if current_user_group.present? %>
         <%= render 'shared/sidebar/circle_page' %>
         <%= render 'shared/sidebar/event' %>
@@ -15,11 +16,16 @@
       <li class="nav-item menu-items active">
         <%= link_to faq_path, class: "nav-link" do %>
           <span class="menu-icon">
-            <i class="mdi mdi-help-circle-outline" style="color: chartreuse;"></i>
+            <% if current_user_group.present? %>
+              <i class="mdi mdi-help-circle-outline" style="color: #6BE1E7;"></i>
+            <% else %>
+              <i class="mdi mdi-help-circle-outline" style="color: #A0C238"></i>
+            <% end %>
           </span>
           <span class="menu-title">FAQ</span>
         <% end %>
       </li>
+      <%= render 'shared/sidebar/payment' %>
       <%= render 'shared/sidebar/customize' %>
       <%= render 'shared/sidebar/logout' %>
     </ul>

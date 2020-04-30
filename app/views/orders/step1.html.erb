@@ -14,7 +14,7 @@
         <li class="nav-item menu-items active">
           <%= link_to step1_orders_path, class: "nav-link" do %>
             <span class="menu-icon">
-              <i class="  mdi mdi-account-card-details" style="color:rgb(74, 234, 255);"></i>
+              <i class="  mdi mdi-account-card-details" style="color: #FFF001"></i>
             </span>
             <span class="menu-title">サークル作成</span>
           <% end %>
@@ -22,6 +22,7 @@
       <% end %>
       <%= render 'shared/sidebar/faq' %>
       <%= render 'shared/sidebar/customize' %>
+      <%= render 'shared/sidebar/payment' %>
       <%= render 'shared/sidebar/logout' %>
     </ul>
   </nav>

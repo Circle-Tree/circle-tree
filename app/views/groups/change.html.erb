@@ -12,7 +12,7 @@
         <li class="nav-item menu-items active">
           <a class="nav-link" data-toggle="collapse" href="#ui-advanced" aria-expanded="false" aria-controls="ui-advanced">
             <span class="menu-icon">
-              <i class="mdi mdi-settings" style="color: blueviolet;"></i>
+              <i class="mdi mdi-settings" style="color: #009B85"></i>
             </span>
             <span class="menu-title">サークル情報</span>
             <i class="menu-arrow"></i>
@@ -22,7 +22,7 @@
               <li class="nav-item"> <%= link_to 'メンバー一覧', group_users_path(group_id: current_user_group.id), class: "nav-link" %></li>
               <li class="nav-item"> <%= link_to 'メンバー設定', change_group_path(id: current_user_group.id), class: "nav-link active" %></li>
               <li class="nav-item"> <%= link_to 'サークル設定', edit_group_path(id: current_user_group.id), class: "nav-link" %></li>
-              <li class="nav-item"> <a class="nav-link" href="#">支払い情報(未)</a></li>
+              <%# <li class="nav-item"> <a class="nav-link" href="#">支払い情報(未)</a></li> %>
             </ul>
           </div>
         </li>
@@ -30,6 +30,7 @@
         <%= render 'shared/sidebar/new_circle' %>
       <% end %>
       <%= render 'shared/sidebar/faq' %>
+      <%= render 'shared/sidebar/payment' %>
       <%= render 'shared/sidebar/customize' %>
       <%= render 'shared/sidebar/logout' %>
     </ul>

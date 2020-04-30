@@ -1,7 +1,11 @@
 <li class="nav-item menu-items">
   <%= link_to faq_path, class: "nav-link" do %>
     <span class="menu-icon">
-      <i class="mdi mdi-help-circle-outline" style="color: chartreuse;"></i>
+      <% if current_user_group.present? %>
+        <i class="mdi mdi-help-circle-outline" style="color: #6BE1E7;"></i>
+      <% else %>
+        <i class="mdi mdi-help-circle-outline" style="color: #A0C238"></i>
+      <% end %>
     </span>
     <span class="menu-title">FAQ</span>
   <% end %>

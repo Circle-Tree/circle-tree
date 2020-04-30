@@ -1,17 +1,17 @@
 <li class="nav-item menu-items">
   <a class="nav-link" data-toggle="collapse" href="#page-layouts" aria-expanded="false" aria-controls="page-layouts">
     <span class="menu-icon">
-      <i class="mdi mdi-account-multiple"></i>
+      <i class="mdi mdi-account-multiple" style="color: #FFF001"></i>
     </span>
     <span class="menu-title">サークルページ</span>
     <i class="menu-arrow"></i>
   </a>
   <div class="collapse" id="page-layouts">
     <ul class="nav flex-column sub-menu">
-      <li class="nav-item"> <%= link_to 'サークルプロフィール', group_path(id: current_user_group.id), class: "nav-link" %></li>
-      <li class="nav-item"> <a class="nav-link" href="#">サークルカレンダー(未)</a></li>
-      <li class="nav-item"> <a class="nav-link" href="#">統計情報(未)</a><%#= link_to '統計情報(未)', statistics_group_path(id: current_user_group.id), class: "nav-link" %></li>
-      <li class="nav-item"> <a class="nav-link" href="#">デポジット(未)</a><%#= link_to 'デポジット(未)', deposit_group_path(id: current_user_group.id), class: "nav-link" %></li>
+      <li class="nav-item"> <a class="nav-link" href="#">サークルプロフィール(coming soon!)</a></li>
+      <%# <li class="nav-item"> <a class="nav-link" href="#">サークルカレンダー</a></li> %>
+      <li class="nav-item"> <a class="nav-link" href="#">統計情報(coming soon!)</a><%#= link_to '統計情報(未)', statistics_group_path(id: current_user_group.id), class: "nav-link" %></li>
+      <li class="nav-item"> <a class="nav-link" href="#">サークル収支(coming soon!)</a><%#= link_to 'デポジット(未)', deposit_group_path(id: current_user_group.id), class: "nav-link" %></li>
     </ul>
   </div>
 </li>
