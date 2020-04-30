@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_04_25_034123) do
+ActiveRecord::Schema.define(version: 2020_04_30_030458) do
 
   create_table "answers", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.integer "status", default: 10, null: false, comment: "回答のステータス"
@@ -128,6 +128,7 @@ ActiveRecord::Schema.define(version: 2020_04_25_034123) do
     t.integer "grade", comment: "学年"
     t.string "furigana", comment: "フリガナ"
     t.boolean "admin", default: false, null: false, comment: "管理者"
+    t.datetime "leave_at", comment: "サービス退会時刻"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["furigana"], name: "index_users_on_furigana"
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
