@@ -27,6 +27,10 @@ class UsersController < ApplicationController
     @my_groups = Group.my_general_groups(current_user)
   end
 
+  def withdraw
+
+  end
+
   def share
     group = Group.find(params[:group_id])
     users = []

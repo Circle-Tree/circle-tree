@@ -62,6 +62,7 @@ Rails.application.routes.draw do
     collection do
       get :join
       get :leave
+      get :withdraw
     end
     resources :transactions, only: %i[index]
     resources :transactions, only: %i[create], controller: 'users/transactions', param: :url_token do
