@@ -27,11 +27,31 @@ class TransactionNotificationMailer < ApplicationMailer
     end
   end
 
+  # イベント収支の個人の情報変更
+  def update_event_transaction(group:, transaction:, current_user:)
+    @transaction = transaction
+    event = @transaction.event
+    @user = @transaction.debtor
+    if @transaction.completed?
+      @message = "#{current_user.name}さんによって#{group.name}の#{event.name}のあなたの支払いが完了状態に変更されました。"
+      subject = "#{event.name}(#{group.name})の支払い完了のお知らせ"
+    else
+      @message = "#{current_user.name}さんが#{group.name}の#{event.name}のあなたの支払い情報を変更しました。"
+      subject = "#{event.name}(#{group.name})の支払い情報変更のお知らせ"
+    end
+    mail(
+      subject: subject,
+      to: @user.email
+    ) do |format|
+      format.text
+    end
+  end
+
   def new_lending_transaction(user:, current_user:)
     @user = user
     @current_user = current_user
     mail(
-      subject: '新規支払い情報の作成のお知らせ',
+      subject: '貸し借りメモの作成のお知らせ',
       to: @user.email
     ) do |format|
       format.text
@@ -42,7 +62,7 @@ class TransactionNotificationMailer < ApplicationMailer
     @user = user
     @current_user = current_user
     mail(
-      subject: '新規支払い情報の作成のお知らせ',
+      subject: '貸し借りメモの作成のお知らせ',
       to: @user.email
     ) do |format|
       format.text
@@ -53,7 +73,7 @@ class TransactionNotificationMailer < ApplicationMailer
     @user = user
     @current_user = current_user
     mail(
-      subject: '支払い情報の変更のお知らせ',
+      subject: '貸し借りメモの変更のお知らせ',
       to: @user.email
     ) do |format|
       format.text
@@ -64,7 +84,7 @@ class TransactionNotificationMailer < ApplicationMailer
     @user = user
     @current_user = current_user
     mail(
-      subject: '支払い情報の変更のお知らせ',
+      subject: '貸し借りメモの変更のお知らせ',
       to: @user.email
     ) do |format|
       format.text
