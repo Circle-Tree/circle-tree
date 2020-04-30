@@ -28,7 +28,6 @@ class UsersController < ApplicationController
   end
 
   def withdraw
-
   end
 
   def share
