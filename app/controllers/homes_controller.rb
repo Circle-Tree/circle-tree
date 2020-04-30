@@ -2,7 +2,7 @@
 
 class HomesController < ApplicationController
   before_action :authenticate_user!, only: %i[index faq]
-  before_action :confirm_definitive_registration
+  before_action :confirm_definitive_registration, only: %i[index faq]
   def index
     user = current_user
     @my_groups = Group.my_groups(user)
