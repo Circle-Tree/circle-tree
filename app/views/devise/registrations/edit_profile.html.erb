@@ -68,10 +68,10 @@
                     <h3>プロフィール設定</h3>
                     <section>
                       <%= form_for(resource, as: resource_name, url: users_update_profile_path(resource_name), html: { method: :put }) do |f| %>
-                        <%= render "devise/shared/error_messages", resource: resource %>
-                        <% if resource.pending_reconfirmation? %>
-                          <div>現在<<%= resource.unconfirmed_email %>>の確認待ちです。</div>
+                        <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
+                          <div>現在<%= resource.unconfirmed_email %>の確認待ちです。</div><br/>
                         <% end %>
+                        <%= render "devise/shared/error_messages", resource: resource %>
                         <div class="form-group row">
                           <%= f.label :name, "氏名", class: "col-sm-3 col-form-label" %>
                           <div class="col-sm-9">
