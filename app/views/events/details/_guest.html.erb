@@ -34,7 +34,7 @@
               </div>
 
               <% today = Time.current.midnight %>
-              <%= render 'events/details/details', group: @group, event: @event, today: today %>
+              <%= render 'events/details/details', group: @group, event: @event, today: today, is_my_group: @is_my_group %>
             </form>
           </div>
         </div>
