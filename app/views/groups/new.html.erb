@@ -1,0 +1,92 @@
+<% provide(:title, "サークル作成") %>
+<div class="sidebar-fixed container-scroller" style="background-color: rgb(44, 44, 44);">
+  <nav class="sidebar sidebar-offcanvas" id="sidebar" >
+    <%= render 'shared/logo'%>
+    <ul class="nav">
+      <%= render 'shared/sidebar/profile' %>
+      <%= render 'shared/sidebar/home' %>
+      <%= render 'shared/sidebar/my_page' %>
+      <% if current_user_group.present? %>
+        <%= render 'shared/sidebar/circle_page' %>
+        <%= render 'shared/sidebar/event' %>
+        <%= render 'shared/sidebar/circle_setting' %>
+      <% else %>
+        <li class="nav-item menu-items active">
+          <%= link_to new_group_path, class: "nav-link" do %>
+            <span class="menu-icon">
+              <i class="  mdi mdi-account-card-details" style="color: #FFF001"></i>
+            </span>
+            <span class="menu-title">サークル作成</span>
+          <% end %>
+        </li>
+      <% end %>
+      <%= render 'shared/sidebar/faq' %>
+      <%= render 'shared/sidebar/customize' %>
+      <%= render 'shared/sidebar/payment' %>
+      <%= render 'shared/sidebar/logout' %>
+    </ul>
+  </nav>
+  <div class="container-fluid page-body-wrapper">
+    <!-- partial:partials/_navbar.html -->
+    <%= render 'shared/topbar' %>
+    <!-- partial -->
+    <%= render 'shared/flash' %>
+    <div class="main-panel">
+      <div class="content-wrapper">
+        <div class="page-header">
+          <h3 class="page-title" style="color: black;"> サークル作成 </h3>
+        </div>
+        <div class="row">
+          <div class="col-md-12 grid-margin stretch-card">
+            <div class="card">
+              <div class="card-body" style="color: black;">
+                <h4 class="card-title">サークル作成</h4>
+                <p class="card-description">あなたのサークルを作成できます。</p>
+                <ul class="nav nav-tabs" role="tablist">
+                  <li class="nav-item" style="width: 100%;">
+                    <div class="nav-link active">サークル情報入力</div>
+                  </li>
+                </ul>
+                <%= form_with model: @group, url: groups_path, local: true do |f| %>
+                  <div class="tab-content">
+                    <div class="tab-pane fade show active">
+                      <h4>サークル情報</h4>
+                      <%= render 'shared/error_messages', model: f.object %>
+                      <%#= f.hidden_field :email, value: current_user.email %>
+                      <div class="form-group" style="margin-bottom: 80px;">
+                        <%= f.label :name, "グループ名", style: "margin-top: 20px;" %>
+                        <%= f.text_field :name, class: "form-control", placeholder: "サークル名を入力してください", style: "color: white;" %>
+                      </div>
+                      <div class="form-group" style="margin-bottom: 80px;">
+                        <%= f.label :email, "代表者メールアドレス", style: "margin-top: 20px;" %>
+                        <%= f.text_field :email, class: "form-control", placeholder: "代表者のメールアドレスを入力してください", style: "color: white;" %>
+                      </div>
+                      <div class="form-group">
+                        <%= f.label :group_number, "サークルID" %>
+                        <%= f.text_field :group_number, class: "form-control", placeholder: "サークル固有のIDを入力してください", style: "color: white;" %>
+                        <small class="form-text text-muted">サークルIDは文字数は6~25字、英数字(アルファベットと数字は必須)とアンダーバー(_)のみ使用できます。</small>
+                      </div>
+                    </div>
+                    <%= f.submit "作成！", class: "btn btn-primary btn-fw offset-md-10", data: { disable_with: '処理中' } %>
+                  </div>
+                <% end %>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- content-wrapper ends -->
+      <%= render 'shared/footer' %>
+    </div>
+    <!-- main-panel ends -->
+  </div>
+  <!-- page-body-wrapper ends -->
+</div>
+<style>
+  .field_with_errors {
+    display: contents;
+    /* input {
+        @extend .is-invalid;
+      } */
+    }
+</style>
