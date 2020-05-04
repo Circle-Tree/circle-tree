@@ -24,7 +24,7 @@ Rails.application.routes.draw do
   get 'privacy_policy', to: 'homes#privacy_policy', as: 'privacy_policy'
   get 'users/csv_template', to: 'users#csv_template', as: 'csv_template'
   # get 'groups/:group_id/users/share', to: 'users#share', as: 'share'
-  resources :groups, except: %i[new create] do
+  resources :groups do
 
     member do
       # get :deposit
