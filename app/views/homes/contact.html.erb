@@ -1,0 +1,46 @@
+<% content_for :pack_tag do %>
+  <%= stylesheet_pack_tag 'landing', media: 'all' %>
+  <%= javascript_pack_tag 'landing' %>
+<% end %>
+<body class="inner-page">
+  <!-- START #fh5co-header -->
+  <%= render 'homes/landing/header' %>
+
+  <div id="fh5co-hero" style="background-image: url(/images/slide_2.jpg);">
+    <div class="overlay"></div>
+    <a href="#fh5co-main" class="smoothscroll fh5co-arrow to-animate hero-animate-4"><i class="ti-angle-down"></i></a>
+    <!-- End fh5co-arrow -->
+    <div class="container">
+      <div class="col-md-12">
+        <div class="fh5co-hero-wrap">
+          <div class="fh5co-hero-intro">
+            <h1 class="to-animate hero-animate-1">お問い合わせ</h1>
+            <h2 class="to-animate hero-animate-2">どんなご意見、<br class="br-sp">ご質問も歓迎します。</h2>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="fh5co-main">
+    <div id="fh5co-contact">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-12">
+            <h2>お困りですか?</h2>
+            <h3>申し訳ございません。<br class="br-sp">お問い合わせページは<br class="br-sp">現在一時的に停止しております。</h3>
+            <p>ご意見ご質問がございましたら<br class="br-sp">お手数ではございますが <br class="br-sp"><a href="mailto:circletree.inquiry@gmail.com">circletree.inquiry@gmail.com</a> まで<br class="br-sp">ご連絡くださいませ。</p>
+            <p>お問い合わせの際は<br class="br-sp">お名前とEメールアドレスをご記入の上<br class="br-sp">お問い合わせください。</p>
+            <p>ご返信には数日かかる場合がございます。</p>
+            <%# <p><a href="https://twitter.com/circle_tree"></p> %>
+            <%# <p><a href="mailto:circletree.inquiry@gmail.com">circletree.inquiry@gmail.com</a></p> %>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- fh5co-contact -->
+  </div>
+  <!-- END fhtco-main -->
+
+  <%= render 'homes/landing/footer' %>
+</body>
