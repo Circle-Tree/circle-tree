@@ -3,7 +3,8 @@
 class GroupsController < ApplicationController
   before_action :authenticate_user!
   before_action :confirm_definitive_registration
-  before_action :set_group
+  before_action :set_group, except: %i[new create] # 一時的
+  before_action :executives_cannot_access, only: %i[new create] # 一時的
   before_action :cannot_access_to_other_groups, only: %i[edit update change inheritable_search inherit assignable_search assign resign deposit statistics]
   before_action :only_executives_can_access, only: %i[edit update change inheritable_search inherit assignable_search assign resign deposit statistics]
   before_action :cannot_resign, only: :resign
@@ -11,6 +12,24 @@ class GroupsController < ApplicationController
   def show
     events = Event.my_groups_events(current_user).order(start_date: :desc)
     @events = Kaminari.paginate_array(events).page(params[:page]).per(5)
+  end
+
+  def new
+    @group = Group.new
+  end
+
+  def create
+    @group = Group.new(group_params)
+    if @group.save
+      GroupUser.create!(
+        group_id: @group.id,
+        user_id: current_user.id,
+        role: GroupUser.roles[:executive]
+      )
+      flash_and_redirect(key: :success, message: "おめでとうございます！あなたは#{@group.name}の幹事となりました！", redirect_url: home_url)
+    else
+      render 'new'
+    end
   end
 
   def edit
@@ -135,5 +154,11 @@ class GroupsController < ApplicationController
 
       # flash[:danger] = '幹事しかアクセスできません'
       raise Forbidden
+    end
+
+    def executives_cannot_access
+      if current_user_group
+        flash_and_redirect(key: :danger, message: 'すでにグループの幹事である人は新しくグループを作成することができません', redirect_url: home_url)
+      end
     end
 end

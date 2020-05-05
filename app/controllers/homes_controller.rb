@@ -30,4 +30,7 @@ class HomesController < ApplicationController
 
   def terms_of_service
   end
+
+  def contact
+  end
 end

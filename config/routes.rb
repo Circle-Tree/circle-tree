@@ -22,9 +22,10 @@ Rails.application.routes.draw do
   get 'faq', to: 'homes#faq', as: 'faq'
   get 'terms_of_service', to: 'homes#terms_of_service', as: 'terms_of_service'
   get 'privacy_policy', to: 'homes#privacy_policy', as: 'privacy_policy'
+  get 'contact', to: 'homes#contact', as: 'contact'
   get 'users/csv_template', to: 'users#csv_template', as: 'csv_template'
   # get 'groups/:group_id/users/share', to: 'users#share', as: 'share'
-  resources :groups, except: %i[new create] do
+  resources :groups do
 
     member do
       # get :deposit
@@ -52,7 +53,7 @@ Rails.application.routes.draw do
         post :invite
       end
     end
-    resources :orders, only: %i[index]
+    # resources :orders, only: %i[index]
   end
 
   resource :users, only: [] do
@@ -108,17 +109,17 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :orders, only: [] do
-    collection do
-      get 'step1'
-      get 'step2'
-    end
-  end
-  post 'orders/submit', to: 'orders#submit'
-  post 'orders/paypal/create_payment', to: 'orders#paypal_create_payment', as: :paypal_create_payment
-  post 'orders/paypal/execute_payment', to: 'orders#paypal_execute_payment', as: :paypal_execute_payment
-  post 'orders/paypal/create_subscription', to: 'orders#paypal_create_subscription', as: :paypal_create_subscription
-  post 'orders/paypal/execute_subscription', to: 'orders#paypal_execute_subscription', as: :paypal_execute_subscription
+  # resources :orders, only: [] do
+  #   collection do
+  #     get 'step1'
+  #     get 'step2'
+  #   end
+  # end
+  # post 'orders/submit', to: 'orders#submit'
+  # post 'orders/paypal/create_payment', to: 'orders#paypal_create_payment', as: :paypal_create_payment
+  # post 'orders/paypal/execute_payment', to: 'orders#paypal_execute_payment', as: :paypal_execute_payment
+  # post 'orders/paypal/create_subscription', to: 'orders#paypal_create_subscription', as: :paypal_create_subscription
+  # post 'orders/paypal/execute_subscription', to: 'orders#paypal_execute_subscription', as: :paypal_execute_subscription
 
 
   ##################### ADMIN ################################
