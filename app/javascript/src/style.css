@@ -19126,7 +19126,8 @@ dl {
   padding: .75rem 1.5rem; }
   @media (max-width: 576px) {
     .nav-tabs .nav-link {
-      padding: 0.3rem 0.5rem; } }
+      padding: 0.3rem 0.5rem;
+      font-size: 1.8vw; } }
 
 .nav-tabs .nav-item:first-child .nav-link {
   border-radius: 4px 0 0 0; }
@@ -21711,7 +21712,7 @@ div.tagsinput {
       text-align: center; }
       @media (max-width: 767px) {
         .wizard > .steps > ul > li {
-          width: 50%; } }
+          width: 100%; } }
     .wizard > .steps a {
       display: block;
       width: auto;
