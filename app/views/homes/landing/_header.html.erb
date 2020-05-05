@@ -10,9 +10,9 @@
       <!-- START #fh5co-menu-wrap -->
       <nav id="fh5co-menu-wrap" role="navigation">
         <ul class="sf-menu" id="fh5co-primary-menu">
-          <li><%= link_to 'ログイン', new_user_session_path %></li>
-          <li><%= link_to '新規登録', new_user_registration_path %></li>
-          <li>
+          <li class="none"><%= link_to 'ログイン', new_user_session_path %></li>
+          <li class="none"><%= link_to '新規登録', new_user_registration_path %></li>
+          <li class="none">
             <a href="#" class="fh5co-sub-ddown">サービス紹介</a>
             <ul class="fh5co-sub-menu">
               <li><%= link_to 'メイン機能', root_path %></li>
@@ -20,7 +20,7 @@
               <li><%= link_to 'プライバシーポリシー', privacy_policy_path %></li>
             </ul>
           </li>
-          <li><%= link_to 'お問い合わせ', contact_path %></li>
+          <li class="none"><%= link_to 'お問い合わせ', contact_path %></li>
         </ul>
       </nav>
     <!-- </div> -->

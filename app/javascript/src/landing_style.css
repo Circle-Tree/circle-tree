@@ -1874,6 +1874,7 @@ a > img.fh5co-align-center {
 @media screen and (max-width: 770px){
   .br-pc { display:none; }
   .br-sp { display:block; }
+  .none{ display: none; }
 }
 
 
