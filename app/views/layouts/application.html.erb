@@ -14,15 +14,17 @@
       <!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
       <!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
       <%= yield(:pack_tag) %>
-      <%= render 'landing_meta' %>
+      <!--[if lt IE 9]>
+      <script src="js/respond.min.js"></script>
+      <![endif]-->
     <% else %>
       <%= stylesheet_pack_tag 'application', media: 'all' %>
       <%= javascript_pack_tag 'application2' %>
+      <!--[if lt IE 9]>
+        <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/r29/html5.min.js">
+        </script>
+      <![endif]-->
     <% end %>
-    <!--[if lt IE 9]>
-      <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/r29/html5.min.js">
-      </script>
-    <![endif]-->
   </head>
 
   <% if controller.controller_name == 'homes' && (controller.action_name == 'landing' || controller.action_name == 'privacy_policy' || controller.action_name == 'terms_of_service' || controller.action_name == 'contact') %>
