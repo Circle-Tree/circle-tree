@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_05_12_075749) do
+ActiveRecord::Schema.define(version: 2020_05_12_090126) do
 
   create_table "answers", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.integer "status", default: 10, null: false, comment: "回答のステータス"
@@ -21,6 +21,21 @@ ActiveRecord::Schema.define(version: 2020_05_12_075749) do
     t.integer "reason", default: 0, null: false
     t.index ["event_id"], name: "fk_rails_a4147b4302"
     t.index ["user_id", "event_id"], name: "index_answers_on_user_id_and_event_id", unique: true
+  end
+
+  create_table "choices", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.string "content", null: false, comment: "選択肢内容"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "chooses", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.bigint "questionnaire_id", null: false, comment: "アンケートID"
+    t.bigint "choice_id", comment: "選択肢ID"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["choice_id"], name: "index_chooses_on_choice_id"
+    t.index ["questionnaire_id"], name: "index_chooses_on_questionnaire_id"
   end
 
   create_table "events", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
@@ -100,6 +115,17 @@ ActiveRecord::Schema.define(version: 2020_05_12_075749) do
     t.index ["user_id"], name: "index_questionnaires_on_user_id"
   end
 
+  create_table "responses", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.bigint "questionnaire_id", null: false, comment: "アンケートID"
+    t.bigint "user_id", null: false, comment: "回答者"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.bigint "choice_id", null: false, comment: "選んだ選択肢"
+    t.index ["choice_id"], name: "index_responses_on_choice_id"
+    t.index ["questionnaire_id"], name: "index_responses_on_questionnaire_id"
+    t.index ["user_id"], name: "index_responses_on_user_id"
+  end
+
   create_table "transactions", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.datetime "deadline"
     t.integer "debt"
@@ -145,6 +171,8 @@ ActiveRecord::Schema.define(version: 2020_05_12_075749) do
 
   add_foreign_key "answers", "events"
   add_foreign_key "answers", "users"
+  add_foreign_key "chooses", "choices"
+  add_foreign_key "chooses", "questionnaires"
   add_foreign_key "events", "groups"
   add_foreign_key "events", "users"
   add_foreign_key "fees", "events"
@@ -152,6 +180,9 @@ ActiveRecord::Schema.define(version: 2020_05_12_075749) do
   add_foreign_key "group_users", "groups"
   add_foreign_key "group_users", "users"
   add_foreign_key "questionnaires", "users"
+  add_foreign_key "responses", "choices"
+  add_foreign_key "responses", "questionnaires"
+  add_foreign_key "responses", "users"
   add_foreign_key "transactions", "events"
   add_foreign_key "transactions", "groups"
   add_foreign_key "transactions", "users", column: "creditor_id"
