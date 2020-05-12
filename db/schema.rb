@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_04_30_030458) do
+ActiveRecord::Schema.define(version: 2020_05_12_075749) do
 
   create_table "answers", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.integer "status", default: 10, null: false, comment: "回答のステータス"
@@ -91,6 +91,15 @@ ActiveRecord::Schema.define(version: 2020_04_30_030458) do
     t.string "price_currency", default: "JPY", null: false
   end
 
+  create_table "questionnaires", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.text "content", null: false, comment: "アンケート内容"
+    t.bigint "user_id", null: false, comment: "質問した人"
+    t.integer "status", default: 0, null: false, comment: "アンケートの回答受付状態"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_questionnaires_on_user_id"
+  end
+
   create_table "transactions", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.datetime "deadline"
     t.integer "debt"
@@ -142,6 +151,7 @@ ActiveRecord::Schema.define(version: 2020_04_30_030458) do
   add_foreign_key "fees", "users", column: "creditor_id"
   add_foreign_key "group_users", "groups"
   add_foreign_key "group_users", "users"
+  add_foreign_key "questionnaires", "users"
   add_foreign_key "transactions", "events"
   add_foreign_key "transactions", "groups"
   add_foreign_key "transactions", "users", column: "creditor_id"
