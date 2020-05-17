@@ -6,6 +6,12 @@ class QuestionnairesController < ApplicationController
 
   def index
     @questionnaire = Questionnaire.new
+    @open_questionnaires = Questionnaire.where(status: Questionnaire.statuses[:open])
+    # @first_open_questionnaire = open_questionnaires.first
+    # @open_questionnaires = open_questionnaires - @first_open_questionnaire
+    @closed_questionnaires = Questionnaire.where(status: Questionnaire.statuses[:closed])
+    # @first_closed_questionnaire = closed_questionnaires.first
+    # @closed_questionnaires = closed_questionnaires - @first_closed_questionnaire
   end
 
   def create
