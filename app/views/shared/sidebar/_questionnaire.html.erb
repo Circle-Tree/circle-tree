@@ -1,5 +1,5 @@
 <li class="nav-item menu-items">
-  <a class="nav-link" href="#">
+  <%= link_to new_questionnaire_path, class: "nav-link" do %>
     <span class="menu-icon">
       <% if current_user_group.present? %>
         <i class="mdi mdi-lead-pencil" style="color: #0168b3;"></i>
@@ -7,6 +7,6 @@
         <i class="mdi mdi-lead-pencil" style="color: #6BE1E7;"></i>
       <% end %>
     </span>
-    <span class="menu-title">アンケート(近日公開)</span>
-  </a>
+    <span class="menu-title">アンケート</span>
+  <% end %>
 </li>
