@@ -109,7 +109,7 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :questionnaires
+  resources :questionnaires, only: %i[index create]
 
   # resources :orders, only: [] do
   #   collection do

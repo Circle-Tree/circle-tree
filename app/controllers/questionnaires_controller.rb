@@ -5,9 +5,6 @@ class QuestionnairesController < ApplicationController
   before_action :confirm_definitive_registration
 
   def index
-  end
-
-  def new
     @questionnaire = Questionnaire.new
   end
 
@@ -15,9 +12,9 @@ class QuestionnairesController < ApplicationController
     @questionnaire = Questionnaire.new(questionnaires_params)
     if @questionnaire.save
       QuestionnaireSlackNotification.created_questionnaire_notify(title: @questionnaire&.title, message: @questionnaire&.content)
-      flash_and_redirect(key: :success, message: 'アンケートが送信されました！', redirect_url: home_url)
+      flash_and_redirect(key: :success, message: 'アンケートが送信されました！', redirect_url: questionnaires_url)
     else
-      render 'new'
+      flash_and_render(key: :danger, message: '間違いがあります。', action: 'index')
     end
   end
 
