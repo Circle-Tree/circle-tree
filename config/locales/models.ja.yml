@@ -8,6 +8,7 @@ ja:
       transaction: 収支 # 変更可能性あり
       fee: 代金
       questionnaire: アンケート
+      choice: 選択肢
     attributes:
       user:
         email: メールアドレス
@@ -62,6 +63,8 @@ ja:
         title: タイトル
         content: 選択肢
         user: ユーザー
+      choice:
+        content: 選択肢
   enums:
     answer:
       reason:
