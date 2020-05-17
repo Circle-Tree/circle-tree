@@ -1,0 +1,108 @@
+<% provide(:title, "アンケート作成") %>
+<div class="sidebar-fixed container-scroller" style="background-color: rgb(44, 44, 44);">
+  <!-- partial:partials/_sidebar.html -->
+  <nav class="sidebar sidebar-offcanvas" id="sidebar" >
+    <%= render 'shared/logo'%>
+    <ul class="nav">
+      <%= render 'shared/sidebar/profile' %>
+      <%= render 'shared/sidebar/home' %>
+      <%= render 'shared/sidebar/my_page' %>
+      <% if current_user_group.present? %>
+        <%= render 'shared/sidebar/circle_page' %>
+        <%= render 'shared/sidebar/event' %>
+        <%= render 'shared/sidebar/circle_setting' %>
+      <% else %>
+        <%= render 'shared/sidebar/new_circle' %>
+      <% end %>
+      <%= render 'shared/sidebar/faq' %>
+      <li class="nav-item menu-items active">
+        <%= link_to new_questionnaire_path, class: "nav-link active" do %>
+          <span class="menu-icon">
+            <% if current_user_group.present? %>
+              <i class="mdi mdi-lead-pencil" style="color: #0168b3;"></i>
+            <% else %>
+              <i class="mdi mdi-lead-pencil" style="color: #6BE1E7;"></i>
+            <% end %>
+          </span>
+          <span class="menu-title">アンケート</span>
+        <% end %>
+      </li>
+      <%= render 'shared/sidebar/customize' %>
+      <%= render 'shared/sidebar/logout' %><li class="nav-item menu-items">
+    </ul>
+  </nav>
+  <!-- partial -->
+  <div class="container-fluid page-body-wrapper">
+    <!-- partial:partials/_navbar.html -->
+    <%= render 'shared/topbar' %>
+    <!-- partial -->
+    <div class="main-panel">
+      <div class="content-wrapper">
+        <div class="page-header">
+          <h3 class="page-title"> アンケート作成 </h3>
+        </div>
+        <div class="row" style="color: black;">
+          <div class="col-12">
+            <div class="row">
+              <div class="col-lg-4">
+                <div class="card" style="margin-bottom: 20px;">
+                  <div class="card-body" style="background-color: #57cecd;">
+                    <a href="">
+                      <div class="container-fluid py-2" style="background-color: white;margin-bottom: 20px; ">
+                        <p class="mb-0 text-black">最新の質問</p>
+                      </div>
+                    </a>
+                    <a href="">
+                      <div class="container-fluid py-2" style="background-color: white; margin-bottom: 20px; ">
+                        <p class="mb-0 text-black">回答受付中</p>
+                      </div>
+                    </a>
+
+                    <%# <a href="">
+                      <div class="container-fluid py-2" style="background-color: white; margin-bottom: 20px; ">
+                        <p class="mb-0 text-black">ジャンル1</p>
+                      </div>
+                    </a>
+                    <a href="">
+                      <div class="container-fluid py-2" style="background-color: white; margin-bottom: 20px; ">
+                        <p class="mb-0 text-black">ジャンル2</p>
+                      </div>
+                    </a> %>
+                  </div>
+                </div>
+
+              </div>
+              <div class="col-lg-8">
+                <%= form_with model: @questionnaire, url: questionnaires_path, local: true do |f| %>
+                  <%= render 'shared/error_messages', model: f.object %>
+                  <div class="card">
+                    <div class="card-body" style="background-color: #57cecd;">
+                      <h3>アンケートの内容</h3>
+                      <%= f.hidden_field :user_id, value: current_user.id %>
+                      <div class="form-group">
+                        <%= f.text_field :title, class: "form-control", style: "color: black; background-color: white;", placeholder: "タイトル" %>
+                      </div>
+                      <%= f.text_area :content, class: "form-control", id: "exampleTextarea1", rows: "16", style: "color: black; background-color: white;", placeholder: "アンケートの選択肢" %>
+                      <%# <small>(未定)</small> %>
+                      <div class="row">
+                        <%= button_tag type: "submit", class: "btn btn-primary btn-icon-text right-bottom", style: "margin-right: 20px;margin-left: 30px; margin-top: 10px;", data: { disable_with: '送信中' } do %>
+                          アンケートを送信する！
+                        <% end %>
+                      </div>
+                    </div>
+                  </div>
+                <% end %>
+              </div>
+            </div>
+          </div> <!-- sub col -->
+        </div><!-- parent row -->
+      </div>
+      <!-- content-wrapper ends -->
+      <!-- partial:../../partials/_footer.html -->
+      <%= render 'shared/footer' %>
+      <!-- partial -->
+    </div>
+    <!-- main-panel ends -->
+  </div>
+  <!-- page-body-wrapper ends -->
+</div>
