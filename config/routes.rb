@@ -127,7 +127,9 @@ Rails.application.routes.draw do
   ##################### ADMIN ################################
   namespace :admin do
     get 'homes/index'
-    resources :questionnaires
+    resources :questionnaires do
+      resources :chooses, only: %i[index create destroy]
+    end
     resources :choices
   end
 
