@@ -109,6 +109,8 @@ Rails.application.routes.draw do
     end
   end
 
+  resources :questionnaires
+
   # resources :orders, only: [] do
   #   collection do
   #     get 'step1'
