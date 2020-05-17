@@ -128,6 +128,7 @@ Rails.application.routes.draw do
   namespace :admin do
     get 'homes/index'
     resources :questionnaires
+    resources :choices
   end
 
   # Basic認証時のユーザー名とパスワードを設定する
