@@ -54,6 +54,13 @@ class ApplicationController < ActionController::Base
       raise Forbidden
     end
 
+    def non_admin_user_cannot_access
+      return if current_user.admin?
+
+      flash[:danger] = '不正な操作です'
+      raise Forbidden
+    end
+
     # ログイン後のリダイレクト先
     def after_sign_in_path_for(resource_or_scope)
       if current_user.admin?
