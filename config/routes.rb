@@ -127,10 +127,10 @@ Rails.application.routes.draw do
   ##################### ADMIN ################################
   namespace :admin do
     get 'homes/index'
-    resources :questionnaires do
+    resources :questionnaires, only: %i[index new create edit update destroy] do
       resources :chooses, only: %i[index create destroy]
     end
-    resources :choices
+    resources :choices, only: %i[index new create edit update destroy]
   end
 
   # Basic認証時のユーザー名とパスワードを設定する
