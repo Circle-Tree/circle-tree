@@ -1,0 +1,18 @@
+<%= render 'admin/shared/links' %>
+<%= form_with model: @choice, url: admin_choice_path(id: @choice.id), local: true do |f| %>
+  <%= render 'shared/error_messages', model: f.object %>
+  <div class="card">
+    <div class="card-body" style="background-color: #57cecd;">
+      <h3>選択肢変更する</h3>
+      <div class="form-group">
+        <%= f.label :content, "選択肢", class: "col-form-label" %>
+        <%= f.text_field :content, class: "form-control", style: "color: black; background-color: white;", placeholder: "選択肢" %>
+      </div>
+      <div class="row">
+        <%= button_tag type: "submit", class: "btn btn-primary btn-icon-text right-bottom", style: "margin-right: 20px;margin-left: 30px; margin-top: 10px;", data: { disable_with: '変更中' } do %>
+          選択肢を変更する！
+        <% end %>
+      </div>
+    </div>
+  </div>
+<% end %>
