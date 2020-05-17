@@ -1,0 +1,66 @@
+<%= link_to 'ホーム', admin_homes_index_path %><br/>
+<%= link_to 'アンケート作成', new_admin_questionnaire_path %><br/>
+<%= link_to 'アンケート一覧', admin_questionnaires_path %><br/>
+<div class="content-wrapper">
+  <div class="page-header">
+    <h3 class="page-title"> アンケート管理 </h3>
+  </div>
+  <div class="row">
+    <h4 class="page-title"> 管理者作成 </h4>
+    <div class="col-12">
+      <div class="table-responsive">
+        <table id="order-listing" class="table">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>タイトル</th>
+              <th>内容</th>
+              <th>変更</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% @admin_questionnaires.each do |questionnaire| %>
+              <tr>
+                <td><%= questionnaire.id %></td>
+                <td><%= questionnaire.title %></td>
+                <td><%#= questionnaire.content %></td>
+                <td><%= link_to '変更', edit_admin_questionnaire_path(id: questionnaire.id), class: 'btn btn-primary' %></td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+        <%#= paginate @events %>
+      </div>
+    </div>
+  </div>
+  <br/>
+  <div class="row">
+    <h4 class="page-title"> 管理者以外が作成 </h4>
+    <div class="col-12">
+      <div class="table-responsive">
+        <table id="order-listing" class="table">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>タイトル</th>
+              <th>内容</th>
+              <th>ユーザー</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% @non_admin_questionnaires.each do |questionnaire| %>
+              <tr>
+                <td><%= questionnaire.id %></td>
+                <td><%= questionnaire.title %></td>
+                <td><%= questionnaire.content %></td>
+                <% user = questionnaire.user %>
+                <td><%= user.name %>（<%= user.id %>）</td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+        <%#= paginate @events %>
+      </div>
+    </div>
+  </div>
+</div>
