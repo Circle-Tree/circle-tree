@@ -1,0 +1,36 @@
+<%= render 'admin/shared/links' %>
+<div class="content-wrapper">
+  <div class="page-header">
+    <h3 class="page-title"> 選択肢管理 </h3>
+  </div>
+  <div class="row">
+    <div class="col-12">
+      <div class="table-responsive">
+        <table id="order-listing" class="table">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>内容</th>
+              <th>使用されているアンケート</th>
+              <th>変更</th>
+              <th>削除</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% @choices.each do |choice| %>
+              <tr>
+                <td><%= choice.id %></td>
+                <td><%= choice.content %></td>
+                <%# ids = choice.chooses.ids %>
+                <td><%= choice.chooses.ids %></td>
+                <td><%= link_to '変更', edit_admin_choice_path(id: choice.id), class: 'btn btn-primary' %></td>
+                <td><%= link_to '削除', admin_choice_path(id: choice.id), method: :delete, class: 'btn btn-danger', data: { confirm: '本当に削除しますか？' } %></td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+        <%#= paginate @events %>
+      </div>
+    </div>
+  </div>
+</div>

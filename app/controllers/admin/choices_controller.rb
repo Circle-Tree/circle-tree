@@ -6,6 +6,7 @@ class Admin::ChoicesController < ApplicationController
   before_action :non_admin_user_cannot_access
 
   def index
+    @choices = Choice.all
   end
 
   def new
