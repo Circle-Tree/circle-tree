@@ -25,6 +25,11 @@ class QuestionnairesController < ApplicationController
     end
   end
 
+  def show
+    @choices = @questionnaire.choices
+    set_form_path_and_response
+  end
+
   private
 
     def questionnaires_params

@@ -1,7 +1,7 @@
 <% provide(:title, "アンケートページ") %>
 <div class="sidebar-fixed container-scroller" style="background-color: rgb(44, 44, 44);">
   <!-- partial:partials/_sidebar.html -->
-  <nav class="sidebar sidebar-offcanvas" id="sidebar" >
+  <nav class="sidebar sidebar-offcanvas" id="sidebar">
     <%= render 'shared/logo'%>
     <ul class="nav">
       <%= render 'shared/sidebar/profile' %>
@@ -51,7 +51,7 @@
                     <div class="card-body" style="background-color: #ffffff; color: #000;">
                       <ul class="nav nav-tabs" role="tablist" style="border-color: #57cecd;">
                         <li class="nav-item">
-                          <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home-1" role="tab" aria-controls="home" aria-selected="true">最新の質問</a>
+                          <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home-1" role="tab" aria-controls="home" aria-selected="true">回答終了</a>
                         </li>
                         <li class="nav-item">
                           <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile-1" role="tab" aria-controls="profile" aria-selected="false">回答受付中</a>
@@ -78,7 +78,7 @@
                                       </h5>
                                     </div>
                                     <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion-1">
-                                      <div class="card-body"> 本文
+                                      <div class="card-body"> <%= questionnaire.content %>
                                         <%= link_to '詳細を見る！', questionnaire_path(id: questionnaire.id), class: "btn btn-rounded right-bottom", style: "background-color:#57cecd;"%>
                                       </div>
                                     </div>
@@ -105,8 +105,12 @@
                                       </h5>
                                     </div>
                                     <div id="collapseTwo-1" class="collapse show" aria-labelledby="headingTwo-1" data-parent="#accordion-2">
-                                      <div class="card-body"> 本文
-                                        <%= link_to '詳細を見る！', questionnaire_path(id: questionnaire.id), class: "btn btn-rounded right-bottom", style: "background-color:#57cecd;"%>
+                                      <div class="card-body"> <%= questionnaire.content %>
+                                        <% if questionnaire.responses.find_by(user_id: current_user.id).blank? %>
+                                          <%= link_to '回答する', questionnaire_path(id: questionnaire.id), class: "btn btn-rounded right-bottom", style: "background-color:#57cecd;" %>
+                                        <% else %>
+                                          <%= link_to '回答済み', questionnaire_path(id: questionnaire.id), class: "btn btn-warning btn-rounded right-bottom" %>
+                                        <% end %>
                                       </div>
                                     </div>
                                   </div>

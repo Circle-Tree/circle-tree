@@ -4,6 +4,7 @@ class Questionnaire < ApplicationRecord
   belongs_to :user
   has_many :chooses, dependent: :destroy
   has_many :choices, through: :chooses
+  has_many :responses
 
   validates :title, presence: true
   validates :title, length: { maximum: 128 }, allow_blank: true
