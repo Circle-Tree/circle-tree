@@ -1,0 +1,144 @@
+<% if @questionnaire.open? %>
+  <% provide(:title, "アンケート回答") %>
+<% else @questionnaire.closed? %>
+  <% provide(:title, "アンケート結果") %>
+<% end %>
+<div class="sidebar-fixed container-scroller" style="background-color: rgb(44, 44, 44);">
+  <!-- partial:partials/_sidebar.html -->
+  <nav class="sidebar sidebar-offcanvas" id="sidebar" >
+    <%= render 'shared/logo'%>
+    <ul class="nav">
+      <%= render 'shared/sidebar/profile' %>
+      <%= render 'shared/sidebar/home' %>
+      <%= render 'shared/sidebar/my_page' %>
+      <% if current_user_group.present? %>
+        <%= render 'shared/sidebar/circle_page' %>
+        <%= render 'shared/sidebar/event' %>
+        <%= render 'shared/sidebar/circle_setting' %>
+      <% else %>
+        <%= render 'shared/sidebar/new_circle' %>
+      <% end %>
+      <%= render 'shared/sidebar/faq' %>
+      <li class="nav-item menu-items active">
+        <%= link_to questionnaires_path, class: "nav-link active" do %>
+          <span class="menu-icon">
+            <% if current_user_group.present? %>
+              <i class="mdi mdi-lead-pencil" style="color: #0168b3;"></i>
+            <% else %>
+              <i class="mdi mdi-lead-pencil" style="color: #6BE1E7;"></i>
+            <% end %>
+          </span>
+          <span class="menu-title">アンケート</span>
+        <% end %>
+      </li>
+      <%= render 'shared/sidebar/customize' %>
+      <%= render 'shared/sidebar/logout' %><li class="nav-item menu-items">
+    </ul>
+  </nav>
+  <!-- partial -->
+  <div class="container-fluid page-body-wrapper">
+    <!-- partial:partials/_navbar.html -->
+    <%= render 'shared/topbar' %>
+    <!-- partial -->
+    <div class="main-panel">
+      <div class="content-wrapper">
+        <div class="page-header">
+          <% if @questionnaire.open? %>
+            <h3 class="page-title" style="color: black;">アンケート回答</h3>
+          <% else @questionnaire.closed? %>
+            <h3 class="page-title" style="color: black;">アンケート結果</h3>
+          <% end %>
+        </div>
+        <%= render 'shared/flash' %>
+        <div class="row">
+          <div class="col-lg-12">
+            <div class="card" style="margin-bottom: 20px;">
+              <div class="card-body" style="color: black; background-color: #57cecd;">
+                <div class="card">
+                  <div class="card-body" style="height: 350px; background-color: white; color: black;">
+                    <div>
+                      <p class="center-block-inner"  style="font-size: 20px; ">
+                        <%= @questionnaire.content %>
+                      </p>
+                    </div>
+                  </div>
+                </div>
+                <% if @questionnaire.open? %>
+                  <%= form_with model: @response, url: @path, local: true do |f| %>
+                    <ul>
+                      <% f.object.errors.full_messages.each do |message| %>
+                        <li style='color:red;'><%= message %></li>
+                      <% end %>
+                    </ul>
+                    <%= f.hidden_field :questionnaire_id, value: @questionnaire.id %>
+                    <%= f.hidden_field :user_id, value: current_user.id %>
+                    <div class="card" style="margin-top: 20px;">
+                      <div class="card-body">
+                        <% @choices.each do |choice| %>
+                          <label><%= f.radio_button :choice_id, choice.id %><%= choice.content %></label><br>
+                        <% end %>
+                      </div>
+                    </div>
+
+                    <div class="form-group" style="margin-top: 20px; border-style: 0;">
+                      <textarea class="form-control" id="exampleTextarea1" rows="4" style="background-color: white; color: #000;">
+                      </textarea>
+                      <label style="margin-top: 10px;" for="exampleTextarea1">コメント</label>
+                    </div>
+
+                    <div class="row">
+                      <%= button_tag type: "submit", class: "btn btn-primary btn-icon-text col-md-3", style: "margin-right: 30px;margin-left: 30px; margin-top: 10px;", data: { disable_with: '送信中' } do %>
+                        回答を送信する！
+                      <% end %>
+                    </div>
+                  <% end %>
+                <% else %>
+                  <div class="row">
+                    <div class="col-lg-6">
+                      <div class="card" style="margin-top: 20px;">
+                        <div class="card-body">
+                          <ul>
+                            <% @choices.each do |choice| %>
+                              <li><%= choice.content %></li>
+                            <% end %>
+                          </ul>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-lg-6 grid-margin stretch-card">
+                      <div class="card" style="margin-top: 20px;">
+                        <div class="card-body">
+                          <h4 class="card-title">Bar chart</h4>
+                          <canvas id="barChart" style="height:230px"></canvas>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-lg-12">
+                    <div class="card" style="margin-top: 0px;">
+                      <div class="card-body">
+                        <ul>
+                          <li>コメント１</li>
+                          <li>コメント２</li>
+                          <li>コメント３</li>
+                          <li>コメント４</li>
+                          <li>コメント５</li>
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                <% end %>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- content-wrapper ends -->
+      <!-- partial:partials/_footer.html -->
+      <%= render 'shared/footer' %>
+      <!-- partial -->
+    </div>
+    <!-- main-panel ends -->
+  </div>
+  <!-- page-body-wrapper ends -->
+</div>

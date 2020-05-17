@@ -1,0 +1,81 @@
+<%= render 'admin/shared/links' %>
+<div class="content-wrapper">
+  <div class="page-header">
+    <h3 class="page-title"> アンケート管理 </h3>
+  </div>
+  <div class="row">
+    <h4 class="page-title"> 管理者が作成 </h4>
+    <div class="col-12">
+      <div class="table-responsive">
+        <table id="order-listing" class="table">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>タイトル</th>
+              <th>選択肢</th>
+              <th>状態</th>
+              <th>変更</th>
+              <th>削除</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% @admin_questionnaires.each do |questionnaire| %>
+              <tr>
+                <td><%= questionnaire.id %></td>
+                <td><%= questionnaire.title %></td>
+                <td><%= link_to '管理', admin_questionnaire_chooses_path(questionnaire_id: questionnaire.id), class: 'btn btn-info' %></td>
+                <td>
+                  <% status = questionnaire.status %>
+                  <% if questionnaire.created? %>
+                    <button class='btn btn-secondary'><%= t("enums.questionnaire.status.#{status}") %></button>
+                  <% elsif questionnaire.open? %>
+                    <button class='btn btn-success'>受付中</button>
+                  <% else %>
+                    <button class='btn btn-warning'>受付終了</button>
+                  <% end %>
+                </td>
+                <td><%= link_to '変更', edit_admin_questionnaire_path(id: questionnaire.id), class: 'btn btn-primary' %></td>
+                <td>
+                  <% unless questionnaire.open? %>
+                    <%= link_to '削除', admin_questionnaire_path(id: questionnaire.id), method: :delete, class: 'btn btn-danger', data: { confirm: '本当に削除しますか？' } %>
+                  <% end %>
+                </td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+        <%#= paginate @events %>
+      </div>
+    </div>
+  </div>
+  <br/>
+  <div class="row">
+    <h4 class="page-title"> 管理者以外が作成 </h4>
+    <div class="col-12">
+      <div class="table-responsive">
+        <table id="order-listing" class="table">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>タイトル</th>
+              <th>内容</th>
+              <th>ユーザー</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% @non_admin_questionnaires.each do |questionnaire| %>
+              <tr>
+                <td><%= questionnaire.id %></td>
+                <td><%= questionnaire.title %></td>
+                <td><%= questionnaire.content %></td>
+                <% user = questionnaire.user %>
+                <td><%= user.name %>（<%= user.id %>）</td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+        <%#= paginate @events %>
+      </div>
+    </div>
+  </div>
+</div>

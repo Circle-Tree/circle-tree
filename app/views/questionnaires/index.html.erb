@@ -1,0 +1,161 @@
+<% provide(:title, "アンケートページ") %>
+<div class="sidebar-fixed container-scroller" style="background-color: rgb(44, 44, 44);">
+  <!-- partial:partials/_sidebar.html -->
+  <nav class="sidebar sidebar-offcanvas" id="sidebar">
+    <%= render 'shared/logo'%>
+    <ul class="nav">
+      <%= render 'shared/sidebar/profile' %>
+      <%= render 'shared/sidebar/home' %>
+      <%= render 'shared/sidebar/my_page' %>
+      <% if current_user_group.present? %>
+        <%= render 'shared/sidebar/circle_page' %>
+        <%= render 'shared/sidebar/event' %>
+        <%= render 'shared/sidebar/circle_setting' %>
+      <% else %>
+        <%= render 'shared/sidebar/new_circle' %>
+      <% end %>
+      <%= render 'shared/sidebar/faq' %>
+      <li class="nav-item menu-items active">
+        <%= link_to questionnaires_path, class: "nav-link active" do %>
+          <span class="menu-icon">
+            <% if current_user_group.present? %>
+              <i class="mdi mdi-lead-pencil" style="color: #0168b3;"></i>
+            <% else %>
+              <i class="mdi mdi-lead-pencil" style="color: #6BE1E7;"></i>
+            <% end %>
+          </span>
+          <span class="menu-title">アンケート</span>
+        <% end %>
+      </li>
+      <%= render 'shared/sidebar/customize' %>
+      <%= render 'shared/sidebar/logout' %><li class="nav-item menu-items">
+    </ul>
+  </nav>
+  <!-- partial -->
+  <div class="container-fluid page-body-wrapper">
+    <!-- partial:partials/_navbar.html -->
+    <%= render 'shared/topbar' %>
+    <!-- partial -->
+    <div class="main-panel">
+      <div class="content-wrapper">
+        <div class="page-header">
+          <h3 class="page-title"> アンケートページ </h3>
+        </div>
+        <%= render 'shared/flash' %>
+        <div class="row" style="color: black;">
+          <div class="col-12">
+            <div class="row">
+              <div class="col-lg-12">
+                <div class="grid-margin stretch-card">
+                  <div class="card">
+                    <div class="card-body" style="background-color: #ffffff; color: #000;">
+                      <ul class="nav nav-tabs" role="tablist" style="border-color: #57cecd;">
+                        <li class="nav-item">
+                          <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home-1" role="tab" aria-controls="home" aria-selected="true">回答終了</a>
+                        </li>
+                        <li class="nav-item">
+                          <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile-1" role="tab" aria-controls="profile" aria-selected="false">回答受付中</a>
+                        </li>
+                        <li class="nav-item">
+                          <a class="nav-link" id="contact-tab" data-toggle="tab" href="#contact-1" role="tab" aria-controls="profile2" aria-selected="false">アンケート作成</a>
+                        </li>
+                      </ul>
+                      <div class="tab-content" style="background-color: #57cecd; border-color: #57cecd;">
+                        <div class="tab-pane fade show active" id="home-1" role="tabpanel" aria-labelledby="home-tab">
+                          <section>
+                            <div class="faq-section" >
+                              <div class="container-fluid py-2" style="background-color: white; ">
+                                <p class="mb-0 text-black">回答終了</p>
+                              </div>
+                              <div id="accordion-1" class="accordion">
+                                <% @closed_questionnaires.each do |questionnaire| %>
+                                  <div class="card" style="border-color: black; color: black;">
+                                    <div class="card-header" id="headingOne">
+                                      <h5 class="mb-0" style="display: inline-block;">
+                                        <a data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne" style="color:#237ef5;">
+                                          <%= questionnaire.title.truncate(32) %>
+                                        </a>
+                                      </h5>
+                                    </div>
+                                    <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion-1">
+                                      <div class="card-body"> <%= questionnaire.content %>
+                                        <%= link_to '詳細を見る！', questionnaire_path(id: questionnaire.id), class: "btn btn-rounded right-bottom", style: "background-color:#57cecd;"%>
+                                      </div>
+                                    </div>
+                                  </div>
+                                <% end %>
+                              </div>
+                            </div>
+                          </section>
+                        </div>
+                        <div class="tab-pane fade" id="profile-1" role="tabpanel" aria-labelledby="profile-tab">
+                          <section>
+                            <div class="faq-section" >
+                              <div class="container-fluid py-2" style="background-color: white; ">
+                                <p class="mb-0 text-black">回答受付中</p>
+                              </div>
+                              <div id="accordion-2" class="accordion">
+                                <% @open_questionnaires.each do |questionnaire| %>
+                                  <div class="card" style="border-color: black; color: black;">
+                                    <div class="card-header" id="headingTwo-1">
+                                      <h5 class="mb-0">
+                                        <a data-toggle="collapse" data-target="#collapseTwo-1" aria-expanded="false" aria-controls="collapseTwo-1" style="color:#237ef5;">
+                                          <%= questionnaire.title.truncate(32) %>
+                                        </a>
+                                      </h5>
+                                    </div>
+                                    <div id="collapseTwo-1" class="collapse show" aria-labelledby="headingTwo-1" data-parent="#accordion-2">
+                                      <div class="card-body"> <%= questionnaire.content %>
+                                        <% if questionnaire.responses.find_by(user_id: current_user.id).blank? %>
+                                          <%= link_to '回答する', questionnaire_path(id: questionnaire.id), class: "btn btn-rounded right-bottom", style: "background-color:#57cecd;" %>
+                                        <% else %>
+                                          <%= link_to '回答済み', questionnaire_path(id: questionnaire.id), class: "btn btn-warning btn-rounded right-bottom" %>
+                                        <% end %>
+                                      </div>
+                                    </div>
+                                  </div>
+                                <% end %>
+                              </div>
+                            </div>
+                          </section>
+                        </div>
+                        <div class="tab-pane fade" id="contact-1" role="tabpanel" aria-labelledby="contact-tab">
+                          <%= form_with model: @questionnaire, url: questionnaires_path, local: true do |f| %>
+                            <ul>
+                              <% f.object.errors.full_messages.each do |message| %>
+                                <li style='color:red;'><%= message %></li>
+                              <% end %>
+                            </ul>
+                            <%= f.hidden_field :user_id, value: current_user.id %>
+                            <section>
+                              <div class="form-group">
+                                <%= f.text_field :title, class: "form-control", style: "color: black; background-color: white;", placeholder: "タイトル" %>
+                              </div>
+                              <%= f.text_area :content, class: "form-control", id: "exampleTextarea1", rows: "16", style: "color: black; background-color: white;",
+                                                        placeholder: "アンケートの選択肢や詳細などを自由に書いてください。具体的な内容であるほど、採用される可能性が高くなります。" %>
+                              <%# <small>(未定)</small> %>
+                              <div class="row">
+                                <%= button_tag type: "submit", class: "btn btn-primary btn-icon-text col-md-3", style: "margin-right: 30px;margin-left: 30px; margin-top: 10px;", data: { disable_with: '送信中' } do %>
+                                  アンケートを送信する！
+                                <% end %>
+                              </div>
+                            </section>
+                          <% end %>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div> <!-- sub col -->
+        </div><!-- parent row -->
+      </div>
+      <!-- content-wrapper ends -->
+      <%= render 'shared/footer' %>
+      <!-- partial -->
+    </div>
+    <!-- main-panel ends -->
+  </div>
+  <!-- page-body-wrapper ends -->
+</div>

@@ -1,0 +1,66 @@
+<%= render 'admin/shared/links' %>
+<div class="content-wrapper">
+  <div class="page-header">
+    <h3 class="page-title"> 「<%= @questionnaire.title %>」の選択肢管理 </h3>
+  </div>
+  <% if @questionnaire.created? %>
+    <% if @unselected_choices.any? %>
+      <%= form_with model: @choose, url: admin_questionnaire_chooses_path(questionnaire_id: @questionnaire.id), local: true do |f| %>
+          <%= render 'shared/error_messages', model: f.object %>
+        <%= f.hidden_field :questionnaire_id, value: @questionnaire.id %>
+        <div class="card">
+          <div class="card-body" style="background-color: #57cecd;">
+            <h3>アンケートに選択肢追加</h3>
+            <div class="form-group">
+              <%= f.select :choice_id, @unselected_choices.map { |choice| [choice.content, choice.id] }, { include_blank: '選択してください' },
+                                        { class: "form-control", style: "color: black; background-color: white;", data: { confirm: '本当に追加しますか？' } } %>
+            </div>
+            <div class="row">
+              <%= button_tag type: "submit", class: "btn btn-primary btn-icon-text right-bottom", style: "margin-right: 20px;margin-left: 30px; margin-top: 10px;", data: { disable_with: '送信中' } do %>
+                追加！
+              <% end %>
+            </div>
+          </div>
+        </div>
+      <% end %>
+    <% else %>
+      <div class="card">
+        <div class="card-body" style="background-color: #57cecd;">
+          <h3>アンケートに選択肢追加</h3>
+          <p>追加できる選択肢はありません。</p>
+        </div>
+      </div>
+    <% end %>
+  <% end %>
+  <div class="row">
+    <h3 class="page-title"> 選択肢一覧 </h3>
+    <div class="col-12">
+      <div class="table-responsive">
+        <table id="order-listing" class="table">
+          <thead>
+            <tr>
+              <th>選択肢ID</th>
+              <th>選択肢</th>
+              <th>アンケートの選択肢から削除</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% @chooses.each do |choose| %>
+              <% choice = choose.choice %>
+              <tr>
+                <td><%= choice.id %></td>
+                <td><%= choice.content %></td>
+                <td>
+                  <% if @questionnaire.created? %>
+                    <%= link_to '削除', admin_questionnaire_choose_path(questionnaire_id: @questionnaire.id, id: choose.id), method: :delete, class: 'btn btn-danger', data: { confirm: '本当に削除しますか？' } %>
+                  <% end %>
+                </td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+        <%#= paginate @events %>
+      </div>
+    </div>
+  </div>
+</div>

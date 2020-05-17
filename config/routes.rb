@@ -109,6 +109,10 @@ Rails.application.routes.draw do
     end
   end
 
+  resources :questionnaires, only: %i[index create show] do
+    resources :responses, only: %i[create update]
+  end
+
   # resources :orders, only: [] do
   #   collection do
   #     get 'step1'
@@ -125,6 +129,10 @@ Rails.application.routes.draw do
   ##################### ADMIN ################################
   namespace :admin do
     get 'homes/index'
+    resources :questionnaires, only: %i[index new create edit update destroy] do
+      resources :chooses, only: %i[index create destroy]
+    end
+    resources :choices, only: %i[index new create edit update destroy]
   end
 
   # Basic認証時のユーザー名とパスワードを設定する

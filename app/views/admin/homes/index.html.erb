@@ -1,11 +1,9 @@
-<h3>adminページ</h3>
-<%= current_user.name %><br>
 <%= link_to 'sidekiq管理画面', sidekiq_web_path %><br>
 <a href='https://dashboard.heroku.com/apps/circle-tree'>Heroku Dashboard</a><br/>
-<a href='https://papertrailapp.com/dashboard'>Papertrail Dashboard</a><br>
+<a href='https://my.papertrailapp.com/systems/circle-tree/events'>Papertrail Dashboard</a><br>
 <a href='https://status.heroku.com/'>Heroku Status</a><br/>
-<a href='https://sentry.io/organizations/circle-tree/projects/'>Sentry Dashboard</a><br>
-<a href=''></a><br/>
+<a href='https://sentry.io/organizations/circle-tree/issues/?project=5189124'>Sentry Dashboard</a><br>
+<%= render 'admin/shared/links' %>
 <a href=''></a><br/>
 <a href=''></a><br/>
 <a href=''></a><br/>
