@@ -37,6 +37,15 @@ class Admin::QuestionnairesController < ApplicationController
     end
   end
 
+  def destroy
+    questionnaire = Questionnaire.find(params[:id])
+    if questionnaire.destroy
+      flash_and_redirect(key: :success, message: 'アンケートを削除しました', redirect_url: admin_questionnaires_url)
+    else
+      flash_and_render(key: :danger, message: 'エラーにより削除できませんでした', action: 'index')
+    end
+  end
+
   private
 
     def questionnaires_params

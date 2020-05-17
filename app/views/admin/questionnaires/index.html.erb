@@ -16,6 +16,7 @@
               <th>タイトル</th>
               <th>内容</th>
               <th>変更</th>
+              <th>削除</th>
             </tr>
           </thead>
           <tbody>
@@ -25,6 +26,7 @@
                 <td><%= questionnaire.title %></td>
                 <td><%#= questionnaire.content %></td>
                 <td><%= link_to '変更', edit_admin_questionnaire_path(id: questionnaire.id), class: 'btn btn-primary' %></td>
+                <td><%= link_to '削除', admin_questionnaire_path(id: questionnaire.id), method: :delete, class: 'btn btn-danger', data: { confirm: '本当に削除しますか？' } %></td>
               </tr>
             <% end %>
           </tbody>
