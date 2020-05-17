@@ -7,6 +7,7 @@ ja:
       answer: 回答
       transaction: 収支 # 変更可能性あり
       fee: 代金
+      questionnaire: アンケート
     attributes:
       user:
         email: メールアドレス
@@ -57,6 +58,10 @@ ja:
         event: イベント
         creditor: 貸手
         type: タイプ
+      questionnaire:
+        title: タイトル
+        content: 選択肢
+        user: ユーザー
   enums:
     answer:
       reason:
