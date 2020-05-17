@@ -1,0 +1,23 @@
+<%= link_to 'ホーム', admin_homes_index_path %><br/>
+<%= link_to 'アンケート作成', new_admin_questionnaire_path %><br/>
+<%= link_to 'アンケート一覧', admin_questionnaires_path %><br/>
+<%= form_with model: @questionnaire, url: admin_questionnaire_path(id: @questionnaire.id), local: true do |f| %>
+  <%= render 'shared/error_messages', model: f.object %>
+  <div class="card">
+    <div class="card-body" style="background-color: #57cecd;">
+      <h3>アンケート変更する</h3>
+      <%= f.hidden_field :user_id, value: current_user.id %>
+      <%= f.hidden_field :content, value: '管理者変更済み' %>
+      <div class="form-group">
+        <%= f.text_field :title, class: "form-control", style: "color: black; background-color: white;", placeholder: "タイトル" %>
+      </div>
+      <%#= f.text_area :content, class: "form-control", id: "exampleTextarea1", rows: "16", style: "color: black; background-color: white;", placeholder: "アンケートの選択肢" %>
+      <%# <small>(未定)</small> %>
+      <div class="row">
+        <%= button_tag type: "submit", class: "btn btn-primary btn-icon-text right-bottom", style: "margin-right: 20px;margin-left: 30px; margin-top: 10px;", data: { disable_with: '変更中' } do %>
+          アンケートを変更する！
+        <% end %>
+      </div>
+    </div>
+  </div>
+<% end %>

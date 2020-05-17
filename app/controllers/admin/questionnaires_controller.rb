@@ -24,6 +24,19 @@ class Admin::QuestionnairesController < ApplicationController
     end
   end
 
+  def edit
+    @questionnaire = Questionnaire.find(params[:id])
+  end
+
+  def update
+    @questionnaire = Questionnaire.find(params[:id])
+    if @questionnaire.update(questionnaires_params)
+      flash_and_redirect(key: :success, message: 'アンケート変更！', redirect_url: admin_questionnaires_url)
+    else
+      render 'edit'
+    end
+  end
+
   private
 
     def questionnaires_params
