@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_05_12_090126) do
+ActiveRecord::Schema.define(version: 2020_05_17_043951) do
 
   create_table "answers", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.integer "status", default: 10, null: false, comment: "回答のステータス"
@@ -112,6 +112,7 @@ ActiveRecord::Schema.define(version: 2020_05_12_090126) do
     t.integer "status", default: 0, null: false, comment: "アンケートの回答受付状態"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "title", null: false
     t.index ["user_id"], name: "index_questionnaires_on_user_id"
   end
 
