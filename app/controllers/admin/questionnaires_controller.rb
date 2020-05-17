@@ -49,6 +49,6 @@ class Admin::QuestionnairesController < ApplicationController
   private
 
     def questionnaires_params
-      params.require(:questionnaire).permit(:title, :content, :user_id)
+      params.require(:questionnaire).permit(:title, :content, :user_id, :status)
     end
 end

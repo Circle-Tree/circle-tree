@@ -72,4 +72,9 @@ ja:
         money: お財布
         unfavorable: 好ましくないイベント
         other: その他
+    questionnaire:
+      status:
+        created: 作成後
+        open: 受付中
+        closed: 受付終了
 
