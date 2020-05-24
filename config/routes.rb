@@ -109,9 +109,9 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :questionnaires, only: %i[index create show] do
-    resources :responses, only: %i[create update]
-  end
+  # resources :questionnaires, only: %i[index create show] do
+  #   resources :responses, only: %i[create update]
+  # end
 
   # resources :orders, only: [] do
   #   collection do
