@@ -24,4 +24,17 @@ class SuccessSlackNotification
   rescue => e
     ErrorUtility.log_and_notify(e)
   end
+
+  def self.new_group_notify
+    count = Group.count
+    notifier = Slack::Notifier.new(ENV['SUBSCRIPTION_SLACK_WEBHOOK_URL'])
+    attachments = {
+      title: '新規サークル',
+      text: "#{count}個目のサークルが作成されました。",
+      color: 'good'
+    }
+    notifier.post attachments: [attachments]
+  rescue => e
+    ErrorUtility.log_and_notify(e)
+  end
 end

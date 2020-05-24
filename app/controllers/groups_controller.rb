@@ -26,6 +26,7 @@ class GroupsController < ApplicationController
         user_id: current_user.id,
         role: GroupUser.roles[:executive]
       )
+      SuccessSlackNotification.new_group_notify
       flash_and_redirect(key: :success, message: "おめでとうございます！あなたは#{@group.name}の幹事となりました！", redirect_url: home_url)
     else
       render 'new'
