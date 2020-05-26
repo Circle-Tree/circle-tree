@@ -72,7 +72,7 @@ RSpec.describe Group, type: :model do
 
   describe '関連付け' do
     it { is_expected.to have_many(:group_users) }
-    it { is_expected.to have_many(:users) }
+    it { is_expected.to have_many(:users).through(:group_users) }
     it { is_expected.to have_many(:events) }
     it { is_expected.to have_many(:transactions) }
   end

@@ -77,9 +77,9 @@ RSpec.describe User, type: :model do
 
   describe '関連付け' do
     it { is_expected.to have_many(:group_users) }
-    # it { is_expected.to have_many(:groups) }
+    # it { is_expected.to have_many(:groups).through(:group_users) }
     it { is_expected.to have_many(:answers) }
-    it { is_expected.to have_many(:events) }
+    it { is_expected.to have_many(:events).through(:answers) }
     # it { is_expected.to have_many(:transactions).with_foreign_key('debtor_id') }
     # it { is_expected.to have_many(:transactions).with_foreign_key('creditor_id') }
     it { is_expected.to have_many(:questionnaires) }
