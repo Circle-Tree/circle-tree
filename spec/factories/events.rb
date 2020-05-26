@@ -8,5 +8,9 @@ FactoryBot.define do
     comment { '楽しもう' }
     association :user
     association :group
+
+    trait :invalid do
+      name { nil }
+    end
   end
 end
