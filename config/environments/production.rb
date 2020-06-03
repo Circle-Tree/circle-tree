@@ -69,7 +69,13 @@ Rails.application.configure do
   # config.active_job.queue_name_prefix = "app_name_#{Rails.env}"
 
   config.action_mailer.perform_caching = false
-  config.action_mailer.default_url_options = { host: "#{ENV['APP_HOST_NAME']}.herokuapp.com" }
+  if ENV['APP_HOST_NAME'] == 'circle-tree-staging'
+    config.action_mailer.default_url_options = { host: "#{ENV['APP_HOST_NAME']}.herokuapp.com" }
+    domain = 'herokuapp.com'
+  elsif ENV['APP_HOST_NAME'] == 'circle-tree'
+    config.action_mailer.default_url_options = { host: "www.#{ENV['APP_HOST_NAME']}.com" }
+    domain = 'circle-tree.com'
+  end
   config.action_mailer.raise_delivery_errors = false
   config.action_mailer.delivery_method = :smtp
   config.action_mailer.smtp_settings = {
@@ -77,7 +83,7 @@ Rails.application.configure do
     password: ENV['SENDGRID_PASSWORD'],
     # user_name: ENV['DEV_EMAIL_USERNAME'],
     # password: ENV['DEV_EMAIL_PASSWORD'],
-    domain: 'herokuapp.com',
+    domain: domain,
     address: 'smtp.sendgrid.net',
     # address: 'smtp.gmail.com',
     port: 587,
