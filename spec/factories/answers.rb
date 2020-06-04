@@ -13,7 +13,7 @@ FactoryBot.define do
       status { Answer.statuses[:unanswered] }
     end
 
-    trait :attending do
+    trait :absent do
       status { Answer.statuses[:absent] }
     end
   end

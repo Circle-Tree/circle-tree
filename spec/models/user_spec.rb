@@ -84,4 +84,89 @@ RSpec.describe User, type: :model do
     # it { is_expected.to have_many(:transactions).with_foreign_key('creditor_id') }
     it { is_expected.to have_many(:questionnaires) }
   end
+
+  describe 'インスタンスメソッド' do
+    context 'admin?' do
+      it 'trueを返す' do
+        admin_user = create(:user, :admin)
+        expect(admin_user.admin?).to be_truthy
+      end
+      it 'falseを返す' do
+        nonadmin_user = create(:user, admin: false)
+        expect(nonadmin_user.admin?).to be_falsey
+      end
+    end
+
+    context 'executive?' do
+      let(:group) { create(:group) }
+      let(:user) { create(:user) }
+      it 'trueを返す' do
+        create(:group_user, :executive, group_id: group.id, user_id: user.id)
+        expect(user.executive?(group)).to be_truthy
+      end
+      it 'falseを返す' do
+        create(:general, group_id: group.id, user_id: user.id)
+        expect(user.executive?(group)).to be_falsey
+      end
+    end
+
+    context 'attending?' do
+      let(:event) { create(:event) }
+      let(:user) { create(:user) }
+      it '出席ならtrueを返す' do
+        create(:attending, event_id: event.id, user_id: user.id)
+        expect(user.attending?(event)).to be_truthy
+      end
+      it '欠席ならfalseを返す' do
+        create(:answer, :absent, event_id: event.id, user_id: user.id)
+        expect(user.attending?(event)).to be_falsey
+      end
+      it '未回答ならfalseを返す' do
+        create(:answer, :unanswered, event_id: event.id, user_id: user.id)
+        expect(user.attending?(event)).to be_falsey
+      end
+    end
+
+    context 'is_gender_boolean?' do
+      # let(:user) { create(:user) }
+      it 'trueを返す' do
+        user = create(:user)
+        expect(user.is_gender_boolean?).to be_truthy
+      end
+    end
+
+    context 'to_readable_grade' do
+      it '1を返す' do
+        user = create(:user, grade: User.grades[:grade1])
+        expect(user.to_readable_grade).to eq 1
+      end
+      it '5を返す' do
+        user = create(:user, grade: User.grades[:grade5])
+        expect(user.to_readable_grade).to eq 5
+      end
+      it 'その他を返す' do
+        user = create(:user, grade: User.grades[:other])
+        expect(user.to_readable_grade).to eq 'その他'
+      end
+    end
+
+    context 'to_readable_gender' do
+      it '女性を返す' do
+        user = create(:user, gender: true)
+        expect(user.to_readable_gender).to eq '女性'
+      end
+      it '男性を返す' do
+        user = create(:user, gender: false)
+        expect(user.to_readable_gender).to eq '男性'
+      end
+    end
+
+    context 'leave' do
+      it 'trueを返す' do
+        user = create(:user, leave_at: nil)
+        user.leave
+        expect(user.leave_at.present?).to be_truthy
+      end
+    end
+  end
 end
