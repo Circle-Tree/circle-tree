@@ -8,12 +8,13 @@ class RemindPaymentJob < ApplicationJob
     return unless transactions.present?
 
     transactions.each do |transaction|
+      next if transaction.completed?
+
       event = transaction.event
       group = event.group
       debtor = transaction.debtor
       begin
         NotificationMailer.remind_payment(debtor, group, event, transaction).deliver_now
-        puts '支払い催促メール送信完了'
       rescue => e
         ErrorUtility.log_and_notify e
       end
