@@ -90,4 +90,44 @@ RSpec.describe Event, type: :model do
     it { is_expected.to have_many(:users).through(:answers) }
     it { is_expected.to have_many(:fees) }
   end
+
+  describe 'クラスメソッド' do
+    let!(:user) { create(:user) }
+    let!(:group1) { create(:group) }
+    let!(:group2) { create(:group) }
+    let!(:group3) { create(:group) }
+    let!(:group_user1) { create(:group_user, group_id: group1.id, user_id: user.id) }
+    let!(:group_user2) { create(:group_user, group_id: group2.id, user_id: user.id) }
+    let!(:event1) { create(:event, group_id: group1.id) }
+    let!(:event2) { create(:event, group_id: group1.id) }
+    let!(:event3) { create(:event, group_id: group2.id) }
+    let!(:event4) { create(:event, group_id: group3.id) }
+
+    context 'my_groups_events' do
+      it '自分の所属するサークルのイベントを返す' do
+        expect(Event.my_groups_events(user)).to eq [event1, event2, event3]
+      end
+      it '自分の所属しないサークルのイベントを返さない' do
+        expect(Event.my_groups_events(user)).to_not include event4
+      end
+    end
+
+    context 'my_attending_events' do
+      let!(:answer1) { create(:answer, event_id: event1.id, user_id: user.id)}
+      let!(:answer2) { create(:answer, :absent, event_id: event2.id, user_id: user.id)}
+      let!(:answer3) { create(:answer, event_id: event3.id, user_id: user.id)}
+
+      it '自分の参加するイベントを返す' do
+        expect(Event.my_attending_events(user)).to eq [event1, event3]
+      end
+
+      it '自分の参加しないイベントを返さない' do
+        expect(Event.my_attending_events(user)).to_not include event2
+      end
+
+      it '自分の所属しないサークルのイベントは返さない' do
+        expect(Event.my_attending_events(user)).to_not include event4
+      end
+    end
+  end
 end
