@@ -86,4 +86,57 @@ RSpec.describe Transaction, type: :model do
     it { is_expected.to belong_to(:creditor).with_foreign_key('creditor_id') }
     # it { is_expected.to belong_to(:event) }
   end
+
+  describe 'インスタンスメソッド' do
+    let(:completed_transaction) { create(:event_transaction) }
+    let(:uncompleted_transaction) { create(:event_transaction, :uncompleted) }
+    let(:overpaid_transaction) { create(:event_transaction) }
+
+    context 'to_param' do
+      it 'url_tokenを返す' do
+        expect(completed_transaction.to_param).to eq completed_transaction.url_token
+      end
+    end
+
+    context 'completed?' do
+      it 'completedなときtrueを返す' do
+        expect(completed_transaction.completed?).to be_truthy
+      end
+      it 'uncompletedなときfalseを返す' do
+        expect(uncompleted_transaction.completed?).to be_falsey
+      end
+      it 'overpaidなときfalseを返す' do
+        overpaid_transaction.update_attribute(:payment, 10000)
+        expect(overpaid_transaction.completed?).to be_falsey
+      end
+    end
+
+    context 'uncompleted?' do
+      it 'completedなときfalseを返す' do
+        expect(completed_transaction.uncompleted?).to be_falsey
+      end
+      it 'uncompletedなときtrueを返す' do
+        expect(uncompleted_transaction.uncompleted?).to be_truthy
+      end
+      it 'overpaidなときfalseを返す' do
+        overpaid_transaction.update_attribute(:payment, 10000)
+        expect(overpaid_transaction.uncompleted?).to be_falsey
+      end
+    end
+
+    context 'overpayment?' do
+      it 'completedなときfalseを返す' do
+        expect(completed_transaction.overpayment?).to be_falsey
+      end
+      it 'uncompletedなときfalseを返す' do
+        expect(uncompleted_transaction.overpayment?).to be_falsey
+      end
+      it 'overpaidなときtrueを返す' do
+        overpaid_transaction.update_attribute(:payment, 10000)
+        expect(overpaid_transaction.overpayment?).to be_truthy
+      end
+    end
+
+
+  end
 end
