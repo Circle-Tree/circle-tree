@@ -25,7 +25,7 @@ Rails.application.routes.draw do
   get 'contact', to: 'homes#contact', as: 'contact'
   get 'users/csv_template', to: 'users#csv_template', as: 'csv_template'
   # get 'groups/:group_id/users/share', to: 'users#share', as: 'share'
-  resources :groups do
+  resources :groups, only: %i[new create edit update] do
 
     member do
       # get :deposit

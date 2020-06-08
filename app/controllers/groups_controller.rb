@@ -38,8 +38,8 @@ class GroupsController < ApplicationController
 
   def update
     if @group.update(group_params)
-      flash[:success] = 'グループの設定を変更しました'
-      redirect_to @group
+      flash[:success] = 'サークルの設定を変更しました'
+      redirect_to edit_group_url(id: @group.id)
     else
       render 'edit'
     end

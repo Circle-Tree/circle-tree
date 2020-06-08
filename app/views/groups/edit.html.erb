@@ -45,6 +45,7 @@
         <div class="page-header">
           <h3 class="page-title"> サークル設定 </h3>
         </div>
+        <%= render 'shared/flash' %>
         <div class="row">
           <div class="col-md-12 grid-margin stretch-card">
             <div class="card">
@@ -64,12 +65,6 @@
                       <input type="email" class="form-control" id="exampleInputEmail2" placeholder="Email" style="color: white;">
                     </div>
                   </div> %>
-                  <div class="form-group row">
-                    <%= f.label :email, "代表者メールアドレス", for: "exampleInputMobile", class: "col-sm-3 col-form-label" %>
-                    <div class="col-sm-9">
-                      <%= f.email_field :email, autofocus: true, autocomplete: "email", id: "exampleInputMobile", class: 'form-control', placeholder: "代表者メールアドレス", style: "color: white;" %>
-                    </div>
-                  </div>
                   <%# <div class="form-group row">
                     <label for="exampleInputPassword2" class="col-sm-3 col-form-label">支払いPayPalアカウント</label>
                     <div class="col-sm-9">
@@ -77,9 +72,10 @@
                     </div>
                   </div> %>
                   <div class="form-group row">
-                    <%= f.label :group_number, "グループID(6~25文字)", for: "exampleInputConfirmPassword2", class: "col-sm-3 col-form-label" %>
+                    <%= f.label :group_number, "サークルID", for: "exampleInputConfirmPassword2", class: "col-sm-3 col-form-label" %>
                     <div class="col-sm-9">
                       <%= f.text_field :group_number, id: "exampleInputConfirmPassword2", class: 'form-control', placeholder: "現在のサークルID", style: "color: white;" %>
+                      <small class="form-text text-muted">サークルIDは文字数は6~25字、英数字(アルファベットと数字は必須)とアンダーバー(_)のみ使用できます。</small>
                     </div>
                   </div>
                   <%= button_tag '変更', type: 'submit', class: "btn btn-primary mr-2", data: { disable_with: '処理中' } %>

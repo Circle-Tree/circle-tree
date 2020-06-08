@@ -52,14 +52,10 @@
                     <div class="tab-pane fade show active">
                       <h4>サークル情報</h4>
                       <%= render 'shared/error_messages', model: f.object %>
-                      <%#= f.hidden_field :email, value: current_user.email %>
+                      <%= f.hidden_field :email, value: current_user.email %>
                       <div class="form-group" style="margin-bottom: 80px;">
                         <%= f.label :name, "グループ名", style: "margin-top: 20px;" %>
                         <%= f.text_field :name, class: "form-control", placeholder: "サークル名を入力してください", style: "color: white;" %>
-                      </div>
-                      <div class="form-group" style="margin-bottom: 80px;">
-                        <%= f.label :email, "代表者メールアドレス", style: "margin-top: 20px;" %>
-                        <%= f.text_field :email, class: "form-control", placeholder: "代表者のメールアドレスを入力してください", style: "color: white;" %>
                       </div>
                       <div class="form-group">
                         <%= f.label :group_number, "サークルID" %>
