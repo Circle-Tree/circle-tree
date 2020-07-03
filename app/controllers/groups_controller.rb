@@ -9,10 +9,10 @@ class GroupsController < ApplicationController
   before_action :only_executives_can_access, only: %i[edit update change inheritable_search inherit assignable_search assign resign deposit statistics]
   before_action :cannot_resign, only: :resign
 
-  def show
-    events = Event.my_groups_events(current_user).order(start_date: :desc)
-    @events = Kaminari.paginate_array(events).page(params[:page]).per(5)
-  end
+  # def show
+  #   events = Event.my_groups_events(current_user).order(start_date: :desc)
+  #   @events = Kaminari.paginate_array(events).page(params[:page]).per(5)
+  # end
 
   def new
     @group = Group.new
@@ -26,7 +26,7 @@ class GroupsController < ApplicationController
         user_id: current_user.id,
         role: GroupUser.roles[:executive]
       )
-      SuccessSlackNotification.new_group_notify
+      # SuccessSlackNotification.new_group_notify
       flash_and_redirect(key: :success, message: "おめでとうございます！あなたは#{@group.name}の幹事となりました！", redirect_url: home_url)
     else
       render 'new'
