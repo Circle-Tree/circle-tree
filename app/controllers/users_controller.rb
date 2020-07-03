@@ -30,21 +30,21 @@ class UsersController < ApplicationController
   def withdraw
   end
 
-  def share
-    group = Group.find(params[:group_id])
-    users = []
-    GroupUser.where(group_id: group.id).each do |relationship|
-      user = User.find(relationship.user_id)
-      users << user unless user.definitive_registration
-    end
-    # users = User.where(group_id: group.id).where(definitive_registration: false)
-    respond_to do |format|
-      format.html
-      format.csv do
-        share_csv(users)
-      end
-    end
-  end
+  # def share
+  #   group = Group.find(params[:group_id])
+  #   users = []
+  #   GroupUser.where(group_id: group.id).each do |relationship|
+  #     user = User.find(relationship.user_id)
+  #     users << user unless user.definitive_registration
+  #   end
+  #   # users = User.where(group_id: group.id).where(definitive_registration: false)
+  #   respond_to do |format|
+  #     format.html
+  #     format.csv do
+  #       share_csv(users)
+  #     end
+  #   end
+  # end
 
   def csv_template
     respond_to do |format|
