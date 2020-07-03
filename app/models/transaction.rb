@@ -29,19 +29,6 @@ class Transaction < ApplicationRecord
     debt < payment
   end
 
-  def total_payment
-    count('payment')
-  end
-
-  def expected_total_payment
-    count('debt')
-  end
-
-  # これらはEvent::Transactionに移動すべき
-  def self.total_payment_by_user(user)
-    Transaction.joins(event: :answers).where(debtor_id: user.id, completed: true, event: { answers: { status: 'attending' } }).distinct.sum('debt')
-  end
-
   def self.transactions_for_attending_event_by_user(user)
     # Transaction.includes(event: :answers).where(debtor_id: user.id, event: { answers: { status: 'attending' } }).distinct
     answers = Answer.my_attending_answers(user).includes(:event)

@@ -67,7 +67,7 @@ class User < ApplicationRecord
   end
 
   def to_readable_gender
-    self.gender ? '女性' : '男性'
+    gender ? '女性' : '男性'
   end
 
   # 論理削除用メソッド

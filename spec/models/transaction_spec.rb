@@ -136,7 +136,65 @@ RSpec.describe Transaction, type: :model do
         expect(overpaid_transaction.overpayment?).to be_truthy
       end
     end
-
-
   end
+
+  # describe 'クラスメソッド' do
+  #   let(:user) { create(:user) }
+  #   let(:event1) { create(:event) }
+  #   let(:event2) { create(:event) }
+  #   let(:event3) { create(:event) }
+  #   let(:event4) { create(:event) }
+  #   let(:event5) { create(:event) }
+  #   let(:event6) { create(:event) }
+  #   let!(:answer1) { create(:answer, event_id: event1.id, user_id: user.id) }
+  #   let!(:answer2) { create(:answer, event_id: event2.id, user_id: user.id) }
+  #   let!(:answer3) { create(:answer, event_id: event3.id, user_id: user.id) }
+  #   let!(:answer4) { create(:answer, :absent, event_id: event4.id, user_id: user.id) }
+  #   let!(:answer5) { create(:answer, :unanswered, event_id: event5.id, user_id: user.id) }
+  #   let!(:event_transaction1) { create(:event_transaction, event_id: event1.id, debtor_id: user.id) }
+  #   let!(:event_transaction2) { create(:event_transaction, event_id: event2.id, debtor_id: user.id) }
+  #   let!(:event_transaction3) { create(:event_transaction, event_id: event3.id, debtor_id: user.id) }
+  #   let!(:event_transaction4) { create(:event_transaction, event_id: event4.id, debtor_id: user.id) }
+  #   let!(:event_transaction5) { create(:event_transaction, event_id: event5.id, debtor_id: user.id) }
+
+  #   context 'transactions_for_attending_event_by_user' do
+  #     it '回答済みイベントのTransactionを返す' do
+  #       id = event_transaction1.id
+  #       expect(Transaction.transactions_for_attending_event_by_user(user)).to eq Event::Transaction.where(id: [id, id+1, id+2])
+  #     end
+  #   end
+
+  #   context 'uncompleted_transactions_by_user' do
+  #     it 'uncompletedなTransactionを返す' do
+  #       event_transaction3.update_attribute(:payment, 0)
+  #       event_transaction4.update_attribute(:payment, 0)
+  #       id = event_transaction1.id
+  #       transactions = Transaction.where(id: [id, id+1, id+2, id+3, id+4])
+  #       expect(
+  #         Transaction.uncompleted_transactions_by_user(transactions)
+  #       ).to eq [event_transaction3, event_transaction4]
+  #     end
+  #   end
+
+  #   context 'overdue_transactions_by_user' do
+  #     it 'overdueなTransactionを返す' do
+  #       id = event_transaction1.id
+  #       transactions = Transaction.where(id: [id, id+1, id+2, id+3, id+4])
+  #       uncompleted_transactions = Transaction.uncompleted_transactions_by_user(transactions)
+  #       event_transaction3.update_attribute(:deadline, Time.current.midnight.ago(3.days))
+  #       expect(uncompleted_transactions).to include event_transaction3
+  #       expect(uncompleted_transactions).to_not include event_transaction4
+  #     end
+  #   end
+
+  #   context 'urgent_transactions_by_user' do
+  #     it 'urgentなTransactionを返す' do
+  #       id = event_transaction1.id
+  #       transactions = Transaction.where(id: [id, id+1])
+  #       event_transaction1.update_attribute(:deadline, Time.current.midnight.since(2.days))
+  #       expect(transactions).to include event_transaction1
+  #       expect(transactions).to_not include event_transaction2
+  #     end
+  #   end
+  # end
 end
