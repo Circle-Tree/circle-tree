@@ -8,15 +8,19 @@ class User < ApplicationRecord
 
   has_many :group_users, dependent: :destroy
   has_many :group, through: :group_users
+  # has_many :groups, through: :group_users
   accepts_nested_attributes_for :group_users
   has_many :answers, dependent: :destroy
   has_many :events, through: :answers # :nullifyの方がよいか？
   has_many :transactions, dependent: :destroy # :nullifyの方がよいか？
-  has_many :fees
+  # has_many :transactions, foreign_key: :debtor_id, dependent: :destroy
+  # has_many :transactions, foreign_key: :creditor_id, dependent: :destroy
+  has_many :fees # 不必要
   has_many :questionnaires
   validates :name, presence: true, length: { maximum: 100 }
   validates :definitive_registration, inclusion: { in: [true, false] }
   validates :furigana, presence: true, on: %i[create]
+  # VALID_FURIGANA_REGEX = /\A[\p{katakana}　ー－&&[^ -~｡-ﾟ]]+\z/.freeze
   validates :furigana, format: { with: /\A[\p{katakana}　ー－&&[^ -~｡-ﾟ]]+\z/, message: 'は全角カタカナのみで入力して下さい。' }, allow_blank: true
   enum grade: {
     other: 0,
@@ -63,7 +67,7 @@ class User < ApplicationRecord
   end
 
   def to_readable_gender
-    self.gender ? '女性' : '男性'
+    gender ? '女性' : '男性'
   end
 
   # 論理削除用メソッド

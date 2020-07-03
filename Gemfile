@@ -66,6 +66,10 @@ group :development, :test do
   gem 'rubocop-performance', require: false
   gem 'rubocop-rails', require: false
   gem 'rubocop-rspec', require: false
+  gem 'rspec-rails'
+  gem 'factory_bot_rails'
+  gem 'spring-commands-rspec'
+  gem 'shoulda-matchers'
 end
 
 group :development do

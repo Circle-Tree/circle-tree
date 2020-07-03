@@ -13,28 +13,34 @@ class Group < ApplicationRecord
   validates :email, presence: true
   validates :email, format: { with: VALID_EMAIL_REGEX }, allow_blank: true # 一意である必要はない
   # group_number
-  VALID_GRPUP_NUMBER_REGEX = /\A(?=.*[a-zA-Z])(?=.*\d)[a-zA-Z\d]\w{6,25}\z/.freeze
+  VALID_GROUP_NUMBER_REGEX = /\A(?=.*[a-zA-Z])(?=.*\d)[a-zA-Z\d]\w{6,25}\z/.freeze
   validates :group_number, presence: true
   validates :group_number, uniqueness: true,
-                           format: { with: VALID_GRPUP_NUMBER_REGEX },
+                           format: { with: VALID_GROUP_NUMBER_REGEX },
                            length: { in: 6..25 },
                            allow_blank: true
   enum payment_status: { unpaid: 0, paid: 1, inactive: 2 }
 
+  # インスタンスメソッド
   def set_paid
     self.payment_status = Group.payment_statuses[:paid]
   end
 
+  def my_group?(user)
+    Group.my_groups(user).include?(self)
+  end
+
+  def my_own_group?(user)
+    self == Group.my_own_group(user)
+  end
+
+  # クラスメソッド
   def self.my_groups(user)
     groups = []
     GroupUser.where(user_id: user.id).each do |relationship|
       groups << Group.find(relationship.group_id)
     end
     groups
-  end
-
-  def my_group?(user)
-    Group.my_groups(user).include?(self)
   end
 
   def self.my_own_group(user)
@@ -44,9 +50,5 @@ class Group < ApplicationRecord
 
   def self.my_general_groups(user)
     Group.joins(:group_users).where(group_users: { user_id: user.id, role: GroupUser.roles[:general] })
-  end
-
-  def my_own_group?(user)
-    self == Group.my_own_group(user)
   end
 end
