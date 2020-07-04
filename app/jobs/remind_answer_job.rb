@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class RemindAnswerJob < ApplicationJob
   queue_as :default
 
@@ -15,7 +17,7 @@ class RemindAnswerJob < ApplicationJob
         begin
           NotificationMailer.remind_answer(user, group, event).deliver_now
           puts '出欠催促メール送信完了'
-        rescue => e
+        rescue StandardError => e
           ErrorUtility.log_and_notify e
         end
       end

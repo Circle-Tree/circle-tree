@@ -1,13 +1,15 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
-RSpec.describe "Users::Transactions", type: :request do
+RSpec.describe 'Users::Transactions', type: :request do
   let(:member) { create(:user) }
   let(:member2) { create(:user) }
   let(:group) { create(:group) }
   let!(:member_relationship) { create(:group_user, user_id: member.id, group_id: group.id) }
   let!(:member_relationship2) { create(:group_user, user_id: member2.id, group_id: group.id) }
 
-  describe "GET #lend(貸しメモ)" do
+  describe 'GET #lend(貸しメモ)' do
     context '認証済みのユーザーとして' do
       context '他人なら' do
         it '正常なレスポンスを返すこと' do
@@ -39,7 +41,7 @@ RSpec.describe "Users::Transactions", type: :request do
     end
   end
 
-  describe "GET #borrow(貸しメモ)" do
+  describe 'GET #borrow(貸しメモ)' do
     context '認証済みのユーザーとして' do
       context '他人なら' do
         it '正常なレスポンスを返すこと' do
@@ -71,7 +73,7 @@ RSpec.describe "Users::Transactions", type: :request do
     end
   end
 
-  describe "POST #create(貸し借り作成)" do
+  describe 'POST #create(貸し借り作成)' do
     context '認証済みのユーザーとして' do
       context '他のメンバーへ/からなら' do
         context '有効な属性値の場合' do
@@ -154,7 +156,7 @@ RSpec.describe "Users::Transactions", type: :request do
   let(:lending_transaction) { create(:individual_transaction, :uncompleted, creditor_id: member.id, debtor_id: member2.id) }
   let(:borrowing_transaction) { create(:individual_transaction, :uncompleted, creditor_id: member2.id, debtor_id: member.id) }
 
-  describe "GET #edit(貸し借りメモ編集ページ)" do
+  describe 'GET #edit(貸し借りメモ編集ページ)' do
     context '認証済みのユーザーとして' do
       context '貸しメモを編集時' do
         it '正常なレスポンスを返すこと' do
@@ -200,7 +202,7 @@ RSpec.describe "Users::Transactions", type: :request do
     end
   end
 
-  describe "GET #update(貸し借りメモ編集)" do
+  describe 'GET #update(貸し借りメモ編集)' do
     context '認証済みのユーザーとして' do
       context '有効な属性値の場合' do
         it '貸しメモが編集されること' do

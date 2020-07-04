@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Order < ApplicationRecord
   enum status: { pending: 0, failed: 1, paid: 2, paypal_executed: 3 }
   belongs_to :product

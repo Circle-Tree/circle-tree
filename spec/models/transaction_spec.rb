@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
 RSpec.describe Transaction, type: :model do
@@ -27,16 +29,16 @@ RSpec.describe Transaction, type: :model do
         expect(transaction.errors[:debt]).to include('は整数で入力してください')
       end
       it '99_999_999は有効であること' do
-        transaction = build(:event_transaction, debt: 99999999)
+        transaction = build(:event_transaction, debt: 99_999_999)
         expect(transaction).to be_valid
       end
       it '100_000_000より大きいのは無効であること' do
-        transaction = build(:transaction, debt: 100000001)
+        transaction = build(:transaction, debt: 100_000_001)
         transaction.valid?
         expect(transaction.errors[:debt]).to include('は100000000より小さい値にしてください')
       end
       it '100_000_000より大きいのは無効であること' do
-        transaction = build(:transaction, debt: 100000000)
+        transaction = build(:transaction, debt: 100_000_000)
         transaction.valid?
         expect(transaction.errors[:debt]).to include('は100000000より小さい値にしてください')
       end
@@ -55,16 +57,16 @@ RSpec.describe Transaction, type: :model do
         expect(transaction.errors[:payment]).to include('は整数で入力してください')
       end
       it '99_999_999は有効であること' do
-        transaction = build(:event_transaction, debt: 99999999)
+        transaction = build(:event_transaction, debt: 99_999_999)
         expect(transaction).to be_valid
       end
       it '100_000_000より大きいのは無効であること' do
-        transaction = build(:transaction, debt: 100000001)
+        transaction = build(:transaction, debt: 100_000_001)
         transaction.valid?
         expect(transaction.errors[:debt]).to include('は100000000より小さい値にしてください')
       end
       it '100_000_000より大きいのは無効であること' do
-        transaction = build(:transaction, debt: 100000000)
+        transaction = build(:transaction, debt: 100_000_000)
         transaction.valid?
         expect(transaction.errors[:debt]).to include('は100000000より小さい値にしてください')
       end
@@ -106,7 +108,7 @@ RSpec.describe Transaction, type: :model do
         expect(uncompleted_transaction.completed?).to be_falsey
       end
       it 'overpaidなときfalseを返す' do
-        overpaid_transaction.update_attribute(:payment, 10000)
+        overpaid_transaction.update_attribute(:payment, 10_000)
         expect(overpaid_transaction.completed?).to be_falsey
       end
     end
@@ -119,7 +121,7 @@ RSpec.describe Transaction, type: :model do
         expect(uncompleted_transaction.uncompleted?).to be_truthy
       end
       it 'overpaidなときfalseを返す' do
-        overpaid_transaction.update_attribute(:payment, 10000)
+        overpaid_transaction.update_attribute(:payment, 10_000)
         expect(overpaid_transaction.uncompleted?).to be_falsey
       end
     end
@@ -132,7 +134,7 @@ RSpec.describe Transaction, type: :model do
         expect(uncompleted_transaction.overpayment?).to be_falsey
       end
       it 'overpaidなときtrueを返す' do
-        overpaid_transaction.update_attribute(:payment, 10000)
+        overpaid_transaction.update_attribute(:payment, 10_000)
         expect(overpaid_transaction.overpayment?).to be_truthy
       end
     end

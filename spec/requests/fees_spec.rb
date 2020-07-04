@@ -1,6 +1,8 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
-RSpec.describe "Fees", type: :request do
+RSpec.describe 'Fees', type: :request do
   let(:executive) { create(:user) }
   let(:member) { create(:user) }
   let(:other_member) { create(:user) }
@@ -9,7 +11,7 @@ RSpec.describe "Fees", type: :request do
   let!(:member_relationship) { create(:group_user, user_id: member.id, group_id: group.id) }
   let(:event) { create(:event, group_id: group.id) }
 
-  describe "GET #new(イベントの支払い情報作成ページ)" do
+  describe 'GET #new(イベントの支払い情報作成ページ)' do
     context '認証済みのユーザーとして' do
       context 'そのサークルの幹事なら' do
         it '正常なレスポンスを返すこと' do
@@ -49,7 +51,7 @@ RSpec.describe "Fees", type: :request do
     end
   end
 
-  describe "POST #create(イベント支払い情報作成)" do
+  describe 'POST #create(イベント支払い情報作成)' do
     context '認証済みのユーザーとして' do
       context 'そのサークルの幹事なら' do
         context '有効な属性値の場合' do
@@ -116,7 +118,7 @@ RSpec.describe "Fees", type: :request do
 
   let(:fee) { create(:fee, event_id: event.id, creditor_id: executive.id, grade: member.grade) }
 
-  describe "PATCH #update(イベント支払い情報編集)" do
+  describe 'PATCH #update(イベント支払い情報編集)' do
     context '認証済みのユーザーとして' do
       context 'そのサークルの幹事なら' do
         # context '有効な属性値の場合' do
@@ -179,7 +181,7 @@ RSpec.describe "Fees", type: :request do
     end
   end
 
-  describe "PATCH #batch(イベント支払い情報一括編集)" do
+  describe 'PATCH #batch(イベント支払い情報一括編集)' do
     context '認証済みのユーザーとして' do
       context 'そのサークルの幹事なら' do
         # context '有効な属性値の場合' do

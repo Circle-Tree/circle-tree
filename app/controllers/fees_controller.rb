@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class FeesController < ApplicationController
   before_action :authenticate_user!
   before_action :confirm_definitive_registration

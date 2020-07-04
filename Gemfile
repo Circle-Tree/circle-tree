@@ -37,39 +37,39 @@ gem 'prawn-table'
 # bulk insert
 # gem 'activerecord-import'
 # gem 'cancancan'
-gem 'roo'
 gem 'rails-i18n'
+gem 'roo'
 # gems for sidekiq
+gem 'redis'
+gem 'redis-namespace'
+gem 'sentry-raven'
 gem 'sidekiq'
 gem 'sidekiq-scheduler'
 gem 'sinatra', require: false
-gem 'redis'
-gem 'redis-namespace'
-gem "sentry-raven"
 # gem "jquery-rails"
-gem "money-rails"
-gem 'paypal-sdk-rest'
+gem 'gimei'
 gem 'haml'
 gem 'kaminari'
-gem 'gimei'
+gem 'money-rails'
+gem 'paypal-sdk-rest'
 # gem "pundit"
 gem 'chart-js-rails'
 gem 'slack-notifier'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
-  gem 'byebug'
   gem 'better_errors'
   gem 'binding_of_caller'
+  gem 'byebug'
   gem 'dotenv-rails'
+  gem 'factory_bot_rails'
+  gem 'rspec-rails'
   gem 'rubocop', require: false
   gem 'rubocop-performance', require: false
   gem 'rubocop-rails', require: false
   gem 'rubocop-rspec', require: false
-  gem 'rspec-rails'
-  gem 'factory_bot_rails'
-  gem 'spring-commands-rspec'
   gem 'shoulda-matchers'
+  gem 'spring-commands-rspec'
 end
 
 group :development do
@@ -77,10 +77,10 @@ group :development do
   gem 'listen'
   gem 'web-console'
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
+  gem 'brakeman', require: false
+  gem 'bullet'
   gem 'spring'
   gem 'spring-watcher-listen'
-  gem 'brakeman', :require => false
-  gem 'bullet'
 end
 
 group :test do

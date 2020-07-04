@@ -19,18 +19,13 @@ class HomesController < ApplicationController
     @urgent_transactions = Transaction.urgent_transactions_by_user(non_overdue_transactions: non_overdue_transactions, max: 2, today: today)
   end
 
-  def faq
-  end
+  def faq; end
 
-  def landing
-  end
+  def landing; end
 
-  def privacy_policy
-  end
+  def privacy_policy; end
 
-  def terms_of_service
-  end
+  def terms_of_service; end
 
-  def contact
-  end
+  def contact; end
 end

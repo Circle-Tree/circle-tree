@@ -8,10 +8,8 @@ class TransactionNotificationMailer < ApplicationMailer
     @group = event.group
     mail(
       subject: "#{@event.name}の支払い情報作成のお知らせ",
-      to: @user.email
-    ) do |format|
-      format.text
-    end
+      to: @user.email, &:text
+    )
   end
 
   def edit_event_transaction(user:, current_user:, event:)
@@ -21,10 +19,8 @@ class TransactionNotificationMailer < ApplicationMailer
     @group = event.group
     mail(
       subject: "#{@event.name}の支払い情報変更のお知らせ",
-      to: @user.email
-    ) do |format|
-      format.text
-    end
+      to: @user.email, &:text
+    )
   end
 
   # イベント収支の個人の情報変更
@@ -41,10 +37,8 @@ class TransactionNotificationMailer < ApplicationMailer
     end
     mail(
       subject: subject,
-      to: @user.email
-    ) do |format|
-      format.text
-    end
+      to: @user.email, &:text
+    )
   end
 
   def new_lending_transaction(user:, current_user:)
@@ -52,10 +46,8 @@ class TransactionNotificationMailer < ApplicationMailer
     @current_user = current_user
     mail(
       subject: '貸し借りメモの作成のお知らせ',
-      to: @user.email
-    ) do |format|
-      format.text
-    end
+      to: @user.email, &:text
+    )
   end
 
   def new_borrowing_transaction(user:, current_user:)
@@ -63,10 +55,8 @@ class TransactionNotificationMailer < ApplicationMailer
     @current_user = current_user
     mail(
       subject: '貸し借りメモの作成のお知らせ',
-      to: @user.email
-    ) do |format|
-      format.text
-    end
+      to: @user.email, &:text
+    )
   end
 
   def update_lending_transaction(user:, current_user:)
@@ -74,10 +64,8 @@ class TransactionNotificationMailer < ApplicationMailer
     @current_user = current_user
     mail(
       subject: '貸し借りメモの変更のお知らせ',
-      to: @user.email
-    ) do |format|
-      format.text
-    end
+      to: @user.email, &:text
+    )
   end
 
   def update_borrowing_transaction(user:, current_user:)
@@ -85,9 +73,7 @@ class TransactionNotificationMailer < ApplicationMailer
     @current_user = current_user
     mail(
       subject: '貸し借りメモの変更のお知らせ',
-      to: @user.email
-    ) do |format|
-      format.text
-    end
+      to: @user.email, &:text
+    )
   end
 end

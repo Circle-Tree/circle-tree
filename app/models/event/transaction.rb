@@ -28,7 +28,6 @@ class Event::Transaction < Transaction
     where(debtor_id: user.id).joins(event: :answers).distinct.where(event: { answers: { status: Answer.statuses[:attending] } }).sum('debt') - paid_total_amount(user)
   end
 
-
   # 以下二つのメソッドは不要なはず。
   # def self.new_transaction_when_create_new_event(member:, creditor:, group:, event:)
   #   create!(

@@ -1,6 +1,8 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
-RSpec.describe "Events", type: :request do
+RSpec.describe 'Events', type: :request do
   let(:executive) { create(:user) }
   let(:member) { create(:user) }
   let(:other_member) { create(:user) }
@@ -8,7 +10,7 @@ RSpec.describe "Events", type: :request do
   let!(:executive_relationship) { create(:group_user, :executive, user_id: executive.id, group_id: group.id) }
   let!(:member_relationship) { create(:group_user, user_id: member.id, group_id: group.id) }
 
-  describe "GET #index(幹事用イベント一覧)" do
+  describe 'GET #index(幹事用イベント一覧)' do
     context '認証済みのユーザーとして' do
       context 'そのサークルの幹事なら' do
         it '正常なレスポンスを返すこと' do
@@ -48,7 +50,7 @@ RSpec.describe "Events", type: :request do
     end
   end
 
-  describe "GET #list(幹事＆一般人用イベント一覧)" do
+  describe 'GET #list(幹事＆一般人用イベント一覧)' do
     context '認証済みのユーザーとして' do
       context 'そのサークルの幹事なら' do
         it '正常なレスポンスを返すこと' do
@@ -69,7 +71,7 @@ RSpec.describe "Events", type: :request do
       context '外部のメンバーとして' do
         it '403レスポンスを返すこと' do
           sign_in other_member
-          get list_user_events_path(user_id:member.id)
+          get list_user_events_path(user_id: member.id)
           expect(response).to have_http_status '403'
         end
       end
@@ -88,7 +90,7 @@ RSpec.describe "Events", type: :request do
     end
   end
 
-  describe "GET #new(イベント作成ページ)" do
+  describe 'GET #new(イベント作成ページ)' do
     context '認証済みのユーザーとして' do
       context 'そのサークルの幹事なら' do
         it '正常なレスポンスを返すこと' do
@@ -128,7 +130,7 @@ RSpec.describe "Events", type: :request do
     end
   end
 
-  describe "POST #create(イベント作成)" do
+  describe 'POST #create(イベント作成)' do
     context '認証済みのユーザーとして' do
       context 'そのサークルの幹事なら' do
         context '有効な属性値の場合' do
@@ -195,7 +197,7 @@ RSpec.describe "Events", type: :request do
 
   let(:event) { create(:event, group_id: group.id, name: 'before_event') }
 
-  describe "GET #show(幹事用イベント詳細/回答)" do
+  describe 'GET #show(幹事用イベント詳細/回答)' do
     context '認証済みのユーザーとして' do
       context 'そのサークルの幹事なら' do
         it '正常なレスポンスを返すこと' do
@@ -235,7 +237,7 @@ RSpec.describe "Events", type: :request do
     end
   end
 
-  describe "GET #show(幹事用イベント詳細/回答)" do
+  describe 'GET #show(幹事用イベント詳細/回答)' do
     context '認証済みのユーザーとして' do
       context 'そのサークルの幹事なら' do
         it '正常なレスポンスを返すこと' do
@@ -270,7 +272,7 @@ RSpec.describe "Events", type: :request do
     end
   end
 
-  describe "GET #edit(イベント編集ページ)" do
+  describe 'GET #edit(イベント編集ページ)' do
     context '認証済みのユーザーとして' do
       context 'そのサークルの幹事なら' do
         it '正常なレスポンスを返すこと' do
@@ -310,7 +312,7 @@ RSpec.describe "Events", type: :request do
     end
   end
 
-  describe "PATCH #update(イベント編集)" do
+  describe 'PATCH #update(イベント編集)' do
     context '認証済みのユーザーとして' do
       context 'そのサークルの幹事なら' do
         context '有効な属性値の場合' do
@@ -373,7 +375,7 @@ RSpec.describe "Events", type: :request do
     end
   end
 
-  describe "DELETE #destroy(イベント削除)" do
+  describe 'DELETE #destroy(イベント削除)' do
     context '認証済みのユーザーとして' do
       # context 'そのサークルの幹事なら' do
       #   it 'イベントが削除されること' do

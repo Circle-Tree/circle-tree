@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class ErrorUtility
   def self.log_and_notify(e)
     Rails.logger.error e.class

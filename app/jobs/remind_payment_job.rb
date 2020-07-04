@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class RemindPaymentJob < ApplicationJob
   queue_as :default
 
@@ -15,7 +17,7 @@ class RemindPaymentJob < ApplicationJob
       debtor = transaction.debtor
       begin
         NotificationMailer.remind_payment(debtor, group, event, transaction).deliver_now
-      rescue => e
+      rescue StandardError => e
         ErrorUtility.log_and_notify e
       end
     end

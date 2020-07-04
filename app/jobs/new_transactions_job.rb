@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class NewTransactionsJob < ApplicationJob
   queue_as :default
 
@@ -32,7 +34,7 @@ class NewTransactionsJob < ApplicationJob
             ErrorSlackNotification.general_error_notify(title: '支払い作成のエラー', message: message)
           end
         end
-      rescue => e
+      rescue StandardError => e
         ErrorUtility.log_and_notify e
       end
     end

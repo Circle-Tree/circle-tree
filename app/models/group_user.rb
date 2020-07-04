@@ -7,7 +7,7 @@ class GroupUser < ApplicationRecord
     general: 10,  # 一般人
     executive: 90 # 幹部
   }
-  validates :group_id, uniqueness:{ scope: [:user_id] }
+  validates :group_id, uniqueness: { scope: [:user_id] }
   validates :role, presence: true
 
   def self.new_group(group, user)
@@ -35,7 +35,7 @@ class GroupUser < ApplicationRecord
         general_relationship.update!(role: GroupUser.roles[:executive])
       end
       true
-    rescue => e
+    rescue StandardError => e
       ErrorUtility.log_and_notify(e)
       false
     end

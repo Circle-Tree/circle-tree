@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class NewEventJob < ApplicationJob
   queue_as :default
 
@@ -8,7 +10,7 @@ class NewEventJob < ApplicationJob
       Answer.new_answer_when_create_new_event(user: member, event: event)
       begin
         NotificationMailer.send_when_make_new_event(user: member, current_user: current_user, group: group, event: event).deliver_later
-      rescue => e
+      rescue StandardError => e
         ErrorUtility.log_and_notify e
       end
     end

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
 RSpec.describe Event, type: :model do
@@ -113,9 +115,9 @@ RSpec.describe Event, type: :model do
     end
 
     context 'my_attending_events' do
-      let!(:answer1) { create(:answer, event_id: event1.id, user_id: user.id)}
-      let!(:answer2) { create(:answer, :absent, event_id: event2.id, user_id: user.id)}
-      let!(:answer3) { create(:answer, event_id: event3.id, user_id: user.id)}
+      let!(:answer1) { create(:answer, event_id: event1.id, user_id: user.id) }
+      let!(:answer2) { create(:answer, :absent, event_id: event2.id, user_id: user.id) }
+      let!(:answer3) { create(:answer, event_id: event3.id, user_id: user.id) }
 
       it '自分の参加するイベントを返す' do
         expect(Event.my_attending_events(user)).to eq [event1, event3]

@@ -1,9 +1,11 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
-RSpec.describe "Groups", type: :request do
+RSpec.describe 'Groups', type: :request do
   let(:user) { create(:user) }
 
-  describe "GET #new(サークル作成ページ)" do
+  describe 'GET #new(サークル作成ページ)' do
     context '認証済みのユーザーとして' do
       it '正常なレスポンスを返すこと' do
         sign_in user
@@ -25,7 +27,7 @@ RSpec.describe "Groups", type: :request do
     end
   end
 
-  describe "POST #create(サークル作成)" do
+  describe 'POST #create(サークル作成)' do
     context '認証済みのユーザーとして' do
       context '有効な属性値の場合' do
         it 'サークルが作成されること' do
@@ -68,7 +70,7 @@ RSpec.describe "Groups", type: :request do
   let!(:member_relationship) { create(:group_user, user_id: member.id, group_id: group.id) }
   let!(:executive_relationship2) { create(:group_user, :executive, group_id: group.id) }
 
-  describe "GET #edit(サークル編集ページ)" do
+  describe 'GET #edit(サークル編集ページ)' do
     context '認証済みのユーザーとして' do
       context 'そのサークルの幹事なら' do
         it '正常なレスポンスを返すこと' do
@@ -108,7 +110,7 @@ RSpec.describe "Groups", type: :request do
     end
   end
 
-  describe "PATCH #update(サークル編集)" do
+  describe 'PATCH #update(サークル編集)' do
     context '認証済みのユーザーとして' do
       context 'そのサークルの幹事なら' do
         context '有効な属性値の場合' do
@@ -173,7 +175,7 @@ RSpec.describe "Groups", type: :request do
     end
   end
 
-  describe "PATCH #change(メンバー設定" do
+  describe 'PATCH #change(メンバー設定' do
     context '認証済みのユーザーとして' do
       context 'そのサークルの幹事なら' do
         it '正常なレスポンスを返すこと' do
@@ -213,10 +215,10 @@ RSpec.describe "Groups", type: :request do
     end
   end
 
-  let(:new_executive){ create(:user) }
-  let!(:new_executive_relationship){ create(:group_user, user_id: new_executive.id, group_id: group.id) }
+  let(:new_executive) { create(:user) }
+  let!(:new_executive_relationship) { create(:group_user, user_id: new_executive.id, group_id: group.id) }
 
-  describe "POST #inherit(引継ぎ)" do
+  describe 'POST #inherit(引継ぎ)' do
     context '認証済みのユーザーとして' do
       context 'そのサークルの幹事なら' do
         it '有効な属性値な場合' do
@@ -245,7 +247,7 @@ RSpec.describe "Groups", type: :request do
     end
   end
 
-  describe "POST #assign(任命)" do
+  describe 'POST #assign(任命)' do
     context '認証済みのユーザーとして' do
       context 'そのサークルの幹事なら' do
         it '有効な属性値な場合' do
@@ -275,7 +277,7 @@ RSpec.describe "Groups", type: :request do
   end
 
   # GETからPATCHに変えたい
-  describe "GET #resign(辞退)" do
+  describe 'GET #resign(辞退)' do
     context '認証済みのユーザーとして' do
       context 'そのサークルの幹事なら' do
         it '有効な属性値な場合' do
@@ -308,5 +310,4 @@ RSpec.describe "Groups", type: :request do
 
   # describe "GET #statistics(統計)" do
   # end
-
 end

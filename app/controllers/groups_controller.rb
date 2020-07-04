@@ -33,8 +33,7 @@ class GroupsController < ApplicationController
     end
   end
 
-  def edit
-  end
+  def edit; end
 
   def update
     if @group.update(group_params)
@@ -105,11 +104,9 @@ class GroupsController < ApplicationController
     end
   end
 
-  def deposit
-  end
+  def deposit; end
 
-  def statistics
-  end
+  def statistics; end
 
   private
 
@@ -137,16 +134,14 @@ class GroupsController < ApplicationController
         user_ids << User.find(relationship.user_id).id
       end
       members = User.where(id: user_ids)
-      @members = members.where('name LIKE :keyword OR furigana LIKE :keyword ', keyword: "%#{keyword.tr('ぁ-ん','ァ-ン')}%").order(furigana: :asc)
+      @members = members.where('name LIKE :keyword OR furigana LIKE :keyword ', keyword: "%#{keyword.tr('ぁ-ん', 'ァ-ン')}%").order(furigana: :asc)
       respond_to do |format|
         format.json { render partial, json: @members }
       end
     end
 
     def cannot_resign
-      if User.executives(@group).count == 1
-        flash_and_redirect(key: :danger, message: '幹事が一人しかいないため辞退できません', redirect_url: home_url)
-      end
+      flash_and_redirect(key: :danger, message: '幹事が一人しかいないため辞退できません', redirect_url: home_url) if User.executives(@group).count == 1
     end
 
     # 幹事のみアクセス可能
@@ -158,8 +153,6 @@ class GroupsController < ApplicationController
     end
 
     def executives_cannot_access
-      if current_user_group
-        flash_and_redirect(key: :danger, message: 'すでにグループの幹事である人は新しくグループを作成することができません', redirect_url: home_url)
-      end
+      flash_and_redirect(key: :danger, message: 'すでにグループの幹事である人は新しくグループを作成することができません', redirect_url: home_url) if current_user_group
     end
 end

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
 RSpec.describe Group, type: :model do
@@ -62,11 +64,13 @@ RSpec.describe Group, type: :model do
     end
 
     context '支払い状況に関して' do
-      it { is_expected.to define_enum_for(:payment_status).with_values(
-        unpaid: 0,
-        paid: 1,
-        inactive: 2
-      ) }
+      it {
+        is_expected.to define_enum_for(:payment_status).with_values(
+          unpaid: 0,
+          paid: 1,
+          inactive: 2
+        )
+      }
     end
   end
 

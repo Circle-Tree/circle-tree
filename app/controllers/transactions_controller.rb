@@ -63,7 +63,6 @@ class TransactionsController < ApplicationController
     end
   end
 
-
   # private
 
   # def transaction_params
@@ -85,5 +84,4 @@ class TransactionsController < ApplicationController
     # flash[:danger] = '幹事しかアクセスできません'
     raise Forbidden
   end
-
 end

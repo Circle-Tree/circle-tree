@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class ErrorSlackNotification
   def self.general_error_notify(title:, message:)
     notifier = Slack::Notifier.new(ENV['ERROR_SLACK_WEBHOOK_URL'])

@@ -35,11 +35,11 @@ class Users::TransactionsController < TransactionsController
 
   def edit
     @transaction = Individual::Transaction.find_by(url_token: params[:url_token])
-    if @transaction.lending?(user: current_user)
-      @user = @transaction.debtor
-    else
-      @user = @transaction.creditor
-    end
+    @user = if @transaction.lending?(user: current_user)
+              @transaction.debtor
+            else
+              @transaction.creditor
+            end
   end
 
   def update
@@ -52,11 +52,11 @@ class Users::TransactionsController < TransactionsController
       end
       flash_and_redirect(key: :success, message: '変更しました。', redirect_url: user_transactions_path(user_id: current_user.id))
     else
-      if @transaction.lending?(user: current_user)
-        @user = @transaction.debtor
-      else
-        @user = @transaction.creditor
-      end
+      @user = if @transaction.lending?(user: current_user)
+                @transaction.debtor
+              else
+                @transaction.creditor
+              end
       render 'edit'
     end
   end
@@ -73,8 +73,6 @@ class Users::TransactionsController < TransactionsController
 
     def cannot_individual_transaction_to_myself
       @user = User.find(params[:user_id])
-      if current_user.id == @user.id
-        flash_and_redirect(key: :danger, message: '自分に対する貸し借りメモは作成できません。', redirect_url: home_url)
-      end
+      flash_and_redirect(key: :danger, message: '自分に対する貸し借りメモは作成できません。', redirect_url: home_url) if current_user.id == @user.id
     end
 end

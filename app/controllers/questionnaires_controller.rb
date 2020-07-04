@@ -38,9 +38,7 @@ class QuestionnairesController < ApplicationController
 
     def cannot_access_to_created_questionnaire
       @questionnaire = Questionnaire.find(params[:id])
-      if @questionnaire.created?
-        flash_and_redirect(key: :danger, message: '無効なアンケートです。', redirect_url: questionnaires_url)
-      end
+      flash_and_redirect(key: :danger, message: '無効なアンケートです。', redirect_url: questionnaires_url) if @questionnaire.created?
     end
 
     def set_form_path_and_response

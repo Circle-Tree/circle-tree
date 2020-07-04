@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 require 'sidekiq/web'
 require 'sidekiq-scheduler/web'
 Rails.application.routes.draw do
@@ -26,7 +27,6 @@ Rails.application.routes.draw do
   get 'users/csv_template', to: 'users#csv_template', as: 'csv_template'
   # get 'groups/:group_id/users/share', to: 'users#share', as: 'share'
   resources :groups, only: %i[new create edit update] do
-
     member do
       # get :deposit
       # get :statistics
@@ -124,7 +124,6 @@ Rails.application.routes.draw do
   # post 'orders/paypal/execute_payment', to: 'orders#paypal_execute_payment', as: :paypal_execute_payment
   # post 'orders/paypal/create_subscription', to: 'orders#paypal_create_subscription', as: :paypal_create_subscription
   # post 'orders/paypal/execute_subscription', to: 'orders#paypal_execute_subscription', as: :paypal_execute_subscription
-
 
   ##################### ADMIN ################################
   namespace :admin do

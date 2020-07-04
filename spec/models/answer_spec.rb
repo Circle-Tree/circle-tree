@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
 RSpec.describe Answer, type: :model do
@@ -11,11 +13,13 @@ RSpec.describe Answer, type: :model do
 
     context '回答状況に関して' do
       it { is_expected.to validate_presence_of(:status) }
-      it { is_expected.to define_enum_for(:status).with_values(
-        unanswered: 10,
-        attending: 20,
-        absent: 30
-      ) }
+      it {
+        is_expected.to define_enum_for(:status).with_values(
+          unanswered: 10,
+          attending: 20,
+          absent: 30
+        )
+      }
     end
 
     it 'ユーザーとイベントはユニークであること' do
@@ -26,15 +30,17 @@ RSpec.describe Answer, type: :model do
     end
 
     context '出欠理由に関して' do
-      it { is_expected.to define_enum_for(:reason).with_values(
-        nothing: 0,
-        job: 1,
-        friend: 2,
-        family: 3,
-        money: 4,
-        unfavorable: 5,
-        other: 6
-      ) }
+      it {
+        is_expected.to define_enum_for(:reason).with_values(
+          nothing: 0,
+          job: 1,
+          friend: 2,
+          family: 3,
+          money: 4,
+          unfavorable: 5,
+          other: 6
+        )
+      }
     end
   end
 
@@ -98,9 +104,9 @@ RSpec.describe Answer, type: :model do
       let(:event2) { create(:event) }
 
       it 'イベント作成時に回答を作成する' do
-        expect {
+        expect do
           Answer.new_answer_when_create_new_event(user: user1, event: event2)
-        }.to change(event2.answers, :count).by(1)
+        end.to change(event2.answers, :count).by(1)
       end
 
       it 'イベント作成時にunansweredの回答を作成する' do

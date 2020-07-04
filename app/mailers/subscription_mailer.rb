@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class SubscriptionMailer < ApplicationMailer
   def new_subscription(group:, user:, order:)
     @group = group
@@ -5,9 +7,7 @@ class SubscriptionMailer < ApplicationMailer
     @product = Product.find(order.product_id)
     mail(
       subject: "#{@product.name}の購読のお知らせ",
-      to: @user.email
-    ) do |format|
-      format.text
-    end
+      to: @user.email, &:text
+    )
   end
 end

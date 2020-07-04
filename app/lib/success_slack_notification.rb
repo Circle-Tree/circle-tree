@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class SuccessSlackNotification
   def self.new_subscription_notify(order:, current_user:)
     product = Product.find(order&.product_id)
@@ -8,7 +10,7 @@ class SuccessSlackNotification
       color: 'good'
     }
     notifier.post attachments: [attachments]
-  rescue => e
+  rescue StandardError => e
     ErrorUtility.log_and_notify(e)
   end
 
@@ -21,7 +23,7 @@ class SuccessSlackNotification
       color: 'good'
     }
     notifier.post attachments: [attachments]
-  rescue => e
+  rescue StandardError => e
     ErrorUtility.log_and_notify(e)
   end
 
@@ -34,7 +36,7 @@ class SuccessSlackNotification
       color: 'good'
     }
     notifier.post attachments: [attachments]
-  rescue => e
+  rescue StandardError => e
     ErrorUtility.log_and_notify(e)
   end
 end

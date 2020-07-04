@@ -33,20 +33,20 @@ class User < ApplicationRecord
     grade6: 6
   }
   validates :grade, presence: true
-  validates :gender, inclusion: { in: [true, false], message: 'が入力されていません。'  }
+  validates :gender, inclusion: { in: [true, false], message: 'が入力されていません。' }
   # with_options unless: -> { validation_context == :batch || :update_password } do |batch|
   #   batch.validates :gender, inclusion: { in: [true, false] }
   #   batch.validates :grade, presence: true
   #   batch.validates :furigana, presence: true
   # end
-  validates_acceptance_of :agreement, allow_nil: false, message: "への同意が必要です。", on: :create
+  validates_acceptance_of :agreement, allow_nil: false, message: 'への同意が必要です。', on: :create
 
   def admin?
     admin
   end
 
   def executive?(group)
-    if GroupUser.find_by(group_id: group.id, user_id: self.id, role: GroupUser.roles[:executive])
+    if GroupUser.find_by(group_id: group.id, user_id: id, role: GroupUser.roles[:executive])
       true
     else
       false
@@ -54,17 +54,17 @@ class User < ApplicationRecord
   end
 
   def attending?(event)
-    self.answers.find_by(event_id: event.id, status: Answer.statuses[:attending]).present?
+    answers.find_by(event_id: event.id, status: Answer.statuses[:attending]).present?
   end
 
   # オープンクラスにいずれ移動
   def is_gender_boolean?
-    !!(self.gender) == self.gender
+    !!gender == gender
   end
 
   def to_readable_grade
     grade = User.grades[self.grade.to_sym]
-    return grade.zero? ? 'その他' : grade
+    grade.zero? ? 'その他' : grade
   end
 
   def to_readable_gender
@@ -92,7 +92,7 @@ class User < ApplicationRecord
       CSV.foreach(file.path, headers: true, skip_blanks: true, encoding: 'CP932:UTF-8') do |row|
         name = row['名前']
         email = row['メールアドレス']
-        furigana = row['フリガナ']&.tr('ぁ-ん','ァ-ン')
+        furigana = row['フリガナ']&.tr('ぁ-ん', 'ァ-ン')
         gender = return_gender_format(row['性別'])
         grade = return_grade_format(row['学年'])
         user = User.new(name: name, email: email, password: password,
@@ -104,7 +104,7 @@ class User < ApplicationRecord
       end
     end
     added_count = added_users.count
-    { added_users: added_users, added_count: added_count, status: 'success'}
+    { added_users: added_users, added_count: added_count, status: 'success' }
   rescue ActiveRecord::RecordInvalid => e
     ErrorUtility.log_and_notify(e)
     puts e.class
@@ -113,7 +113,7 @@ class User < ApplicationRecord
     puts error_message
     error_message = error_message.gsub!(/。/, '') + "(#{failed_number}人目)。" unless error_message.include?('パスワード')
     { error_message: error_message, status: 'failure' }
-  rescue => e
+  rescue StandardError => e
     ErrorUtility.log_and_notify(e)
     { error_message: '何らかのエラーが発生しました。', status: 'failure' }
   end
@@ -151,7 +151,7 @@ class User < ApplicationRecord
       user = User.find_by(id: relationship.user_id, grade: grade)
       members << user if user
     end
-    members #.sort_by { |member| member.furigana } # 配列をフリガナ順に並べる
+    members # .sort_by { |member| member.furigana } # 配列をフリガナ順に並べる
   end
 
   # 支払いが済んでいない人たち
@@ -161,37 +161,31 @@ class User < ApplicationRecord
     answers.each do |answer|
       user = answer.user
       transaction = Event::Transaction.find_by(event_id: event.id, debtor_id: user.id)
-      if transaction
-        unless transaction.completed?
-          transactions << transaction
-          users << user
-        end
+      next unless transaction
+
+      unless transaction.completed?
+        transactions << transaction
+        users << user
       end
     end
     { uncompleted_transactions: transactions, unpaid_members: users }
   end
 
-  private
-
-    def self.return_gender_format(str)
-      case str
-      when '女'
-        true
-      when '男'
-        false
-      else
-        nil
-      end
+  def self.return_gender_format(str)
+    case str
+    when '女'
+      true
+    when '男'
+      false
     end
+  end
 
-    def self.return_grade_format(str)
-      number = str.to_i
-      if str == '0'
-        number
-      elsif number >= 1 && number <= 6
-        number
-      else
-        nil
-      end
+  def self.return_grade_format(str)
+    number = str.to_i
+    if str == '0'
+      number
+    elsif number >= 1 && number <= 6
+      number
     end
+  end
 end

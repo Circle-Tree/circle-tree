@@ -1,6 +1,8 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
-RSpec.describe "Events::Transactions", type: :request do
+RSpec.describe 'Events::Transactions', type: :request do
   let(:executive) { create(:user) }
   let(:member) { create(:user) }
   let(:other_member) { create(:user) }
@@ -10,7 +12,7 @@ RSpec.describe "Events::Transactions", type: :request do
   let(:event) { create(:event, group_id: group.id) }
   let(:event_transaction) { create(:event_transaction, :uncompleted, event_id: event.id) }
 
-  describe "GET #edit(イベント収支編集ページ)" do
+  describe 'GET #edit(イベント収支編集ページ)' do
     context '認証済みのユーザーとして' do
       context 'そのサークルの幹事なら' do
         it '正常なレスポンスを返すこと' do
@@ -50,7 +52,7 @@ RSpec.describe "Events::Transactions", type: :request do
     end
   end
 
-  describe "PATCH #update(イベント収支編集)" do
+  describe 'PATCH #update(イベント収支編集)' do
     context '認証済みのユーザーとして' do
       context 'そのサークルの幹事なら' do
         context '有効な属性値なら' do

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Fee < ApplicationRecord
   belongs_to :event
   belongs_to :creditor, class_name: 'User', foreign_key: 'creditor_id'

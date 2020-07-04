@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 FactoryBot.define do
   factory :transaction do
     deadline { Time.current.midnight.since(10.days) }
@@ -26,7 +28,7 @@ FactoryBot.define do
     end
 
     trait :overpaid do
-      payment { 10000 }
+      payment { 10_000 }
     end
 
     trait :invalid do
@@ -39,16 +41,16 @@ FactoryBot.define do
   #   debt { 3000 }
   #   payment { 3000 }
   #   association :debtor, factory: :user
-    # association :creditor, factory: :user
+  # association :creditor, factory: :user
   #   association :group
   #   sequence(:url_token) { |n| "#{n}#{SecureRandom.hex(10)}" }
 
   #   trait :uncompleted do
   #     payment { 0 }
   #   end
-    # trait :overpaid do
-    #   payment { 10000 }
-    # end
+  # trait :overpaid do
+  #   payment { 10000 }
+  # end
   # end
 
   factory :individual_transaction, class: Individual::Transaction do
@@ -65,7 +67,7 @@ FactoryBot.define do
     end
 
     trait :overpaid do
-      payment { 10000 }
+      payment { 10_000 }
     end
 
     trait :invalid do

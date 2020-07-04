@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
 RSpec.describe GroupUser, type: :model do
@@ -11,10 +13,12 @@ RSpec.describe GroupUser, type: :model do
 
     context '役割に関して' do
       it { is_expected.to validate_presence_of(:role) }
-      it { is_expected.to define_enum_for(:role).with_values(
-        general: 10,
-        executive: 90
-      ) }
+      it {
+        is_expected.to define_enum_for(:role).with_values(
+          general: 10,
+          executive: 90
+        )
+      }
     end
 
     it 'ユーザーとグループはユニークであること' do
@@ -35,14 +39,14 @@ RSpec.describe GroupUser, type: :model do
     let!(:user2) { create(:user) }
     let!(:user3) { create(:user) }
     let!(:group) { create(:group) }
-    let!(:group_user1) { create(:group_user, :executive, group_id: group.id, user_id: user2.id)}
-    let!(:group_user2) { create(:general, group_id: group.id, user_id: user3.id)}
+    let!(:group_user1) { create(:group_user, :executive, group_id: group.id, user_id: user2.id) }
+    let!(:group_user2) { create(:general, group_id: group.id, user_id: user3.id) }
 
     context 'new_group' do
       it '新しいGroupUserが追加される' do
-        expect {
+        expect do
           GroupUser.new_group(group, user1)
-        }.to change(group.users, :count).by(1)
+        end.to change(group.users, :count).by(1)
       end
       it 'executiveなGroupUserが追加される' do
         GroupUser.new_group(group, user1)

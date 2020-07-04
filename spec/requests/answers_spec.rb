@@ -1,6 +1,8 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
-RSpec.describe "Answers", type: :request do
+RSpec.describe 'Answers', type: :request do
   # let(:executive) { create(:user) }
   # let(:member) { create(:user) }
   # let(:other_member) { create(:user) }

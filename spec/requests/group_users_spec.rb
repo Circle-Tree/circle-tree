@@ -1,6 +1,8 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
-RSpec.describe "GroupUsers", type: :request do
+RSpec.describe 'GroupUsers', type: :request do
   let(:executive) { create(:user) }
   let(:member) { create(:user) }
   let(:other_member) { create(:user) }
@@ -9,7 +11,7 @@ RSpec.describe "GroupUsers", type: :request do
   let!(:member_relationship) { create(:group_user, user_id: member.id, group_id: group.id) }
   let(:event) { create(:event) }
 
-  describe "GET #invite(招待)" do
+  describe 'GET #invite(招待)' do
     context '認証済みのユーザーとして' do
       context 'そのサークルの幹事なら' do
         it 'メンバーを増えること' do
@@ -50,7 +52,7 @@ RSpec.describe "GroupUsers", type: :request do
     end
   end
 
-  describe "POST #join(サークルに参加)" do
+  describe 'POST #join(サークルに参加)' do
     context '認証済みのユーザーとして' do
       context '外部のメンバーとして' do
         it 'メンバーが増えること' do
@@ -96,7 +98,7 @@ RSpec.describe "GroupUsers", type: :request do
     end
   end
 
-  describe "DELETE #leave(サークルを退会)" do
+  describe 'DELETE #leave(サークルを退会)' do
     context '認証済みのユーザーとして' do
       context '一般人として' do
         it '退会すること' do
@@ -146,7 +148,7 @@ RSpec.describe "GroupUsers", type: :request do
   let(:member3) { create(:user) }
   let(:member_relationship2) { create(:group_user, user_id: member3.id, group_id: group.id) }
 
-  describe "DELETE #destroy(サークルからメンバーを退会させる)" do
+  describe 'DELETE #destroy(サークルからメンバーを退会させる)' do
     context '認証済みのユーザーとして' do
       context 'そのサークルの幹事として' do
         # it '一般人を退会させること' do

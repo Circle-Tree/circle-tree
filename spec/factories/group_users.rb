@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 FactoryBot.define do
   factory :group_user, aliases: [:general] do
     role { GroupUser.roles[:general] }

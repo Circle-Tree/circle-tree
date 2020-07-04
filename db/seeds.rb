@@ -20,7 +20,7 @@ gimei1 = Gimei.name
 # 幹事User1
 User.create!(
   name: gimei1.kanji,
-  furigana: gimei1.katakana.gsub(" ", ""),
+  furigana: gimei1.katakana.gsub(' ', ''),
   email: 'executive1@example.com',
   password: 'password',
   password_confirmation: 'password',
@@ -35,7 +35,7 @@ gimei2 = Gimei.name
 # 幹事User2
 User.create!(
   name: gimei2.kanji,
-  furigana: gimei2.katakana.gsub(" ", ""),
+  furigana: gimei2.katakana.gsub(' ', ''),
   email: 'executive2@example.com',
   password: 'password',
   password_confirmation: 'password',
@@ -50,7 +50,7 @@ User.create!(
   gimei = Gimei.name
   User.create!(
     name: gimei.kanji,
-    furigana: gimei.katakana.gsub(" ", ""),
+    furigana: gimei.katakana.gsub(' ', ''),
     email: "General#{i + 1}@example.com",
     password: 'password',
     password_confirmation: 'password',
@@ -64,7 +64,7 @@ end
 gimei3 = Gimei.name
 User.create!(
   name: gimei3.kanji,
-  furigana: gimei3.katakana.gsub(" ", ""),
+  furigana: gimei3.katakana.gsub(' ', ''),
   email: 'definitive_test@example.com',
   password: 'password',
   password_confirmation: 'password',
@@ -78,18 +78,17 @@ User.create!(
 # Group
 
 Group.create!(
-  name: "Group 1",
-  email: "executive1@example.com",
-  group_number: "group_test_1",
+  name: 'Group 1',
+  email: 'executive1@example.com',
+  group_number: 'group_test_1',
   payment_status: Group.payment_statuses[:paid]
 )
 Group.create!(
-  name: "Group 2",
-  email: "executive2@example.com",
-  group_number: "group_test_2",
+  name: 'Group 2',
+  email: 'executive2@example.com',
+  group_number: 'group_test_2',
   payment_status: Group.payment_statuses[:paid]
 )
-
 
 # GroupUser
 # Executive 1(Group1) & 2(Group2)
@@ -236,4 +235,3 @@ Product.create!(
   paypal_plan_name: 'P-9UY75926TX6644447EAODKPI',
   price_cents: 400
 )
-

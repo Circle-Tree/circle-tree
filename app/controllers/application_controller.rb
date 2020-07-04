@@ -62,7 +62,7 @@ class ApplicationController < ActionController::Base
     end
 
     # ログイン後のリダイレクト先
-    def after_sign_in_path_for(resource_or_scope)
+    def after_sign_in_path_for(_resource_or_scope)
       if current_user.admin?
         admin_homes_index_path
       else
@@ -71,7 +71,7 @@ class ApplicationController < ActionController::Base
     end
 
     # ログアウト後のリダイレクト先
-    def after_sign_out_path_for(resource_or_scope)
+    def after_sign_out_path_for(_resource_or_scope)
       new_user_session_path
     end
 

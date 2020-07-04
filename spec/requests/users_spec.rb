@@ -1,13 +1,15 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
-RSpec.describe "Users", type: :request do
-  describe "GET #index(メンバー一覧)" do
+RSpec.describe 'Users', type: :request do
+  describe 'GET #index(メンバー一覧)' do
     let(:group) { create(:group) }
 
     context '認証済みのユーザーとして' do
       let(:member) { create(:user) }
       let(:other_member) { create(:user) }
-      let!(:group_user1) { create(:group_user, user_id: member.id, group_id: group.id)}
+      let!(:group_user1) { create(:group_user, user_id: member.id, group_id: group.id) }
 
       context 'メンバーとして' do
         it '正常なレスポンスを返すこと' do
@@ -39,7 +41,7 @@ RSpec.describe "Users", type: :request do
     end
   end
 
-  describe "GET #join(サークル入会)" do
+  describe 'GET #join(サークル入会)' do
     let(:user) { create(:user) }
 
     context '認証済みのユーザーとして' do
@@ -63,7 +65,7 @@ RSpec.describe "Users", type: :request do
     end
   end
 
-  describe "GET #leave(サークル退会)" do
+  describe 'GET #leave(サークル退会)' do
     let(:user) { create(:user) }
 
     context '認証済みのユーザーとして' do
@@ -87,7 +89,7 @@ RSpec.describe "Users", type: :request do
     end
   end
 
-  describe "GET #withdraw(サービス退会)" do
+  describe 'GET #withdraw(サービス退会)' do
     let(:user) { create(:user) }
 
     context '認証済みのユーザーとして' do

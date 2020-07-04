@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
 RSpec.describe Fee, type: :model do
@@ -21,16 +23,16 @@ RSpec.describe Fee, type: :model do
         expect(fee.errors[:amount]).to include('は整数で入力してください')
       end
       it '99_999_999は有効であること' do
-        fee = build(:fee, amount: 99999999)
+        fee = build(:fee, amount: 99_999_999)
         expect(fee).to be_valid
       end
       it '100_000_000より大きいのは無効であること' do
-        fee = build(:fee, amount: 100000001)
+        fee = build(:fee, amount: 100_000_001)
         fee.valid?
         expect(fee.errors[:amount]).to include('は100000000より小さい値にしてください')
       end
       it '100_000_000より大きいのは無効であること' do
-        fee = build(:fee, amount: 100000000)
+        fee = build(:fee, amount: 100_000_000)
         fee.valid?
         expect(fee.errors[:amount]).to include('は100000000より小さい値にしてください')
       end
@@ -55,15 +57,17 @@ RSpec.describe Fee, type: :model do
 
     context '学年に関して' do
       it { is_expected.to validate_presence_of(:grade) }
-      it { is_expected.to define_enum_for(:grade).with_values(
-        other: 0,
-        grade1: 1,
-        grade2: 2,
-        grade3: 3,
-        grade4: 4,
-        grade5: 5,
-        grade6: 6
-      ) }
+      it {
+        is_expected.to define_enum_for(:grade).with_values(
+          other: 0,
+          grade1: 1,
+          grade2: 2,
+          grade3: 3,
+          grade4: 4,
+          grade5: 5,
+          grade6: 6
+        )
+      }
     end
   end
 

@@ -2,10 +2,10 @@
 
 class Users::RegistrationsController < Devise::RegistrationsController
   before_action :configure_sign_up_params, only: [:create]
-  before_action :configure_account_update_params, only: [:update_password, :update_profile]
-  before_action :confirm_definitive_registration, only: [:edit_profile, :update_profile, :destroy]
+  before_action :configure_account_update_params, only: %i[update_password update_profile]
+  before_action :confirm_definitive_registration, only: %i[edit_profile update_profile destroy]
   # prepend_before_action :require_no_authentication, only: [:new, :create, :cancel]
-  prepend_before_action :authenticate_scope!, only: [:edit_profile, :edit_password, :update_profile, :update_password, :destroy]
+  prepend_before_action :authenticate_scope!, only: %i[edit_profile edit_password update_profile update_password destroy]
 
   # GET /resource/sign_up
   def new
@@ -96,8 +96,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
     end
   end
 
-  def completed
-  end
+  def completed; end
 
   # DELETE /resource
   def destroy
@@ -105,7 +104,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
     Devise.sign_out_all_scopes ? sign_out : sign_out(resource_name)
     set_flash_message! :notice, :destroyed
     yield resource if block_given?
-    respond_with_navigational(resource){ redirect_to after_sign_out_path_for(resource_name) }
+    respond_with_navigational(resource) { redirect_to after_sign_out_path_for(resource_name) }
   end
 
   # GET /resource/cancel
@@ -119,33 +118,31 @@ class Users::RegistrationsController < Devise::RegistrationsController
 
   protected
 
-  # If you have extra params to permit, append them to the sanitizer.
-  def configure_sign_up_params
-    devise_parameter_sanitizer.permit(:sign_up, keys: [:name, :definitive_registration, :gender, :grade, :furigana, :agreement])
-  end
+    # If you have extra params to permit, append them to the sanitizer.
+    def configure_sign_up_params
+      devise_parameter_sanitizer.permit(:sign_up, keys: %i[name definitive_registration gender grade furigana agreement])
+    end
 
-  # If you have extra params to permit, append them to the sanitizer.
-  def configure_account_update_params
-    devise_parameter_sanitizer.permit(:account_update, keys: [:name, :definitive_registration, :gender, :grade, :furigana])
-  end
+    # If you have extra params to permit, append them to the sanitizer.
+    def configure_account_update_params
+      devise_parameter_sanitizer.permit(:account_update, keys: %i[name definitive_registration gender grade furigana])
+    end
 
+    # The path used after sign up.
+    def after_sign_up_path_for(_resource)
+      users_completed_path
+      # new_user_session_path
+    end
 
+    # The path used after sign up for inactive accounts.
+    def after_inactive_sign_up_path_for(_resource)
+      users_completed_path
+      # new_user_session_path
+    end
 
-  # The path used after sign up.
-  def after_sign_up_path_for(resource)
-    users_completed_path
-    # new_user_session_path
-  end
-
-  # The path used after sign up for inactive accounts.
-  def after_inactive_sign_up_path_for(resource)
-    users_completed_path
-    # new_user_session_path
-  end
-
-  def join_circle
-    GroupUser.create!(user_id: resource.id, group_id: params[:group_id].to_i, role: GroupUser.roles[:general]) if params[:group_id]
-  rescue => e
-    ErrorUtility.log_and_notify(e)
-  end
+    def join_circle
+      GroupUser.create!(user_id: resource.id, group_id: params[:group_id].to_i, role: GroupUser.roles[:general]) if params[:group_id]
+    rescue StandardError => e
+      ErrorUtility.log_and_notify(e)
+    end
 end

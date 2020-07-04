@@ -19,7 +19,7 @@ class Answer < ApplicationRecord
     unfavorable: 5,
     other: 6
   }
-  scope :my_attending_answers, -> (user){ where(user_id: user.id, status: Answer.statuses[:attending]) }
+  scope :my_attending_answers, ->(user) { where(user_id: user.id, status: Answer.statuses[:attending]) }
 
   def self.divide_answers_in_three(event)
     answers = event.answers

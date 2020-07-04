@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class QuestionnaireSlackNotification
   def self.created_questionnaire_notify(title:, message:)
     notifier = Slack::Notifier.new(ENV['QUESTIONNAIRE_SLACK_WEBHOOK_URL'])

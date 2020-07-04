@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
 RSpec.describe User, type: :model do
@@ -47,15 +49,17 @@ RSpec.describe User, type: :model do
 
     context '学年に関して' do
       it { is_expected.to validate_presence_of(:grade) }
-      it { is_expected.to define_enum_for(:grade).with_values(
-        other: 0,
-        grade1: 1,
-        grade2: 2,
-        grade3: 3,
-        grade4: 4,
-        grade5: 5,
-        grade6: 6
-      ) }
+      it {
+        is_expected.to define_enum_for(:grade).with_values(
+          other: 0,
+          grade1: 1,
+          grade2: 2,
+          grade3: 3,
+          grade4: 4,
+          grade5: 5,
+          grade6: 6
+        )
+      }
     end
 
     context '性別に関して' do

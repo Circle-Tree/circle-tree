@@ -18,7 +18,7 @@ module AppName
     config.filter_parameters += [/password/]
     config.assets.enabled = false
     # field_with_errorsを作らせない
-    config.action_view.field_error_proc = Proc.new { |html_tag, instance| html_tag }
+    config.action_view.field_error_proc = proc { |html_tag, _instance| html_tag }
 
     # Settings in config/environments/* take precedence over those specified here.
     # Application configuration can go into files in config/initializers
@@ -26,10 +26,10 @@ module AppName
     # the framework and any gems in your application.
     config.generators do |g|
       g.test_framework :rspec,
-      view_specs: false,
-      helper_specs: false,
-      controller_specs: false,
-      routing_specs: false
+                       view_specs: false,
+                       helper_specs: false,
+                       controller_specs: false,
+                       routing_specs: false
     end
   end
 end
