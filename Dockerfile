@@ -10,6 +10,7 @@ RUN gem install bundler
 WORKDIR /tmp
 ADD Gemfile Gemfile
 ADD Gemfile.lock Gemfile.lock
+RUN bundle update
 RUN bundle install
 ENV APP_HOME /app_name
 RUN mkdir -p $APP_HOME
