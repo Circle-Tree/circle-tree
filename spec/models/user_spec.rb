@@ -59,15 +59,21 @@ RSpec.describe User, type: :model do
     end
 
     context '性別に関して' do
-      it { is_expected.to validate_presence_of(:gender) }
+      it { is_expected.to allow_value(true).for(:gender) }
+      it { is_expected.to allow_value(false).for(:gender) }
+      it { is_expected.not_to allow_value(nil).for(:gender) }
     end
 
     context 'adminに関して' do
-      it { is_expected.to validate_inclusion_of(:admin).in_array([true, false]) }
+      it { is_expected.to allow_value(true).for(:admin) }
+      it { is_expected.to allow_value(false).for(:admin) }
+      it { is_expected.not_to allow_value(nil).for(:admin) }
     end
 
     context '仮登録に関して' do
-      it { is_expected.to validate_inclusion_of(:definitive_registration).in_array([true, false]) }
+      it { is_expected.to allow_value(true).for(:definitive_registration) }
+      it { is_expected.to allow_value(false).for(:definitive_registration) }
+      it { is_expected.not_to allow_value(nil).for(:definitive_registration) }
     end
 
     # context '利用規約に関して' do

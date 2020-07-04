@@ -19,6 +19,7 @@ class User < ApplicationRecord
   has_many :questionnaires
   validates :name, presence: true, length: { maximum: 100 }
   validates :definitive_registration, inclusion: { in: [true, false] }
+  validates :admin, inclusion: { in: [true, false] }
   validates :furigana, presence: true, on: %i[create]
   # VALID_FURIGANA_REGEX = /\A[\p{katakana}　ー－&&[^ -~｡-ﾟ]]+\z/.freeze
   validates :furigana, format: { with: /\A[\p{katakana}　ー－&&[^ -~｡-ﾟ]]+\z/, message: 'は全角カタカナのみで入力して下さい。' }, allow_blank: true
