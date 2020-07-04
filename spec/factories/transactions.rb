@@ -28,6 +28,10 @@ FactoryBot.define do
     trait :overpaid do
       payment { 10000 }
     end
+
+    trait :invalid do
+      payment { nil }
+    end
   end
 
   # factory :group_transaction, class: Group::Transaction do
@@ -62,6 +66,10 @@ FactoryBot.define do
 
     trait :overpaid do
       payment { 10000 }
+    end
+
+    trait :invalid do
+      payment { nil }
     end
   end
 end
