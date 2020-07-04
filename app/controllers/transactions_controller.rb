@@ -5,6 +5,7 @@ class TransactionsController < ApplicationController
   before_action :confirm_definitive_registration
   before_action :other_user_cannot_access, only: %i[index]
   before_action :only_executives_can_access, only: %i[change]
+
   def index
     user = current_user
     @today = Time.current.midnight
@@ -39,11 +40,11 @@ class TransactionsController < ApplicationController
   #   end
   # end
 
-  def edit
-  end
+  # def edit
+  # end
 
-  def update
-  end
+  # def update
+  # end
 
   def change
     url_token = params[:url_token]
