@@ -2,14 +2,14 @@
 
 class Users::TransactionsController < TransactionsController
   before_action :authenticate_user!
+  before_action :confirm_definitive_registration
+  before_action :cannot_individual_transaction_to_myself, only: %i[lend borrow create]
 
   def lend
-    @user = User.find(params[:user_id])
     @transaction = Individual::Transaction.new
   end
 
   def borrow
-    @user = User.find(params[:user_id])
     @transaction = Individual::Transaction.new
   end
 
@@ -69,5 +69,12 @@ class Users::TransactionsController < TransactionsController
 
     def update_user_transaction_params
       params.require(:individual_transaction).permit(:deadline, :debt, :payment, :memo)
+    end
+
+    def cannot_individual_transaction_to_myself
+      @user = User.find(params[:user_id])
+      if current_user.id == @user.id
+        flash_and_redirect(key: :danger, message: '自分に対する貸し借りメモは作成できません。', redirect_url: home_url)
+      end
     end
 end
