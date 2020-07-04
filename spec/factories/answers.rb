@@ -6,7 +6,7 @@ FactoryBot.define do
     association :event
 
     trait :invalid do
-      name { nil }
+      status { nil }
     end
 
     trait :unanswered do
