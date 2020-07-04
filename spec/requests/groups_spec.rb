@@ -78,7 +78,7 @@ RSpec.describe "Groups", type: :request do
         end
       end
 
-      context 'そのサークルのメンバーなら' do
+      context 'そのサークルの一般人なら' do
         it '403レスポンスを返すこと' do
           sign_in member
           get edit_group_path(id: group.id)
@@ -137,7 +137,7 @@ RSpec.describe "Groups", type: :request do
         end
       end
 
-      context 'そのサークルのメンバーなら' do
+      context 'そのサークルの一般人なら' do
         it '403レスポンスを返すこと' do
           group_params = attributes_for(:group, :invalid)
           sign_in member
@@ -183,7 +183,7 @@ RSpec.describe "Groups", type: :request do
         end
       end
 
-      context 'そのサークルのメンバーなら' do
+      context 'そのサークルの一般人なら' do
         it '403レスポンスを返すこと' do
           sign_in member
           get change_group_path(id: group.id)
@@ -228,7 +228,7 @@ RSpec.describe "Groups", type: :request do
       end
     end
 
-    context 'そのサークルのメンバーなら' do
+    context 'そのサークルの一般人なら' do
       it '403レスポンスを返すこと' do
         sign_in member
         post inherit_group_path(id: group.id), params: { new_executive: new_executive.id }
@@ -257,7 +257,7 @@ RSpec.describe "Groups", type: :request do
       end
     end
 
-    context 'そのサークルのメンバーなら' do
+    context 'そのサークルの一般人なら' do
       it '403レスポンスを返すこと' do
         sign_in member
         post assign_group_path(id: group.id), params: { new_executive: new_executive.id }
@@ -286,7 +286,7 @@ RSpec.describe "Groups", type: :request do
       end
     end
 
-    context 'そのサークルのメンバーなら' do
+    context 'そのサークルの一般人なら' do
       it '403レスポンスを返すこと' do
         sign_in member
         get resign_group_path(id: group.id)
